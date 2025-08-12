@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Supabase Connection</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <h1>Testing Supabase Connection</h1>
+    <div id="status">Connecting...</div>
+    <div id="data"></div>
+
+    <script src="supabase-config.js"></script>
+    <script>
+        async function testConnection() {
+            const statusDiv = document.getElementById('status');
+            const dataDiv = document.getElementById('data');
+            
+            try {
+                // Test connection by fetching users
+                const { data, error } = await supabaseClient
+                    .from('users')
+                    .select('first_name, last_name, email, created_at')
+                    .limit(5);
+                
+                if (error) {
+                    statusDiv.innerHTML = `<span style="color: red;">Error: ${error.message}</span>`;
+                } else {
+                    statusDiv.innerHTML = '<span style="color: green;">✅ Connected successfully!</span>';
+                    dataDiv.innerHTML = '<h3>Users in database:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                }
+            } catch (err) {
+                statusDiv.innerHTML = `<span style="color: red;">Connection failed: ${err.message}</span>`;
+            }
+        }
+
+        // Test connection when page loads
+        testConnection();
+    </script>
+</body>
+</html>
