@@ -99,24 +99,48 @@
             color: white;
         }
 
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+        .tools-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
             margin-bottom: 40px;
         }
 
         .tool-card {
             background: white;
             border-radius: 20px;
-            padding: 30px;
+            padding: 40px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            width: 100%;
         }
 
         .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .tool-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 968px) {
+            .tool-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
         }
 
         .tool-icon {
@@ -279,87 +303,145 @@
             </a>
         </div>
 
-        <!-- AI Tools Grid -->
-        <div class="tools-grid">
+        <!-- AI Tools Stack -->
+        <div class="tools-container">
             <!-- Content Generator -->
             <div class="tool-card">
-                <div class="tool-icon">✍️</div>
-                <h3>Content Creator</h3>
-                <p>Generate engaging social media posts, email content, and marketing copy tailored to your brand voice and audience.</p>
-                
-                <div class="tool-form">
-                    <select id="contentType">
-                        <option value="linkedin">LinkedIn Post</option>
-                        <option value="instagram">Instagram Caption</option>
-                        <option value="email">Email Newsletter</option>
-                        <option value="blog">Blog Post Outline</option>
-                        <option value="website">Website Copy</option>
-                    </select>
-                    <textarea id="contentTopic" placeholder="What topic or message do you want to create content about?" rows="3"></textarea>
-                    <input type="text" id="targetAudience" placeholder="Who is your target audience? (e.g., working moms, executives)">
-                    <button class="generate-btn" onclick="generateContent()">Generate Content</button>
+                <div class="tool-header">
+                    <div class="tool-icon">✍️</div>
+                    <div>
+                        <h3>Content Creator</h3>
+                        <p style="color: #64748b; margin: 0;">Generate engaging social media posts, email content, and marketing copy tailored to your brand voice and audience.</p>
+                    </div>
                 </div>
-                <div class="output-area" id="contentOutput"></div>
+                
+                <div class="tool-content">
+                    <div class="tool-form">
+                        <select id="contentType">
+                            <option value="linkedin">LinkedIn Post</option>
+                            <option value="instagram">Instagram Caption</option>
+                            <option value="email">Email Newsletter</option>
+                            <option value="blog">Blog Post Outline</option>
+                            <option value="website">Website Copy</option>
+                        </select>
+                        <textarea id="contentTopic" placeholder="What topic or message do you want to create content about?" rows="3"></textarea>
+                        <input type="text" id="targetAudience" placeholder="Who is your target audience? (e.g., working moms, executives)">
+                        <button class="generate-btn" onclick="generateContent()">Generate Content</button>
+                    </div>
+                    <div class="output-area" id="contentOutput"></div>
+                </div>
             </div>
 
             <!-- Business Plan Generator -->
             <div class="tool-card">
-                <div class="tool-icon">📋</div>
-                <h3>Business Plan Builder</h3>
-                <p>Create detailed business plans, proposals, and strategic documents for your new venture or side business.</p>
-                
-                <div class="tool-form">
-                    <input type="text" id="businessName" placeholder="Business/Project Name">
-                    <textarea id="businessIdea" placeholder="Describe your business idea or what you want to offer..." rows="3"></textarea>
-                    <select id="businessType">
-                        <option value="consulting">Consulting Business</option>
-                        <option value="coaching">Coaching Practice</option>
-                        <option value="online">Online Course/Digital Product</option>
-                        <option value="service">Service Business</option>
-                        <option value="ecommerce">E-commerce Store</option>
-                    </select>
-                    <button class="generate-btn" onclick="generateBusinessPlan()">Generate Business Plan</button>
+                <div class="tool-header">
+                    <div class="tool-icon">📋</div>
+                    <div>
+                        <h3>Business Plan Builder</h3>
+                        <p style="color: #64748b; margin: 0;">Create detailed business plans, proposals, and strategic documents for your new venture or side business.</p>
+                    </div>
                 </div>
-                <div class="output-area" id="businessOutput"></div>
+                
+                <div class="tool-content">
+                    <div class="tool-form">
+                        <input type="text" id="businessName" placeholder="Business/Project Name">
+                        <textarea id="businessIdea" placeholder="Describe your business idea or what you want to offer..." rows="3"></textarea>
+                        <select id="businessType">
+                            <option value="consulting">Consulting Business</option>
+                            <option value="coaching">Coaching Practice</option>
+                            <option value="online">Online Course/Digital Product</option>
+                            <option value="service">Service Business</option>
+                            <option value="ecommerce">E-commerce Store</option>
+                        </select>
+                        <button class="generate-btn" onclick="generateBusinessPlan()">Generate Business Plan</button>
+                    </div>
+                    <div class="output-area" id="businessOutput"></div>
+                </div>
             </div>
 
             <!-- Roadmap Generator -->
             <div class="tool-card">
-                <div class="tool-icon">🗺️</div>
-                <h3>Dream Roadmap Creator</h3>
-                <p>Transform your dreams into actionable 90-day plans with specific steps, timelines, and milestones.</p>
-                
-                <div class="tool-form">
-                    <textarea id="dreamGoal" placeholder="What's your big dream or goal you want to achieve?" rows="3"></textarea>
-                    <select id="timeframe">
-                        <option value="90">90 Days</option>
-                        <option value="180">6 Months</option>
-                        <option value="365">1 Year</option>
-                    </select>
-                    <input type="text" id="currentSituation" placeholder="Where are you starting from? (current role, skills, resources)">
-                    <button class="generate-btn" onclick="generateRoadmap()">Create My Roadmap</button>
+                <div class="tool-header">
+                    <div class="tool-icon">🗺️</div>
+                    <div>
+                        <h3>Dream Roadmap Creator</h3>
+                        <p style="color: #64748b; margin: 0;">Transform your dreams into actionable 90-day plans with specific steps, timelines, and milestones.</p>
+                    </div>
                 </div>
-                <div class="output-area" id="roadmapOutput"></div>
+                
+                <div class="tool-content">
+                    <div class="tool-form">
+                        <textarea id="dreamGoal" placeholder="What's your big dream or goal you want to achieve?" rows="3"></textarea>
+                        <select id="timeframe">
+                            <option value="90">90 Days</option>
+                            <option value="180">6 Months</option>
+                            <option value="365">1 Year</option>
+                        </select>
+                        <input type="text" id="currentSituation" placeholder="Where are you starting from? (current role, skills, resources)">
+                        <button class="generate-btn" onclick="generateRoadmap()">Create My Roadmap</button>
+                    </div>
+                    <div class="output-area" id="roadmapOutput"></div>
+                </div>
             </div>
 
             <!-- AI Coach -->
             <div class="tool-card">
-                <div class="tool-icon">💬</div>
-                <h3>Personal AI Coach</h3>
-                <p>Get personalized advice, clarity, and motivation from an AI coach trained specifically for accomplished women in transition.</p>
-                
-                <div class="tool-form">
-                    <textarea id="coachQuestion" placeholder="What challenge are you facing? What do you need clarity on?" rows="4"></textarea>
-                    <select id="coachingType">
-                        <option value="clarity">Need Clarity & Direction</option>
-                        <option value="confidence">Confidence & Mindset</option>
-                        <option value="strategy">Strategy & Planning</option>
-                        <option value="transition">Career Transition</option>
-                        <option value="motivation">Motivation & Inspiration</option>
-                    </select>
-                    <button class="generate-btn" onclick="getCoaching()">Get AI Coaching</button>
+                <div class="tool-header">
+                    <div class="tool-icon">💬</div>
+                    <div>
+                        <h3>Personal AI Coach</h3>
+                        <p style="color: #64748b; margin: 0;">Get personalized advice, clarity, and motivation from an AI coach trained specifically for accomplished women in transition.</p>
+                    </div>
                 </div>
-                <div class="output-area" id="coachOutput"></div>
+                
+                <div class="tool-content">
+                    <div class="tool-form">
+                        <textarea id="coachQuestion" placeholder="What challenge are you facing? What do you need clarity on?" rows="4"></textarea>
+                        <select id="coachingType">
+                            <option value="clarity">Need Clarity & Direction</option>
+                            <option value="confidence">Confidence & Mindset</option>
+                            <option value="strategy">Strategy & Planning</option>
+                            <option value="transition">Career Transition</option>
+                            <option value="motivation">Motivation & Inspiration</option>
+                        </select>
+                        <button class="generate-btn" onclick="getCoaching()">Get AI Coaching</button>
+                    </div>
+                    <div class="output-area" id="coachOutput"></div>
+                </div>
+            </div>
+
+            <!-- AI Image Generator -->
+            <div class="tool-card">
+                <div class="tool-header">
+                    <div class="tool-icon">🎨</div>
+                    <div>
+                        <h3>AI Image Creator</h3>
+                        <p style="color: #64748b; margin: 0;">Generate professional images, social media graphics, and brand visuals for your business and personal brand.</p>
+                    </div>
+                </div>
+                
+                <div class="tool-content">
+                    <div class="tool-form">
+                        <textarea id="imagePrompt" placeholder="Describe the image you want to create (e.g., professional headshot, business logo, social media graphic)" rows="3"></textarea>
+                        <select id="imageStyle">
+                            <option value="professional">Professional/Business</option>
+                            <option value="modern">Modern & Minimalist</option>
+                            <option value="creative">Creative & Artistic</option>
+                            <option value="social">Social Media Ready</option>
+                            <option value="brand">Brand/Logo Style</option>
+                        </select>
+                        <select id="imageSize">
+                            <option value="1024x1024">Square (1024x1024) - Social Media</option>
+                            <option value="1792x1024">Landscape (1792x1024) - Website Banner</option>
+                            <option value="1024x1792">Portrait (1024x1792) - Stories/Posts</option>
+                        </select>
+                        <button class="generate-btn" onclick="generateImage()">Create Image</button>
+                    </div>
+                    <div class="output-area" id="imageOutput" style="text-align: center;">
+                        <div id="imagePreview" style="margin-bottom: 20px;"></div>
+                        <div id="imageText"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -611,6 +693,61 @@ Remember: You already have everything you need to succeed. Trust your instincts 
                 btn.disabled = false;
                 btn.textContent = originalText;
             }, 2000);
+        }
+
+        async function generateImage() {
+            if (!useGeneration()) return;
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Creating Image...';
+            
+            const prompt = document.getElementById('imagePrompt').value;
+            const style = document.getElementById('imageStyle').value;
+            const size = document.getElementById('imageSize').value;
+            
+            setTimeout(() => {
+                const output = document.getElementById('imageOutput');
+                const preview = document.getElementById('imagePreview');
+                const text = document.getElementById('imageText');
+                
+                // Create a placeholder image (in production, this would be from DALL-E or Midjourney)
+                const placeholderImage = `https://via.placeholder.com/${size.replace('x', 'x')}/7c3aed/ffffff?text=AI+Generated+Image`;
+                
+                preview.innerHTML = `
+                    <img src="${placeholderImage}" alt="AI Generated Image" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                `;
+                
+                text.innerHTML = `
+<strong>Image Generated Successfully!</strong>
+
+<strong>Prompt:</strong> ${prompt}
+<strong>Style:</strong> ${style.charAt(0).toUpperCase() + style.slice(1)}
+<strong>Dimensions:</strong> ${size}
+
+<div style="margin-top: 20px; padding: 15px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid #3b82f6;">
+    <strong>💡 Pro Tip:</strong> As a MogulMomma member, you'd get:
+    • High-resolution downloads
+    • Multiple variations per prompt
+    • Advanced editing options
+    • Commercial usage rights
+    • Integration with design tools
+</div>
+
+<button onclick="downloadImage()" style="background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; margin-top: 15px; cursor: pointer;">
+    Download Image (Demo)
+</button>
+                `;
+                
+                output.classList.add('show');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }, 3000);
+        }
+
+        function downloadImage() {
+            alert('🎉 Image download feature available for paid members! Join MogulMomma to unlock full image generation and download capabilities.');
         }
 
         // Helper functions for content generation
