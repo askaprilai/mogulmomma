@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma AI Tools - Content Creation & Business Tools</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #7c3aed;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .usage-counter {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid #f59e0b;
+        }
+
+        .usage-counter.warning {
+            background: linear-gradient(135deg, #fecaca, #ef4444);
+            border-color: #dc2626;
+            color: white;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .tool-card h3 {
+            color: #1e293b;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .tool-card p {
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tool-form {
+            margin: 20px 0;
+        }
+
+        .tool-form textarea, .tool-form input, .tool-form select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+
+        .tool-form textarea:focus, .tool-form input:focus, .tool-form select:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .generate-btn {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .output-area {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 120px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .output-area.show {
+            display: block;
+        }
+
+        .upgrade-prompt {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+            display: none;
+        }
+
+        .upgrade-prompt.show {
+            display: block;
+        }
+
+        .upgrade-btn {
+            background: white;
+            color: #7c3aed;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">👑 MogulMomma AI Tools</div>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="mogul-mama-assessment.html">Assessment</a>
+                <a href="login.html">Member Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>🤖 AI Creation Studio</h1>
+            <p style="color: #64748b; font-size: 1.2rem; max-width: 600px; margin: 0 auto;">
+                Powerful AI tools designed specifically for accomplished women building their next chapter
+            </p>
+        </div>
+
+        <!-- Usage Counter -->
+        <div class="usage-counter" id="usageCounter">
+            <strong>Free Trial: <span id="usageCount">5</span> uses remaining</strong>
+            <p style="margin: 5px 0 0 0; font-size: 0.9rem;">Try our AI tools before upgrading to unlimited access</p>
+        </div>
+
+        <!-- Upgrade Prompt (hidden initially) -->
+        <div class="upgrade-prompt" id="upgradePrompt">
+            <h3 style="margin-bottom: 15px;">🎉 You've Used All Your Free Tries!</h3>
+            <p style="margin-bottom: 20px; font-size: 1.1rem;">
+                Ready for unlimited AI tool access? Join the MogulMomma community and get unlimited generations plus live coaching, community support, and exclusive resources.
+            </p>
+            <a href="mogulmomma-membership.html" class="upgrade-btn">
+                💎 Upgrade to Unlimited Access - $97/month
+            </a>
+        </div>
+
+        <!-- AI Tools Grid -->
+        <div class="tools-grid">
+            <!-- Content Generator -->
+            <div class="tool-card">
+                <div class="tool-icon">✍️</div>
+                <h3>Content Creator</h3>
+                <p>Generate engaging social media posts, email content, and marketing copy tailored to your brand voice and audience.</p>
+                
+                <div class="tool-form">
+                    <select id="contentType">
+                        <option value="linkedin">LinkedIn Post</option>
+                        <option value="instagram">Instagram Caption</option>
+                        <option value="email">Email Newsletter</option>
+                        <option value="blog">Blog Post Outline</option>
+                        <option value="website">Website Copy</option>
+                    </select>
+                    <textarea id="contentTopic" placeholder="What topic or message do you want to create content about?" rows="3"></textarea>
+                    <input type="text" id="targetAudience" placeholder="Who is your target audience? (e.g., working moms, executives)">
+                    <button class="generate-btn" onclick="generateContent()">Generate Content</button>
+                </div>
+                <div class="output-area" id="contentOutput"></div>
+            </div>
+
+            <!-- Business Plan Generator -->
+            <div class="tool-card">
+                <div class="tool-icon">📋</div>
+                <h3>Business Plan Builder</h3>
+                <p>Create detailed business plans, proposals, and strategic documents for your new venture or side business.</p>
+                
+                <div class="tool-form">
+                    <input type="text" id="businessName" placeholder="Business/Project Name">
+                    <textarea id="businessIdea" placeholder="Describe your business idea or what you want to offer..." rows="3"></textarea>
+                    <select id="businessType">
+                        <option value="consulting">Consulting Business</option>
+                        <option value="coaching">Coaching Practice</option>
+                        <option value="online">Online Course/Digital Product</option>
+                        <option value="service">Service Business</option>
+                        <option value="ecommerce">E-commerce Store</option>
+                    </select>
+                    <button class="generate-btn" onclick="generateBusinessPlan()">Generate Business Plan</button>
+                </div>
+                <div class="output-area" id="businessOutput"></div>
+            </div>
+
+            <!-- Roadmap Generator -->
+            <div class="tool-card">
+                <div class="tool-icon">🗺️</div>
+                <h3>Dream Roadmap Creator</h3>
+                <p>Transform your dreams into actionable 90-day plans with specific steps, timelines, and milestones.</p>
+                
+                <div class="tool-form">
+                    <textarea id="dreamGoal" placeholder="What's your big dream or goal you want to achieve?" rows="3"></textarea>
+                    <select id="timeframe">
+                        <option value="90">90 Days</option>
+                        <option value="180">6 Months</option>
+                        <option value="365">1 Year</option>
+                    </select>
+                    <input type="text" id="currentSituation" placeholder="Where are you starting from? (current role, skills, resources)">
+                    <button class="generate-btn" onclick="generateRoadmap()">Create My Roadmap</button>
+                </div>
+                <div class="output-area" id="roadmapOutput"></div>
+            </div>
+
+            <!-- AI Coach -->
+            <div class="tool-card">
+                <div class="tool-icon">💬</div>
+                <h3>Personal AI Coach</h3>
+                <p>Get personalized advice, clarity, and motivation from an AI coach trained specifically for accomplished women in transition.</p>
+                
+                <div class="tool-form">
+                    <textarea id="coachQuestion" placeholder="What challenge are you facing? What do you need clarity on?" rows="4"></textarea>
+                    <select id="coachingType">
+                        <option value="clarity">Need Clarity & Direction</option>
+                        <option value="confidence">Confidence & Mindset</option>
+                        <option value="strategy">Strategy & Planning</option>
+                        <option value="transition">Career Transition</option>
+                        <option value="motivation">Motivation & Inspiration</option>
+                    </select>
+                    <button class="generate-btn" onclick="getCoaching()">Get AI Coaching</button>
+                </div>
+                <div class="output-area" id="coachOutput"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script>
+        let usageCount = parseInt(localStorage.getItem('mogulmomma_ai_usage') || '5');
+        let isPaidMember = false;
+        
+        // Check if user is a paid member
+        async function checkMembershipStatus() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            
+            if (user) {
+                // Check if user has active subscription
+                const { data: subscription } = await supabaseClient
+                    .from('subscriptions')
+                    .select('status')
+                    .eq('user_id', user.id)
+                    .eq('status', 'active')
+                    .single();
+                
+                if (subscription) {
+                    isPaidMember = true;
+                    // Hide usage counter for paid members
+                    document.getElementById('usageCounter').innerHTML = `
+                        <strong style="color: #10b981;">✅ Unlimited Access - Active Member</strong>
+                        <p style="margin: 5px 0 0 0; font-size: 0.9rem;">Enjoy unlimited AI tool usage as part of your membership</p>
+                    `;
+                    document.getElementById('usageCounter').style.background = 'linear-gradient(135deg, #d1fae5, #10b981)';
+                    document.getElementById('usageCounter').style.borderColor = '#10b981';
+                    return;
+                }
+            }
+            
+            // Not a paid member - use trial system
+            updateUsageCounter();
+        }
+        
+        // Update usage counter display
+        function updateUsageCounter() {
+            const counter = document.getElementById('usageCounter');
+            const countDisplay = document.getElementById('usageCount');
+            const upgradePrompt = document.getElementById('upgradePrompt');
+            
+            countDisplay.textContent = usageCount;
+            
+            if (usageCount <= 0) {
+                counter.style.display = 'none';
+                upgradePrompt.classList.add('show');
+                // Disable all generate buttons
+                document.querySelectorAll('.generate-btn').forEach(btn => {
+                    btn.disabled = true;
+                    btn.textContent = 'Upgrade Required';
+                });
+            } else if (usageCount <= 2) {
+                counter.classList.add('warning');
+            }
+        }
+
+        // Use one generation
+        function useGeneration() {
+            // Paid members get unlimited access
+            if (isPaidMember) {
+                return true;
+            }
+            
+            // Free users have limited usage
+            if (usageCount <= 0) {
+                return false;
+            }
+            usageCount--;
+            localStorage.setItem('mogulmomma_ai_usage', usageCount.toString());
+            updateUsageCounter();
+            return true;
+        }
+
+        // AI Generation Functions (simulated)
+        async function generateContent() {
+            if (!useGeneration()) return;
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Generating...';
+            
+            const contentType = document.getElementById('contentType').value;
+            const topic = document.getElementById('contentTopic').value;
+            const audience = document.getElementById('targetAudience').value;
+            
+            // Simulate AI generation
+            setTimeout(() => {
+                const output = document.getElementById('contentOutput');
+                output.innerHTML = `
+<strong>${contentType.charAt(0).toUpperCase() + contentType.slice(1)} Content:</strong>
+
+${getContentSample(contentType, topic, audience)}
+
+---
+✨ This is AI-generated content. As a MogulMomma member, you'd get unlimited generations with advanced customization options!
+                `;
+                output.classList.add('show');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }, 2000);
+        }
+
+        async function generateBusinessPlan() {
+            if (!useGeneration()) return;
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Creating Plan...';
+            
+            const businessName = document.getElementById('businessName').value;
+            const idea = document.getElementById('businessIdea').value;
+            const type = document.getElementById('businessType').value;
+            
+            setTimeout(() => {
+                const output = document.getElementById('businessOutput');
+                output.innerHTML = `
+<strong>Business Plan: ${businessName}</strong>
+
+EXECUTIVE SUMMARY:
+${idea}
+
+BUSINESS MODEL:
+• Target Market: Professional women seeking ${type} services
+• Revenue Streams: ${getRevenueStreams(type)}
+• Competitive Advantage: Personal experience in corporate transition
+
+MARKETING STRATEGY:
+• LinkedIn content marketing
+• Referral network building
+• Speaking engagements
+• Online course creation
+
+FINANCIAL PROJECTIONS:
+Month 1-3: Foundation building ($0-2K/month)
+Month 4-6: Client acquisition ($2K-5K/month) 
+Month 7-12: Scale and systems ($5K-10K/month)
+
+NEXT STEPS:
+1. Validate demand with 10 target customer interviews
+2. Create minimum viable service offering
+3. Build online presence and content
+4. Launch pilot program
+
+---
+✨ This is a basic plan. Members get detailed financial models, marketing templates, and implementation guides!
+                `;
+                output.classList.add('show');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }, 3000);
+        }
+
+        async function generateRoadmap() {
+            if (!useGeneration()) return;
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Mapping Your Journey...';
+            
+            const goal = document.getElementById('dreamGoal').value;
+            const timeframe = document.getElementById('timeframe').value;
+            const current = document.getElementById('currentSituation').value;
+            
+            setTimeout(() => {
+                const output = document.getElementById('roadmapOutput');
+                output.innerHTML = `
+<strong>${timeframe}-Day Dream Roadmap</strong>
+
+DREAM: ${goal}
+STARTING POINT: ${current}
+
+PHASE 1 (Days 1-30): Foundation
+□ Clarify vision and define success metrics
+□ Assess current skills and identify gaps
+□ Research market and competition
+□ Begin building network and online presence
+
+PHASE 2 (Days 31-60): Build & Test
+□ Create minimum viable version of your goal
+□ Test with target audience and gather feedback
+□ Refine approach based on learnings
+□ Establish daily/weekly success habits
+
+PHASE 3 (Days 61-${timeframe}): Scale & Optimize
+□ Launch your refined version
+□ Implement feedback and iterate
+□ Build systems for sustainable growth
+□ Plan next phase of expansion
+
+KEY MILESTONES:
+• Week 2: Complete market research
+• Week 6: Launch pilot/test version
+• Week 10: Gather and implement feedback
+• Week 12: Full launch and celebration!
+
+---
+✨ Members get personalized roadmaps with specific action items, resource recommendations, and accountability check-ins!
+                `;
+                output.classList.add('show');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }, 2500);
+        }
+
+        async function getCoaching() {
+            if (!useGeneration()) return;
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Coaching You...';
+            
+            const question = document.getElementById('coachQuestion').value;
+            const type = document.getElementById('coachingType').value;
+            
+            setTimeout(() => {
+                const output = document.getElementById('coachOutput');
+                output.innerHTML = `
+<strong>Your AI Coach Response:</strong>
+
+I hear you asking about: "${question}"
+
+${getCoachingResponse(type, question)}
+
+RECOMMENDED NEXT STEPS:
+1. Take one small action today toward this goal
+2. Identify one person who can support or advise you
+3. Set a specific deadline for your next milestone
+4. Join a community of women facing similar challenges
+
+REFLECTION QUESTIONS:
+• What would you do if you knew you couldn't fail?
+• What's the smallest step you could take today?
+• Who do you know who has achieved something similar?
+
+Remember: You already have everything you need to succeed. Trust your instincts and take action! 💪
+
+---
+✨ As a member, you get unlimited coaching conversations with personalized advice based on your assessment results!
+                `;
+                output.classList.add('show');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }, 2000);
+        }
+
+        // Helper functions for content generation
+        function getContentSample(type, topic, audience) {
+            const samples = {
+                linkedin: `🌟 ${topic}
+
+As accomplished ${audience}, we often...
+
+Here's what I've learned:
+• Point 1
+• Point 2  
+• Point 3
+
+What's your experience with this? Drop a comment below! 👇
+
+#WomenInBusiness #CareerTransition #Leadership`,
+                instagram: `✨ ${topic}
+
+${audience} - this one's for you! 💜
+
+[Inspiring message about the topic]
+
+Double tap if you agree! 👆
+
+#MogulMomma #WomenEmpowerment #DreamBig`,
+                email: `Subject: Your weekly dose of inspiration: ${topic}
+
+Hey gorgeous,
+
+[Personal opening about ${topic}]
+
+This week, I want to talk about...
+
+[Main content]
+
+You've got this! 
+[Your name]`,
+                blog: `${topic} - A Guide for ${audience}
+
+1. Introduction: Why this matters
+2. The challenge most ${audience} face
+3. 3 proven strategies that work
+4. Real examples and case studies  
+5. Your action plan to get started
+6. Conclusion and next steps`,
+                website: `${topic}
+
+Perfect for ${audience} who want...
+
+• Benefit 1
+• Benefit 2
+• Benefit 3
+
+Ready to get started? [Call to action]`
+            };
+            return samples[type] || 'Custom content generated for your specific needs!';
+        }
+
+        function getRevenueStreams(type) {
+            const streams = {
+                consulting: 'Hourly consulting, project retainers, group workshops',
+                coaching: 'Individual sessions, group programs, online courses',
+                online: 'Course sales, membership subscriptions, affiliate marketing',
+                service: 'Service packages, monthly retainers, premium tiers',
+                ecommerce: 'Product sales, subscriptions, wholesale partnerships'
+            };
+            return streams[type] || 'Multiple revenue streams based on your expertise';
+        }
+
+        function getCoachingResponse(type, question) {
+            const responses = {
+                clarity: "This is such a common experience for accomplished women! When we've been successful in one area, it can feel overwhelming to choose our next path. The key is to start with what energizes you most...",
+                confidence: "I love that you're asking this question - it shows self-awareness! Confidence isn't about having all the answers; it's about trusting yourself to figure things out as you go...",
+                strategy: "Strategy is your superpower as an accomplished woman! You already know how to plan and execute - now we're just applying those skills to your new direction...",
+                transition: "Career transitions are both exciting and terrifying - you're not alone in feeling this way! The key is to transition strategically, not just leap...",
+                motivation: "I can hear the passion in your question, and that's your greatest asset! Motivation comes and goes, but systems and community keep you moving forward..."
+            };
+            return responses[type] || "This is a great question that many accomplished women ask. Here's my perspective...";
+        }
+
+        // Initialize page
+        checkMembershipStatus();
+    </script>
+</body>
+</html>
