@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MogulMomma Clarity Assessment - Discover Your Next Chapter</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -1537,8 +1538,8 @@
                         <div style="background: rgba(255, 255, 255, 0.8); padding: 25px; border-radius: 16px; margin: 25px 0;">
                             <h4 style="color: #7c3aed; margin-bottom: 15px;">👑 Ready to Transform Your Transition?</h4>
                             <p style="color: #64748b; margin-bottom: 20px;">Join the MogulMomma community and get ongoing support, accountability, and coaching to turn your clarity into confident action.</p>
-                            <a href="#" class="nav-button" style="text-decoration: none; display: inline-block; margin: 10px;">Join MogulMomma Community</a>
-                            <a href="#" class="nav-button secondary" style="text-decoration: none; display: inline-block; margin: 10px;">Schedule Strategy Call</a>
+                            <a href="mogulmomma-membership.html" class="nav-button" style="text-decoration: none; display: inline-block; margin: 10px;">Join MogulMomma Community ($97/mo)</a>
+                            <a href="login.html" class="nav-button secondary" style="text-decoration: none; display: inline-block; margin: 10px;">Already a Member? Sign In</a>
                         </div>
                         
                         <p style="font-size: 0.9rem; color: #6b7280; margin-top: 20px;">
@@ -1751,6 +1752,9 @@
                 customNotes: customNotes,
                 completedDate: new Date().toLocaleDateString()
             };
+            
+            // Save assessment completion to Google Sheets for email marketing
+            saveAssessmentToGoogleSheets(archetype);
         }
 
         function calculateArchetype() {
@@ -1873,6 +1877,64 @@
             setTimeout(() => {
                 errorDiv.style.display = 'none';
             }, 5000);
+        }
+
+        // Google Sheets Integration for Assessment Leads
+        async function saveAssessmentToGoogleSheets(archetype) {
+            // You'll replace this URL with your Google Apps Script Web App URL
+            const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+            
+            const data = {
+                timestamp: new Date().toISOString(),
+                type: 'assessment_completion',
+                archetype: archetype.name,
+                source: 'assessment_page',
+                status: 'lead',
+                ip_address: 'unknown', // Could add IP detection
+                user_agent: navigator.userAgent,
+                referrer: document.referrer || 'direct'
+            };
+            
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                console.log('Assessment data saved to Google Sheets');
+            } catch (error) {
+                console.error('Error saving to Google Sheets:', error);
+                // Don't show error to user, just log it
+            }
+        }
+
+        // Save email when collected
+        function saveEmailToGoogleSheets(firstName, email, currentRole, dreamRole) {
+            const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+            
+            const data = {
+                timestamp: new Date().toISOString(),
+                type: 'email_capture',
+                first_name: firstName,
+                email: email,
+                current_role: currentRole,
+                dream_role: dreamRole,
+                archetype: window.assessmentResults?.archetype?.name || 'unknown',
+                source: 'assessment_email_capture',
+                status: 'lead'
+            };
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).catch(error => console.error('Email save error:', error));
         }
 
         updateNavigation();
