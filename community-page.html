@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MogulMomma Community - Connect, Share, Thrive</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         * {
             margin: 0;
@@ -1384,6 +1385,45 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('MogulMomma Community loaded! 👑');
         });
+    </script>
+
+    <!-- Authentication Protection -->
+    <script src="supabase-config.js"></script>
+    <script>
+        // Check if user is authenticated
+        async function checkAuth() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            
+            if (!user) {
+                // User is not logged in, redirect to signup
+                window.location.href = 'signup.html?redirect=community-page.html';
+            } else {
+                // User is logged in, show welcome message
+                console.log('Welcome to the community,', user.email);
+                
+                // Add logout functionality
+                addLogoutButton();
+            }
+        }
+
+        function addLogoutButton() {
+            const header = document.querySelector('.header-content');
+            if (header) {
+                const logoutBtn = document.createElement('a');
+                logoutBtn.href = '#';
+                logoutBtn.innerHTML = 'Logout';
+                logoutBtn.style.cssText = 'color: #7c3aed; font-weight: 600; text-decoration: none; margin-left: 20px;';
+                logoutBtn.onclick = async (e) => {
+                    e.preventDefault();
+                    await supabaseClient.auth.signOut();
+                    window.location.href = 'login.html';
+                };
+                header.appendChild(logoutBtn);
+            }
+        }
+
+        // Run auth check when page loads
+        checkAuth();
     </script>
 </body>
 </html>
