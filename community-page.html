@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Community - Connect, Share, Thrive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 300px 1fr 280px;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin: 5px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: #f8fafc;
+            color: #7c3aed;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+        }
+
+        .nav-badge {
+            background: #ef4444;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .trending-topics {
+            list-style: none;
+        }
+
+        .trending-topic {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .trending-topic:hover {
+            color: #7c3aed;
+        }
+
+        .trending-topic:last-child {
+            border-bottom: none;
+        }
+
+        .topic-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        .topic-count {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        /* Main Feed */
+        .main-feed {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .feed-header {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .feed-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feed-subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .post-composer {
+            padding: 25px 30px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .composer-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .composer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .composer-info h4 {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .composer-info p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .post-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            line-height: 1.5;
+            resize: vertical;
+            font-family: inherit;
+            margin-bottom: 15px;
+        }
+
+        .post-input:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .composer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .composer-tools {
+            display: flex;
+            gap: 15px;
+        }
+
+        .tool-btn {
+            background: #f8fafc;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .tool-btn:hover {
+            background: #f0f9ff;
+            color: #7c3aed;
+        }
+
+        .post-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .post-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .post-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Feed Filters */
+        .feed-filters {
+            padding: 20px 30px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover {
+            border-color: #7c3aed;
+            color: #7c3aed;
+        }
+
+        .filter-btn.active {
+            background: #7c3aed;
+            border-color: #7c3aed;
+            color: white;
+        }
+
+        /* Feed Posts */
+        .feed-posts {
+            padding: 0 30px 30px;
+        }
+
+        .post {
+            border-bottom: 1px solid #f1f5f9;
+            padding: 25px 0;
+            transition: all 0.3s ease;
+        }
+
+        .post:last-child {
+            border-bottom: none;
+        }
+
+        .post:hover {
+            background: #fafbfc;
+            margin: 0 -30px;
+            padding: 25px 30px;
+            border-radius: 12px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .post-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 3px;
+        }
+
+        .post-meta {
+            color: #64748b;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .post-badge {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .post-content {
+            margin-bottom: 15px;
+            color: #374151;
+            line-height: 1.7;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .post-tag {
+            background: #f0f9ff;
+            color: #3b82f6;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .post-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #f8fafc;
+            color: #7c3aed;
+        }
+
+        .action-btn.liked {
+            color: #ef4444;
+        }
+
+        .action-btn.saved {
+            color: #10b981;
+        }
+
+        /* Right Sidebar */
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .member-item:hover {
+            background: #f8fafc;
+            margin: 0 -25px;
+            padding: 12px 25px;
+            border-radius: 8px;
+        }
+
+        .member-item:last-child {
+            border-bottom: none;
+        }
+
+        .member-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .member-info {
+            flex: 1;
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        .member-title {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        .connect-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .event-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .event-item:hover {
+            background: #f8fafc;
+            margin: 0 -25px;
+            padding: 15px 25px;
+            border-radius: 8px;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-date {
+            background: #7c3aed;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .event-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .event-meta {
+            color: #64748b;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            margin-top: 5px;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .register-btn:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .sidebar, .right-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+            }
+            
+            .search-box {
+                width: 200px;
+            }
+            
+            .post-composer {
+                padding: 20px 15px;
+            }
+            
+            .feed-posts {
+                padding: 0 15px 20px;
+            }
+            
+            .composer-tools {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+        }
+
+        /* Loading States */
+        .loading-post {
+            padding: 25px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        .skeleton-text {
+            height: 16px;
+            margin: 8px 0;
+        }
+
+        .skeleton-line {
+            height: 12px;
+            margin: 6px 0;
+        }
+
+        /* Success States */
+        .success-message {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">👑 MogulMomma</div>
+            <div class="header-actions">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search posts, members, topics...">
+                </div>
+                <div class="user-avatar">SM</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Navigation</h3>
+                <a href="#" class="nav-item active">
+                    <span class="nav-icon">🏠</span>
+                    <span>Home Feed</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🔥</span>
+                    <span>Trending</span>
+                    <span class="nav-badge">12</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">💡</span>
+                    <span>Questions</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🎉</span>
+                    <span>Celebrations</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📚</span>
+                    <span>Resources</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">🤝</span>
+                    <span>Accountability</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="nav-icon">📅</span>
+                    <span>Events</span>
+                </a>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Trending Topics</h3>
+                <ul class="trending-topics">
+                    <li class="trending-topic">
+                        <div class="topic-name">#CareerTransition</div>
+                        <div class="topic-count">127 posts this week</div>
+                    </li>
+                    <li class="trending-topic">
+                        <div class="topic-name">#AITools</div>
+                        <div class="topic-count">89 posts this week</div>
+                    </li>
+                    <li class="trending-topic">
+                        <div class="topic-name">#WomenInBusiness</div>
+                        <div class="topic-count">156 posts this week</div>
+                    </li>
+                    <li class="trending-topic">
+                        <div class="topic-name">#DreamMapping</div>
+                        <div class="topic-count">73 posts this week</div>
+                    </li>
+                    <li class="trending-topic">
+                        <div class="topic-name">#Mindset</div>
+                        <div class="topic-count">94 posts this week</div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Feed -->
+        <main class="main-feed">
+            <div class="feed-header">
+                <h1 class="feed-title">MogulMomma Community</h1>
+                <p class="feed-subtitle">Connect with ambitious women transforming their dreams into reality</p>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="success-message">
+                ✅ Your post has been shared with the community!
+            </div>
+
+            <!-- Post Composer -->
+            <div class="post-composer">
+                <div class="composer-header">
+                    <div class="composer-avatar">SM</div>
+                    <div class="composer-info">
+                        <h4>Sarah Mitchell</h4>
+                        <p>Strategic Builder • Former CFO</p>
+                    </div>
+                </div>
+                
+                <textarea 
+                    class="post-input" 
+                    id="post-input"
+                    placeholder="Share your journey, ask a question, or celebrate a win with the community..."
+                ></textarea>
+                
+                <div class="composer-actions">
+                    <div class="composer-tools">
+                        <button class="tool-btn" onclick="addImage()">📷 Photo</button>
+                        <button class="tool-btn" onclick="addPoll()">📊 Poll</button>
+                        <button class="tool-btn" onclick="addMilestone()">🎯 Milestone</button>
+                        <button class="tool-btn" onclick="addResource()">📎 Resource</button>
+                    </div>
+                    <button class="post-btn" onclick="sharePost()" id="share-btn" disabled>Share Post</button>
+                </div>
+            </div>
+
+            <!-- Feed Filters -->
+            <div class="feed-filters">
+                <button class="filter-btn active" onclick="filterPosts('all')">All Posts</button>
+                <button class="filter-btn" onclick="filterPosts('questions')">Questions</button>
+                <button class="filter-btn" onclick="filterPosts('wins')">Wins & Celebrations</button>
+                <button class="filter-btn" onclick="filterPosts('resources')">Resources</button>
+                <button class="filter-btn" onclick="filterPosts('accountability')">Accountability</button>
+            </div>
+
+            <!-- Feed Posts -->
+            <div class="feed-posts" id="feed-posts">
+                <!-- Post 1 -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">LR</div>
+                        <div class="post-info">
+                            <div class="post-author">Linda Rodriguez</div>
+                            <div class="post-meta">
+                                <span>Transformational Guide</span>
+                                <span>•</span>
+                                <span>2 hours ago</span>
+                                <span class="post-badge">💎 Premium</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        🎉 HUGE WIN! After 6 months of working with the MogulMomma community, I just signed my first $10K coaching client! 
+                        <br><br>
+                        The dream mapping process was game-changing - it helped me get crystal clear on my ideal client and value proposition. To anyone still on the fence about making the leap: your dreams are valid and achievable! 
+                        <br><br>
+                        Special thanks to @SarahM and @JenC for the accountability check-ins and @CoachMia for the pricing strategy session. This community is pure gold! ✨
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#Win</span>
+                        <span class="post-tag">#Coaching</span>
+                        <span class="post-tag">#DreamMapping</span>
+                        <span class="post-tag">#Grateful</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>247 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>38 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Post 2 -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">JC</div>
+                        <div class="post-info">
+                            <div class="post-author">Jennifer Chang</div>
+                            <div class="post-meta">
+                                <span>Expert Authority</span>
+                                <span>•</span>
+                                <span>4 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        💭 QUESTION: How do you handle the financial anxiety of transitioning from a steady corporate salary to entrepreneurship? 
+                        <br><br>
+                        I have 8 months of expenses saved, a solid business plan, and validation from potential clients, but I still wake up at 3am worrying about money. Anyone else been through this? What mindset shifts helped you? 
+                        <br><br>
+                        Looking for practical AND emotional advice! 🙏
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#Question</span>
+                        <span class="post-tag">#FinancialAnxiety</span>
+                        <span class="post-tag">#Mindset</span>
+                        <span class="post-tag">#Transition</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>89 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>67 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Post 3 -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">MJ</div>
+                        <div class="post-info">
+                            <div class="post-author">Maria Johnson</div>
+                            <div class="post-meta">
+                                <span>Innovative Creator</span>
+                                <span>•</span>
+                                <span>6 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        🔥 HOT TIP: I just discovered an AI tool that's revolutionizing my content creation process! 
+                        <br><br>
+                        The MogulMomma Content Generator helped me create a month's worth of LinkedIn posts in 2 hours. Each post is personalized to my voice and includes engagement optimization tips. 
+                        <br><br>
+                        My engagement has increased 300% since I started using it! Who else is leveraging AI in their business? Drop your favorite tools below! 👇
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Content creation workspace" class="post-image">
+                    <div class="post-tags">
+                        <span class="post-tag">#AITools</span>
+                        <span class="post-tag">#ContentCreation</span>
+                        <span class="post-tag">#Productivity</span>
+                        <span class="post-tag">#LinkedInTips</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>156 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>42 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Post 4 -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">KW</div>
+                        <div class="post-info">
+                            <div class="post-author">Karen Williams</div>
+                            <div class="post-meta">
+                                <span>Strategic Builder</span>
+                                <span>•</span>
+                                <span>8 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        📚 RESOURCE SHARE: Just finished "The $100M Offers" by Alex Hormozi and it's a game-changer for anyone pricing their services! 
+                        <br><br>
+                        Key takeaways that transformed my consulting packages:
+                        <br>• Value stacking beats price competition every time
+                        <br>• Urgency + scarcity = irresistible offers
+                        <br>• Risk reversal makes buyers feel safe
+                        <br><br>
+                        Anyone else read this? What was your biggest aha moment? 🤔
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#BookRecommendation</span>
+                        <span class="post-tag">#Pricing</span>
+                        <span class="post-tag">#Business</span>
+                        <span class="post-tag">#Value</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>98 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>29 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Load More Button -->
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="post-btn" onclick="loadMorePosts()" style="padding: 15px 30px;">
+                        Load More Posts
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar">
+            <!-- Active Members -->
+            <div class="widget">
+                <h3 class="widget-title">
+                    <span>👥</span>
+                    <span>Active Members</span>
+                </h3>
+                <div class="member-item">
+                    <div class="member-avatar">SM</div>
+                    <div class="member-info">
+                        <div class="member-name">Sarah Mitchell</div>
+                        <div class="member-title">Community Leader</div>
+                    </div>
+                    <button class="connect-btn">Message</button>
+                </div>
+                <div class="member-item">
+                    <div class="member-avatar">LR</div>
+                    <div class="member-info">
+                        <div class="member-name">Lisa Roberts</div>
+                        <div class="member-title">Career Coach</div>
+                    </div>
+                    <button class="connect-btn">Connect</button>
+                </div>
+                <div class="member-item">
+                    <div class="member-avatar">JD</div>
+                    <div class="member-info">
+                        <div class="member-name">Jessica Davis</div>
+                        <div class="member-title">Entrepreneur</div>
+                    </div>
+                    <button class="connect-btn">Connect</button>
+                </div>
+                <div class="member-item">
+                    <div class="member-avatar">MT</div>
+                    <div class="member-info">
+                        <div class="member-name">Michelle Torres</div>
+                        <div class="member-title">Consultant</div>
+                    </div>
+                    <button class="connect-btn">Connect</button>
+                </div>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="widget">
+                <h3 class="widget-title">
+                    <span>📅</span>
+                    <span>Upcoming Events</span>
+                </h3>
+                <div class="event-item" onclick="registerForEvent('Dec 20', 'Dream Mapping Workshop', 'zoom_link_1')">
+                    <div class="event-date">Dec 20</div>
+                    <div class="event-title">Dream Mapping Workshop</div>
+                    <div class="event-meta">7:00 PM EST • 47 attending</div>
+                    <button class="register-btn">Register</button>
+                </div>
+                <div class="event-item" onclick="registerForEvent('Dec 22', 'AI Tools for Business Growth', 'zoom_link_2')">
+                    <div class="event-date">Dec 22</div>
+                    <div class="event-title">AI Tools for Business Growth</div>
+                    <div class="event-meta">2:00 PM EST • 89 attending</div>
+                    <button class="register-btn">Register</button>
+                </div>
+                <div class="event-item" onclick="registerForEvent('Dec 28', 'New Year Goal Setting Session', 'zoom_link_3')">
+                    <div class="event-date">Dec 28</div>
+                    <div class="event-title">New Year Goal Setting Session</div>
+                    <div class="event-meta">6:00 PM EST • 156 attending</div>
+                    <button class="register-btn">Register</button>
+                </div>
+                <div class="event-item" onclick="registerForEvent('Jan 5', 'Monthly Accountability Circle', 'zoom_link_4')">
+                    <div class="event-date">Jan 5</div>
+                    <div class="event-title">Monthly Accountability Circle</div>
+                    <div class="event-meta">7:30 PM EST • 203 attending</div>
+                    <button class="register-btn">Register</button>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="widget">
+                <h3 class="widget-title">
+                    <span>📊</span>
+                    <span>Community Stats</span>
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
+                    <div style="background: #f0f9ff; padding: 15px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #3b82f6;">1,247</div>
+                        <div style="font-size: 0.8rem; color: #64748b;">Active Members</div>
+                    </div>
+                    <div style="background: #f0fdf4; padding: 15px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #10b981;">89</div>
+                        <div style="font-size: 0.8rem; color: #64748b;">Posts Today</div>
+                    </div>
+                    <div style="background: #fdf4ff; padding: 15px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #c084fc;">23</div>
+                        <div style="font-size: 0.8rem; color: #64748b;">New Members</div>
+                    </div>
+                    <div style="background: #fef7f0; padding: 15px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #f97316;">456</div>
+                        <div style="font-size: 0.8rem; color: #64748b;">Comments</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Post input handling
+        const postInput = document.getElementById('post-input');
+        const shareBtn = document.getElementById('share-btn');
+
+        postInput.addEventListener('input', function() {
+            const hasContent = this.value.trim().length > 0;
+            shareBtn.disabled = !hasContent;
+            shareBtn.style.opacity = hasContent ? '1' : '0.6';
+        });
+
+        // Post sharing
+        function sharePost() {
+            const content = postInput.value.trim();
+            if (!content) return;
+
+            // Show loading state
+            shareBtn.textContent = 'Sharing...';
+            shareBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // Reset form
+                postInput.value = '';
+                shareBtn.textContent = 'Share Post';
+                shareBtn.disabled = true;
+                shareBtn.style.opacity = '0.6';
+
+                // Show success message
+                const successMsg = document.getElementById('success-message');
+                successMsg.classList.add('show');
+                setTimeout(() => {
+                    successMsg.classList.remove('show');
+                }, 3000);
+
+                // Add new post to feed (simulate)
+                addNewPostToFeed(content);
+            }, 1000);
+        }
+
+        // Add new post to feed
+        function addNewPostToFeed(content) {
+            const feedPosts = document.getElementById('feed-posts');
+            const newPost = document.createElement('article');
+            newPost.className = 'post';
+            newPost.innerHTML = `
+                <div class="post-header">
+                    <div class="post-avatar">SM</div>
+                    <div class="post-info">
+                        <div class="post-author">Sarah Mitchell</div>
+                        <div class="post-meta">
+                            <span>Strategic Builder</span>
+                            <span>•</span>
+                            <span>Just now</span>
+                            <span class="post-badge">💎 Premium</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">${content}</div>
+                <div class="post-actions">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                        <span>❤️</span>
+                        <span>0 loves</span>
+                    </button>
+                    <button class="action-btn" onclick="toggleComments(this)">
+                        <span>💬</span>
+                        <span>0 comments</span>
+                    </button>
+                    <button class="action-btn" onclick="toggleSave(this)">
+                        <span>🔖</span>
+                        <span>Save</span>
+                    </button>
+                    <button class="action-btn" onclick="sharePost(this)">
+                        <span>📤</span>
+                        <span>Share</span>
+                    </button>
+                </div>
+            `;
+            
+            feedPosts.insertBefore(newPost, feedPosts.firstChild);
+        }
+
+        // Post interactions
+        function toggleLike(btn) {
+            btn.classList.toggle('liked');
+            const span = btn.querySelector('span:last-child');
+            const currentCount = parseInt(span.textContent.split(' ')[0]);
+            const newCount = btn.classList.contains('liked') ? currentCount + 1 : currentCount - 1;
+            span.textContent = `${newCount} loves`;
+        }
+
+        function toggleSave(btn) {
+            btn.classList.toggle('saved');
+            const span = btn.querySelector('span:last-child');
+            span.textContent = btn.classList.contains('saved') ? 'Saved' : 'Save';
+        }
+
+        function toggleComments(btn) {
+            // Would open comments panel
+            console.log('Opening comments...');
+        }
+
+        // Filter posts
+        function filterPosts(filter) {
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Simulate filtering (in real app, would fetch filtered posts)
+            console.log(`Filtering posts by: ${filter}`);
+        }
+
+        // Load more posts
+        function loadMorePosts() {
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Loading...';
+            btn.disabled = true;
+
+            // Simulate loading more posts
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                // In real app, would append new posts to feed
+                console.log('Loaded more posts');
+            }, 1000);
+        }
+
+        // Composer tools
+        function addImage() {
+            console.log('Adding image...');
+            // Would open image selector/upload
+        }
+
+        function addPoll() {
+            console.log('Adding poll...');
+            // Would add poll creation interface
+        }
+
+        function addMilestone() {
+            console.log('Adding milestone...');
+            // Would add milestone tracking
+        }
+
+        function addResource() {
+            console.log('Adding resource...');
+            // Would add resource link interface
+        }
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query.length > 2) {
+                // Simulate search (in real app, would call search API)
+                console.log(`Searching for: ${query}`);
+            }
+        });
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Update member count, new posts indicator, etc.
+            updateCommunityStats();
+        }, 30000); // Every 30 seconds
+
+        function updateCommunityStats() {
+            // Would fetch real-time stats from API
+            console.log('Updating community stats...');
+        }
+
+        // Auto-expand textarea
+        postInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+        });
+
+        // Event registration function
+        function registerForEvent(date, title, zoomId) {
+            event.stopPropagation();
+            
+            // Zoom meeting URLs (these would be stored in your database)
+            const zoomLinks = {
+                'zoom_link_1': 'https://us06web.zoom.us/j/81234567890?pwd=VGhpc2lzYXRlc3Rjb2Rl',
+                'zoom_link_2': 'https://us06web.zoom.us/j/81234567891?pwd=VGhpc2lzYXRlc3Rjb2Rl',
+                'zoom_link_3': 'https://us06web.zoom.us/j/81234567892?pwd=VGhpc2lzYXRlc3Rjb2Rl',
+                'zoom_link_4': 'https://us06web.zoom.us/j/81234567893?pwd=VGhpc2lzYXRlc3Rjb2Rl'
+            };
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            
+            // Show loading state
+            btn.textContent = 'Registering...';
+            btn.disabled = true;
+            
+            // Simulate API call to register user
+            setTimeout(() => {
+                // In real implementation, this would:
+                // 1. Call your backend API to register user for event
+                // 2. Send calendar invite with Zoom link
+                // 3. Update event attendance count
+                // 4. Add event to user's dashboard
+                
+                alert(`✅ Successfully registered for "${title}" on ${date}!\n\n📧 Calendar invite sent to your email\n🔗 Zoom link: ${zoomLinks[zoomId]}\n\n💡 Tip: Add this event to your calendar and set a reminder!`);
+                
+                btn.textContent = 'Registered ✓';
+                btn.style.background = '#10b981';
+                btn.disabled = true;
+                
+                // Update attendance count
+                const eventItem = btn.closest('.event-item');
+                const metaText = eventItem.querySelector('.event-meta');
+                const currentCount = parseInt(metaText.textContent.match(/(\d+) attending/)[1]);
+                metaText.textContent = metaText.textContent.replace(/\d+ attending/, `${currentCount + 1} attending`);
+                
+            }, 1500);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('MogulMomma Community loaded! 👑');
+        });
+    </script>
+</body>
+</html>
