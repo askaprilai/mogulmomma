@@ -141,6 +141,11 @@
                 grid-template-columns: 1fr;
                 gap: 30px;
             }
+            
+            .tool-card .output-area div[style*="grid-template-columns"] {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
         }
 
         .tool-icon {
@@ -271,7 +276,7 @@
             <div class="logo">👑 MogulMomma AI Tools</div>
             <nav class="nav-links">
                 <a href="/">Home</a>
-                <a href="mogul-mama-assessment.html">Assessment</a>
+                <a href="mogul-mama-assessment.html">Free Assessment</a>
                 <a href="login.html">Member Login</a>
             </nav>
         </div>
@@ -437,9 +442,11 @@
                         </select>
                         <button class="generate-btn" onclick="generateImage()">Create Image</button>
                     </div>
-                    <div class="output-area" id="imageOutput" style="text-align: center;">
-                        <div id="imagePreview" style="margin-bottom: 20px;"></div>
-                        <div id="imageText"></div>
+                    <div class="output-area" id="imageOutput">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start;">
+                            <div id="imagePreview" style="text-align: center;"></div>
+                            <div id="imageText" style="text-align: left;"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -713,7 +720,8 @@ Remember: You already have everything you need to succeed. Trust your instincts 
                 const text = document.getElementById('imageText');
                 
                 // Create a placeholder image (in production, this would be from DALL-E or Midjourney)
-                const placeholderImage = `https://via.placeholder.com/${size.replace('x', 'x')}/7c3aed/ffffff?text=AI+Generated+Image`;
+                const dimensions = size.split('x');
+                const placeholderImage = `https://via.placeholder.com/${dimensions[0]}x${dimensions[1]}/7c3aed/ffffff?text=AI+Generated+Image`;
                 
                 preview.innerHTML = `
                     <img src="${placeholderImage}" alt="AI Generated Image" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
