@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Clarity Assessment - Discover Your Next Chapter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 50%, #f472b6 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(196, 181, 253, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(244, 114, 182, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 50%, #f472b6 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            margin-bottom: 15px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .header .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            opacity: 0.95;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .header .tagline {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .assessment-content {
+            padding: 40px 30px;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-bar {
+            background: #f1f5f9;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #7c3aed 0%, #c084fc 50%, #f472b6 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.8s ease;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+            animation: progressShine 2s ease-in-out infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Section Styles */
+        .section {
+            display: none;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(244, 114, 182, 0.05) 100%);
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            border-left: 6px solid #7c3aed;
+            position: relative;
+        }
+
+        .section-header h2 {
+            color: #1e293b;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-header p {
+            color: #64748b;
+            font-size: 1.2rem;
+            line-height: 1.7;
+        }
+
+        .question {
+            background: white;
+            padding: 35px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f1f5f9;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .question:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .question h3 {
+            color: #1e293b;
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-right: 18px;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .answer-options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .answer-option {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 25px;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .answer-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(124, 58, 237, 0.1) 50%, transparent 100%);
+            transition: left 0.5s ease;
+        }
+
+        .answer-option:hover {
+            background: linear-gradient(135deg, #f3e8ff 0%, #fce7f3 100%);
+            border-color: #7c3aed;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.15);
+        }
+
+        .answer-option:hover::before {
+            left: 100%;
+        }
+
+        .answer-option.selected {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(244, 114, 182, 0.1) 100%);
+            border-color: #7c3aed;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(124, 58, 237, 0.2);
+        }
+
+        .answer-option input[type="radio"] {
+            opacity: 0;
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
+        .custom-radio {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #cbd5e1;
+            border-radius: 50%;
+            margin-right: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .answer-option.selected .custom-radio {
+            border-color: #7c3aed;
+            background: #7c3aed;
+        }
+
+        .answer-option.selected .custom-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .answer-text {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+
+        .answer-description {
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        /* Custom Notes Section */
+        .custom-notes-section {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(244, 114, 182, 0.05) 100%);
+            padding: 35px;
+            border-radius: 20px;
+            margin-top: 35px;
+            border-left: 6px solid #7c3aed;
+            animation: slideIn 0.6s ease-out;
+            position: relative;
+        }
+
+        .custom-notes-section::before {
+            content: '💭';
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2.5rem;
+            opacity: 0.3;
+        }
+
+        .custom-notes-section h4 {
+            color: #7c3aed;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .custom-notes-section p {
+            color: #64748b;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .custom-text-input {
+            width: 100%;
+            min-height: 160px;
+            padding: 25px;
+            border: 3px solid #e2e8f0;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            resize: vertical;
+            transition: all 0.4s ease;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+
+        .custom-text-input:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15), 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .custom-text-input::placeholder {
+            color: #94a3b8;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        /* Navigation */
+        .navigation {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 30px;
+            border-top: 1px solid #e2e8f0;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+            transition: left 0.5s ease;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .nav-button:disabled::before {
+            display: none;
+        }
+
+        .nav-button.secondary {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button.secondary:hover {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #1e293b;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-counter {
+            background: rgba(124, 58, 237, 0.1);
+            padding: 12px 25px;
+            border-radius: 50px;
+            color: #7c3aed;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Intro Section */
+        .intro-section {
+            text-align: center;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .intro-section h2 {
+            color: #1e293b;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .intro-section p {
+            color: #64748b;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 35px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-card:nth-child(1) { border-left-color: #7c3aed; }
+        .feature-card:nth-child(2) { border-left-color: #c084fc; }
+        .feature-card:nth-child(3) { border-left-color: #f472b6; }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-title {
+            color: #1e293b;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-description {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            font-weight: 700;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .start-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+            transition: left 0.6s ease;
+        }
+
+        .start-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4);
+        }
+
+        .start-button:hover::before {
+            left: 100%;
+        }
+
+        /* Results Section */
+        .results {
+            display: none;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .results-header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(244, 114, 182, 0.1) 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 2px solid #7c3aed;
+        }
+
+        .results-header h2 {
+            color: #7c3aed;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .email-capture {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(244, 114, 182, 0.05) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            border-left: 6px solid #7c3aed;
+        }
+
+        .email-capture h3 {
+            color: #7c3aed;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .email-capture p {
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .email-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .email-form input {
+            padding: 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .email-form input:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1), 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-form button {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .email-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid #ef4444;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .assessment-content {
+                padding: 20px;
+            }
+            
+            .section-header,
+            .question,
+            .custom-notes-section {
+                padding: 25px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+            
+            .nav-button {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .email-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👑 MogulMomma Clarity Assessment</h1>
+            <p class="subtitle">Discover Your Next Chapter & Transform Your Career Transition</p>
+            <div class="tagline">
+                <strong>Designed Specifically for Accomplished Women Ready for More</strong>
+            </div>
+        </div>
+
+        <div class="assessment-content">
+            <!-- Intro Section -->
+            <div class="intro-section" id="introSection">
+                <h2>🌟 Ready to Get Crystal Clear on Your Next Move?</h2>
+                <p>
+                    This assessment is specifically designed for accomplished women like you who are ready to transition from their current career into something more fulfilling. In just 15 minutes, you'll discover exactly what's been holding you back and your personalized roadmap forward.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🧬</span>
+                        <div class="feature-title">Identity Clarity</div>
+                        <div class="feature-description">Rediscover who you are beyond your career and what truly drives you</div>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🎯</span>
+                        <div class="feature-title">Direction Focus</div>
+                        <div class="feature-description">Identify the specific path that aligns with your values and goals</div>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <div class="feature-title">Action Blueprint</div>
+                        <div class="feature-description">Get a personalized roadmap to take confident steps forward</div>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">💫</span>
+                        <div class="feature-title">Dream Mapping</div>
+                        <div class="feature-description">Transform your dreams into actionable steps with our proven mapping system</div>
+                    </div>
+                </div>
+
+                <div style="background: rgba(124, 58, 237, 0.05); padding: 25px; border-radius: 16px; margin: 30px 0;">
+                    <h3 style="color: #7c3aed; margin-bottom: 15px;">👑 You'll Discover:</h3>
+                    <ul style="text-align: left; color: #64748b; max-width: 500px; margin: 0 auto; line-height: 1.8;">
+                        <li>✅ Your MogulMomma Archetype & Transition Style</li>
+                        <li>✅ Hidden blocks keeping you stuck in indecision</li>
+                        <li>✅ Your unique strengths and how to monetize them</li>
+                        <li>✅ Personalized next steps for your transition</li>
+                        <li>✅ Bonus: Confidence-building strategies</li>
+                    </ul>
+                </div>
+                
+                <button class="start-button" onclick="startAssessment()">👑 Start Your Clarity Journey (Free)</button>
+                <p style="color: #6b7280; font-size: 0.9rem; margin-top: 15px;">📊 15 strategic questions • ⏱️ 10 minutes • 🎁 Instant personalized results</p>
+            </div>
+
+            <!-- Progress Section -->
+            <div class="progress-section" id="progressSection">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <span style="font-weight: 600; color: #1e293b; font-size: 1.1rem;">Assessment Progress</span>
+                    <span id="progressText" style="color: #64748b; font-weight: 600;">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- Identity Section -->
+            <div class="section" id="identity">
+                <div class="section-header">
+                    <h2>🧬 IDENTITY - Who You Are Beyond Your Career</h2>
+                    <p>Let's rediscover the authentic you that's been waiting beneath years of professional identity. These questions will help reveal your true drivers and desires.</p>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">1</span>When you imagine your ideal day without work obligations, you feel most energized by:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity1" value="0">
+                            <div>
+                                <div class="answer-text">Creating systems and solving problems</div>
+                                <div class="answer-description">You naturally organize, optimize, and find efficient solutions</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity1" value="1">
+                            <div>
+                                <div class="answer-text">Inspiring and empowering other women</div>
+                                <div class="answer-description">You light up when helping others overcome challenges and believe in themselves</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity1" value="2">
+                            <div>
+                                <div class="answer-text">Learning, teaching, and sharing expertise</div>
+                                <div class="answer-description">You love mastering new subjects and educating others</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity1" value="3">
+                            <div>
+                                <div class="answer-text">Creating beautiful, innovative experiences</div>
+                                <div class="answer-description">You're drawn to artistic expression and groundbreaking ideas</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">2</span>Throughout your career, colleagues have consistently come to you for:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity2" value="0">
+                            <div>
+                                <div class="answer-text">Strategic planning and execution</div>
+                                <div class="answer-description">You're known for getting things done efficiently and effectively</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity2" value="1">
+                            <div>
+                                <div class="answer-text">Support during difficult times</div>
+                                <div class="answer-description">People feel heard, understood, and motivated after talking with you</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity2" value="2">
+                            <div>
+                                <div class="answer-text">Deep industry knowledge and insights</div>
+                                <div class="answer-description">You're the go-to expert who understands complex topics thoroughly</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity2" value="3">
+                            <div>
+                                <div class="answer-text">Fresh perspectives and creative solutions</div>
+                                <div class="answer-description">You see opportunities others miss and think outside conventional frameworks</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">3</span>What secretly frustrates you most about your current career situation?</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity3" value="0">
+                            <div>
+                                <div class="answer-text">Inefficient processes and wasted potential</div>
+                                <div class="answer-description">You see so many ways things could work better but feel powerless to change them</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity3" value="1">
+                            <div>
+                                <div class="answer-text">Limited impact on people's lives</div>
+                                <div class="answer-description">You want to make a real difference but feel constrained by corporate structures</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity3" value="2">
+                            <div>
+                                <div class="answer-text">Not being valued for your true expertise</div>
+                                <div class="answer-description">Your deep knowledge and insights aren't fully recognized or utilized</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity3" value="3">
+                            <div>
+                                <div class="answer-text">Lack of creative freedom and innovation</div>
+                                <div class="answer-description">You're constrained by rigid structures that stifle your creative potential</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">4</span>When you think about legacy and impact, you most want to be remembered for:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity4" value="0">
+                            <div>
+                                <div class="answer-text">Building something sustainable and profitable</div>
+                                <div class="answer-description">Creating systems, businesses, or solutions that continue to deliver value</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity4" value="1">
+                            <div>
+                                <div class="answer-text">Empowering other women to reach their potential</div>
+                                <div class="answer-description">Being a catalyst for transformation and growth in others' lives</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity4" value="2">
+                            <div>
+                                <div class="answer-text">Sharing knowledge that changes how people think</div>
+                                <div class="answer-description">Educating and enlightening others with your expertise and wisdom</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity4" value="3">
+                            <div>
+                                <div class="answer-text">Creating something beautiful that inspires others</div>
+                                <div class="answer-description">Bringing new ideas, art, or innovations into the world</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">5</span>If money were no object, the work that would make you jump out of bed every morning involves:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity5" value="0">
+                            <div>
+                                <div class="answer-text">Scaling successful businesses or strategies</div>
+                                <div class="answer-description">You love the challenge of growth, optimization, and strategic execution</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity5" value="1">
+                            <div>
+                                <div class="answer-text">Mentoring and developing other women</div>
+                                <div class="answer-description">You thrive on seeing others breakthrough barriers and achieve their dreams</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity5" value="2">
+                            <div>
+                                <div class="answer-text">Researching, writing, or speaking about your expertise</div>
+                                <div class="answer-description">You want to be recognized as a thought leader in your field</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="identity5" value="3">
+                            <div>
+                                <div class="answer-text">Designing groundbreaking solutions or experiences</div>
+                                <div class="answer-description">You're energized by pushing boundaries and creating something entirely new</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Custom Notes for Identity -->
+                <div class="custom-notes-section">
+                    <h4>💭 Your Identity Insights</h4>
+                    <p>What aspects of your personality and values do you feel haven't been fully expressed in your career? What makes you uniquely you?</p>
+                    <textarea class="custom-text-input" id="identity_notes" placeholder="Example: I've always been the problem-solver in my family and friend groups, but my corporate role doesn't let me use that gift fully. I light up when I can help someone see a solution they couldn't see before. I value authenticity and connection but feel like I have to wear a mask at work..."></textarea>
+                </div>
+            </div>
+
+            <!-- Direction Section -->
+            <div class="section" id="direction">
+                <div class="section-header">
+                    <h2>🎯 DIRECTION - What You Want Your Next Chapter to Look Like</h2>
+                    <p>Now let's explore what your ideal future looks like and identify the specific direction that calls to your heart and leverages your experience.</p>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">6</span>When you envision your ideal work environment in 2 years, you see yourself:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction1" value="0">
+                            <div>
+                                <div class="answer-text">Running a profitable business with a small, efficient team</div>
+                                <div class="answer-description">You want to be in control of operations and focused on sustainable growth</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction1" value="1">
+                            <div>
+                                <div class="answer-text">Coaching or mentoring women one-on-one or in groups</div>
+                                <div class="answer-description">You're drawn to direct impact on individuals' lives and transformations</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction1" value="2">
+                            <div>
+                                <div class="answer-text">Speaking, teaching, or consulting in your area of expertise</div>
+                                <div class="answer-description">You want to be recognized as a thought leader and share your knowledge widely</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction1" value="3">
+                            <div>
+                                <div class="answer-text">Creating something innovative that didn't exist before</div>
+                                <div class="answer-description">You want to pioneer new solutions, products, or ways of doing things</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">7</span>The type of problems you most want to solve for other women are:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction2" value="0">
+                            <div>
+                                <div class="answer-text">Business and financial challenges</div>
+                                <div class="answer-description">Helping women build wealth, start businesses, or advance professionally</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction2" value="1">
+                            <div>
+                                <div class="answer-text">Confidence and mindset obstacles</div>
+                                <div class="answer-description">Supporting women to overcome self-doubt and step into their power</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction2" value="2">
+                            <div>
+                                <div class="answer-text">Knowledge gaps in your area of expertise</div>
+                                <div class="answer-description">Educating women about topics you've mastered over your career</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction2" value="3">
+                            <div>
+                                <div class="answer-text">Lack of creative solutions or fresh approaches</div>
+                                <div class="answer-description">Helping women think differently and find innovative paths forward</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">8</span>Your biggest fear about making a career transition is:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction3" value="0">
+                            <div>
+                                <div class="answer-text">Financial instability or starting over financially</div>
+                                <div class="answer-description">You've worked hard for security and don't want to jeopardize it</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction3" value="1">
+                            <div>
+                                <div class="answer-text">Not being good enough or failing publicly</div>
+                                <div class="answer-description">Impostor syndrome and fear of judgment hold you back</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction3" value="2">
+                            <div>
+                                <div class="answer-text">Losing your professional reputation or credibility</div>
+                                <div class="answer-description">You've built expertise and don't want to seem like you're starting over</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction3" value="3">
+                            <div>
+                                <div class="answer-text">Being too different or not fitting in</div>
+                                <div class="answer-description">You worry your ideas or approach might be too unconventional</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">9</span>Success in your next chapter would mean:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction4" value="0">
+                            <div>
+                                <div class="answer-text">Financial freedom and business ownership</div>
+                                <div class="answer-description">You want to build wealth and have control over your income potential</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction4" value="1">
+                            <div>
+                                <div class="answer-text">Making a meaningful difference in women's lives</div>
+                                <div class="answer-description">Impact and transformation matter more than money to you</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction4" value="2">
+                            <div>
+                                <div class="answer-text">Being recognized as an expert and thought leader</div>
+                                <div class="answer-description">You want your knowledge and insights to be valued and sought after</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction4" value="3">
+                            <div>
+                                <div class="answer-text">Creating something that changes how things are done</div>
+                                <div class="answer-description">You want to innovate and leave a lasting mark on your industry or field</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">10</span>The work-life integration you crave most includes:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction5" value="0">
+                            <div>
+                                <div class="answer-text">Flexible schedule with consistent income streams</div>
+                                <div class="answer-description">You want both freedom and financial security</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction5" value="1">
+                            <div>
+                                <div class="answer-text">Work that feels like play and energizes you</div>
+                                <div class="answer-description">You want to love what you do and feel fulfilled daily</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction5" value="2">
+                            <div>
+                                <div class="answer-text">Intellectual stimulation and continuous learning</div>
+                                <div class="answer-description">You want to keep growing and be challenged mentally</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="direction5" value="3">
+                            <div>
+                                <div class="answer-text">Creative freedom and autonomy</div>
+                                <div class="answer-description">You want space to innovate without corporate constraints</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Custom Notes for Direction -->
+                <div class="custom-notes-section">
+                    <h4>💭 Your Direction Vision</h4>
+                    <p>What specific vision keeps calling to your heart? Describe your dream scenario for your next chapter, even if it seems impossible right now.</p>
+                    <textarea class="custom-text-input" id="direction_notes" placeholder="Example: I keep imagining myself running small group workshops for women executives who want to start consulting businesses. I see myself in a beautiful office space, maybe even combining it with a wellness component. I want to help women like me who know they have so much to offer but are scared to take the leap. I dream of creating a community where we support each other through the transition..."></textarea>
+                </div>
+            </div>
+
+            <!-- Craft Section -->
+            <div class="section" id="craft">
+                <div class="section-header">
+                    <h2>⚡ ACTION - How You'll Make It Happen</h2>
+                    <p>Let's identify your natural approach to taking action and create a strategy that works with your personality, not against it.</p>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">11</span>When you're facing a major life decision, you typically:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft1" value="0">
+                            <div>
+                                <div class="answer-text">Research extensively, create a detailed plan, then execute systematically</div>
+                                <div class="answer-description">You like having a clear roadmap and contingency plans</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft1" value="1">
+                            <div>
+                                <div class="answer-text">Talk it through with trusted friends and mentors</div>
+                                <div class="answer-description">You value input from others and process decisions through conversation</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft1" value="2">
+                            <div>
+                                <div class="answer-text">Analyze all options thoroughly before making a move</div>
+                                <div class="answer-description">You want to understand every angle and potential outcome</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft1" value="3">
+                            <div>
+                                <div class="answer-text">Trust your intuition and take calculated risks</div>
+                                <div class="answer-description">You're comfortable with uncertainty if the vision feels right</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">12</span>Your biggest strength when it comes to building something new is:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft2" value="0">
+                            <div>
+                                <div class="answer-text">Strategic thinking and execution excellence</div>
+                                <div class="answer-description">You excel at turning ideas into profitable, sustainable reality</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft2" value="1">
+                            <div>
+                                <div class="answer-text">Building relationships and inspiring others</div>
+                                <div class="answer-description">You naturally attract people who want to be part of your mission</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft2" value="2">
+                            <div>
+                                <div class="answer-text">Deep expertise and credibility in your field</div>
+                                <div class="answer-description">You have knowledge and experience that others desperately need</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft2" value="3">
+                            <div>
+                                <div class="answer-text">Innovation and creative problem-solving</div>
+                                <div class="answer-description">You see solutions and opportunities that others completely miss</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">13</span>What would help you feel most confident about making your transition?</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft3" value="0">
+                            <div>
+                                <div class="answer-text">A clear business plan and financial projections</div>
+                                <div class="answer-description">You need to see the numbers and have a strategic roadmap</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft3" value="1">
+                            <div>
+                                <div class="answer-text">A supportive community of women going through similar transitions</div>
+                                <div class="answer-description">You want connection, encouragement, and shared experiences</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft3" value="2">
+                            <div>
+                                <div class="answer-text">Validation that your expertise is valuable and marketable</div>
+                                <div class="answer-description">You need proof that people will pay for what you know</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft3" value="3">
+                            <div>
+                                <div class="answer-text">Permission to experiment and iterate without judgment</div>
+                                <div class="answer-description">You need space to try new approaches and learn as you go</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">14</span>Your ideal timeline for making a significant career change is:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft4" value="0">
+                            <div>
+                                <div class="answer-text">6-12 months with a structured transition plan</div>
+                                <div class="answer-description">You want to move decisively but with careful planning</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft4" value="1">
+                            <div>
+                                <div class="answer-text">12-18 months with gradual transition and support</div>
+                                <div class="answer-description">You prefer a gentler pace with community support</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft4" value="2">
+                            <div>
+                                <div class="answer-text">18-24 months with thorough preparation and validation</div>
+                                <div class="answer-description">You want to be absolutely certain before making the leap</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft4" value="3">
+                            <div>
+                                <div class="answer-text">When it feels right - I'm open to the unexpected</div>
+                                <div class="answer-description">You trust timing and are willing to move when opportunity strikes</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3><span class="question-number">15</span>The support system you most need to succeed includes:</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft5" value="0">
+                            <div>
+                                <div class="answer-text">Business mentors and strategic advisors</div>
+                                <div class="answer-description">You want guidance from people who've built successful businesses</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft5" value="1">
+                            <div>
+                                <div class="answer-text">A community of supportive, like-minded women</div>
+                                <div class="answer-description">You thrive with connection, accountability, and shared experiences</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft5" value="2">
+                            <div>
+                                <div class="answer-text">Industry experts and thought leaders</div>
+                                <div class="answer-description">You want access to the highest level of knowledge and expertise</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft5" value="3">
+                            <div>
+                                <div class="answer-text">Creative collaborators and innovative thinkers</div>
+                                <div class="answer-description">You want to surround yourself with people who think differently</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 16: AI Interest -->
+                <div class="question">
+                    <h3><span class="question-number">16</span>How do you feel about incorporating AI tools into your future work or business?</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft6" value="0">
+                            <div>
+                                <div class="answer-text">I want to master AI tools to streamline operations and scale efficiently</div>
+                                <div class="answer-description">You see AI as a strategic advantage for business growth</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft6" value="1">
+                            <div>
+                                <div class="answer-text">I'm interested in AI that helps me serve and support people better</div>
+                                <div class="answer-description">You want AI to enhance your ability to guide and mentor others</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft6" value="2">
+                            <div>
+                                <div class="answer-text">I want to become an authority on AI in my field</div>
+                                <div class="answer-description">You see opportunity in teaching others about AI integration</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft6" value="3">
+                            <div>
+                                <div class="answer-text">I'm excited about using AI to create something completely new</div>
+                                <div class="answer-description">You want to innovate and build novel AI-powered solutions</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 17: AI Learning -->
+                <div class="question">
+                    <h3><span class="question-number">17</span>What's your current relationship with learning new technology and AI skills?</h3>
+                    <div class="answer-options">
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft7" value="0">
+                            <div>
+                                <div class="answer-text">I learn technology strategically - only what directly impacts my goals</div>
+                                <div class="answer-description">You're selective and focused on ROI when learning new tech</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft7" value="1">
+                            <div>
+                                <div class="answer-text">I learn at my own pace and prefer hands-on, supportive guidance</div>
+                                <div class="answer-description">You value community and mentorship when learning new skills</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft7" value="2">
+                            <div>
+                                <div class="answer-text">I dive deep and become the go-to person for new tech in my circle</div>
+                                <div class="answer-description">You love mastering new tools and sharing knowledge with others</div>
+                            </div>
+                        </label>
+                        <label class="answer-option">
+                            <div class="custom-radio"></div>
+                            <input type="radio" name="craft7" value="3">
+                            <div>
+                                <div class="answer-text">I'm always experimenting with the latest AI tools and trends</div>
+                                <div class="answer-description">You're an early adopter who loves exploring cutting-edge technology</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Custom Notes for Action -->
+                <div class="custom-notes-section">
+                    <h4>💭 Your Action Insights</h4>
+                    <p>What's really been holding you back from making your move? What would you need to feel confident taking your first step?</p>
+                    <textarea class="custom-text-input" id="craft_notes" placeholder="Example: I think I've been overthinking everything. I keep waiting for the 'perfect' moment or for all my ducks to be in a row, but I'm starting to realize that might never happen. My biggest fear is probably that I'll invest time and energy into something that doesn't work out. I need to know that I can start small and test things out without burning bridges or risking everything I've built..."></textarea>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="navigation" id="navigation">
+                <button type="button" class="nav-button secondary" id="prevButton" onclick="previousSection()" disabled>← Previous</button>
+                <span class="section-counter" id="sectionCounter">Section 1 of 3</span>
+                <button type="button" class="nav-button" id="nextButton" onclick="nextSection()" disabled>Next →</button>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results" id="results">
+                <div class="results-header">
+                    <h2>👑 Your MogulMomma Clarity Results!</h2>
+                    <p style="color: #7c3aed; font-size: 1.2rem; margin-top: 15px;">
+                        Congratulations! You've discovered your unique transition style. Get your personalized roadmap and action plan.
+                    </p>
+                </div>
+                
+                <div id="detailedResults" style="text-align: left;"></div>
+
+                <!-- Email Capture for Results -->
+                <div class="email-capture" id="emailCapture">
+                    <h3>👑 Get Your Complete MogulMomma Clarity Report</h3>
+                    <p style="margin-bottom: 25px;">
+                        Your personalized report includes your MogulMomma Archetype, specific blocks keeping you stuck, your unique strengths to leverage, and a step-by-step transition plan designed for accomplished women like you.
+                    </p>
+                    
+                    <div style="background: rgba(124, 58, 237, 0.1); padding: 20px; border-radius: 12px; margin: 20px 0; border-left: 4px solid #7c3aed;">
+                        <h4 style="color: #7c3aed; margin-bottom: 10px;">👑 Your Complete MogulMomma Package Includes:</h4>
+                        <ul style="color: #64748b; line-height: 1.8;">
+                            <li>✅ Your MogulMomma Archetype & Transition Style</li>
+                            <li>✅ Hidden blocks diagnosis and breakthrough strategies</li>
+                            <li>✅ Personalized career transition roadmap</li>
+                            <li>✅ Confidence-building action steps</li>
+                            <li>✅ Monetization strategies for your expertise</li>
+                            <li>✅ Next steps checklist and timeline</li>
+                            <li>✅ Bonus: Exclusive access to MogulMomma community</li>
+                            <li>✅ Bonus: "From Corporate to Confident" masterclass ($297 value)</li>
+                        </ul>
+                    </div>
+
+                    <form class="email-form" id="emailForm">
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+                        <input type="email" id="email" name="email" placeholder="Email Address" required>
+                        <input type="text" id="currentRole" name="currentRole" placeholder="Current Role/Industry (Optional)">
+                        <input type="text" id="dreamRole" name="dreamRole" placeholder="Dream next chapter (Optional)">
+                        <button type="submit">👑 Send My MogulMomma Report (Free)</button>
+                    </form>
+                    <div id="emailError" class="error-message"></div>
+                    
+                    <p style="color: #6b7280; font-size: 0.9rem; margin-top: 15px; text-align: center;">
+                        📧 Delivered instantly • 🔒 Your information is secure • 👥 Join 5,000+ women in transition
+                    </p>
+                </div>
+
+                <!-- Final CTA Section -->
+                <div id="ctaSection" style="display: none;">
+                    <div style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(244, 114, 182, 0.1) 100%); padding: 40px; border-radius: 20px; margin: 40px 0; border: 2px solid #7c3aed; text-align: center;">
+                        <h3 style="color: #7c3aed; margin-bottom: 20px; font-size: 1.8rem;">🎉 Your MogulMomma Report is On Its Way!</h3>
+                        <p style="font-size: 1.2rem; color: #64748b; line-height: 1.7; margin-bottom: 25px;">
+                            Check your email for your comprehensive MogulMomma Clarity Report. You'll receive your personalized roadmap to confidently transition from your current career to your dream next chapter within the next 5 minutes.
+                        </p>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.8); padding: 25px; border-radius: 16px; margin: 25px 0;">
+                            <h4 style="color: #7c3aed; margin-bottom: 15px;">👑 Ready to Transform Your Transition?</h4>
+                            <p style="color: #64748b; margin-bottom: 20px;">Join the MogulMomma community and get ongoing support, accountability, and coaching to turn your clarity into confident action.</p>
+                            <a href="#" class="nav-button" style="text-decoration: none; display: inline-block; margin: 10px;">Join MogulMomma Community</a>
+                            <a href="#" class="nav-button secondary" style="text-decoration: none; display: inline-block; margin: 10px;">Schedule Strategy Call</a>
+                        </div>
+                        
+                        <p style="font-size: 0.9rem; color: #6b7280; margin-top: 20px;">
+                            👥 Supportive women's community • 🎯 Monthly group coaching • 💡 Expert guidance • 📚 Transition resources
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+        const sections = ['identity', 'direction', 'craft'];
+        let assessmentData = {};
+        let customNotes = {};
+
+        function startAssessment() {
+            window.scrollTo(0, 0);
+            document.getElementById('introSection').classList.add('hidden');
+            document.getElementById('progressSection').style.display = 'block';
+            document.getElementById('navigation').style.display = 'flex';
+            showSection(0);
+            updateProgress();
+            updateNavigation();
+        }
+
+        function showSection(index) {
+            window.scrollTo(0, 0);
+            sections.forEach(section => {
+                document.getElementById(section).classList.remove('active');
+            });
+            
+            if (index < sections.length) {
+                document.getElementById(sections[index]).classList.add('active');
+            } else {
+                showResults();
+            }
+        }
+
+        function nextSection() {
+            window.scrollTo(0, 0);
+            saveCustomNotes();
+            
+            if (currentSection < sections.length - 1) {
+                currentSection++;
+                showSection(currentSection);
+                updateProgress();
+                updateNavigation();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousSection() {
+            window.scrollTo(0, 0);
+            saveCustomNotes();
+            
+            if (currentSection > 0) {
+                currentSection--;
+                showSection(currentSection);
+                updateProgress();
+                updateNavigation();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / sections.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `${Math.round(progress)}%`;
+        }
+
+        function updateNavigation() {
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+            const sectionCounter = document.getElementById('sectionCounter');
+
+            prevButton.disabled = currentSection === 0;
+            
+            const currentSectionAnswered = isSectionCompleted(currentSection);
+            nextButton.disabled = !currentSectionAnswered;
+            
+            if (currentSection === sections.length - 1 && currentSectionAnswered) {
+                nextButton.textContent = 'Get My Results →';
+            } else {
+                nextButton.textContent = 'Next →';
+            }
+
+            sectionCounter.textContent = `Section ${currentSection + 1} of ${sections.length}`;
+        }
+
+        function isSectionCompleted(sectionIndex) {
+            const sectionName = sections[sectionIndex];
+            const questions = document.querySelectorAll(`#${sectionName} input[type="radio"]`);
+            const questionNames = [...new Set([...questions].map(q => q.name))];
+            
+            return questionNames.every(name => {
+                return document.querySelector(`input[name="${name}"]:checked`);
+            });
+        }
+
+        function saveCustomNotes() {
+            const currentSectionName = sections[currentSection];
+            const notesInput = document.getElementById(`${currentSectionName}_notes`);
+            
+            if (notesInput && notesInput.value.trim()) {
+                customNotes[currentSectionName] = notesInput.value.trim();
+            }
+        }
+
+        function showResults() {
+            window.scrollTo(0, 0);
+            saveCustomNotes();
+            
+            sections.forEach(section => {
+                document.getElementById(section).classList.remove('active');
+            });
+            document.getElementById('navigation').style.display = 'none';
+            document.getElementById('progressSection').style.display = 'none';
+            
+            calculateAndDisplayResults();
+            document.getElementById('results').classList.add('active');
+        }
+
+        function calculateAndDisplayResults() {
+            const archetype = calculateArchetype();
+            
+            // Get AI preferences for personalized recommendations
+            const aiInterest = assessmentData['craft6'];
+            const aiLearning = assessmentData['craft7'];
+            
+            // Generate personalized AI learning recommendation
+            let aiRecommendation = '';
+            if (aiLearning === 3) {
+                aiRecommendation = 'Perfect! As an early AI adopter, you\'ll love our advanced AI integration workshops and cutting-edge tool training.';
+            } else if (aiLearning === 2) {
+                aiRecommendation = 'Great! Your expertise-focused approach to AI learning makes you ideal for our AI Authority Track program.';
+            } else if (aiLearning === 1) {
+                aiRecommendation = 'Wonderful! Our supportive, hands-on AI learning community is designed exactly for your learning style.';
+            } else {
+                aiRecommendation = 'Perfect! Our strategic AI implementation program focuses on high-ROI AI tools for business growth.';
+            }
+
+            let resultsHTML = `
+                <div style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(244, 114, 182, 0.05) 100%); padding: 40px; border-radius: 20px; margin-bottom: 40px; border-left: 6px solid #7c3aed;">
+                    <div style="display: flex; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 20px;">
+                        <div style="background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%); color: white; padding: 15px 30px; border-radius: 50px; font-weight: 600; font-size: 1.2rem;">${archetype.name}</div>
+                        <div>
+                            <h3 style="color: #7c3aed; font-size: 1.5rem; margin-bottom: 5px;">Your MogulMomma Archetype</h3>
+                            <p style="color: #64748b; font-size: 1.1rem;">Your unique transition style</p>
+                        </div>
+                    </div>
+                    <p style="color: #475569; font-size: 1.2rem; line-height: 1.7; margin-bottom: 20px;">${archetype.description}</p>
+                    <div style="background: rgba(255, 255, 255, 0.8); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                        <h4 style="color: #7c3aed; margin-bottom: 10px;">Your Path Forward:</h4>
+                        <p style="color: #64748b;">${archetype.pathForward}</p>
+                    </div>
+                    ${aiInterest !== undefined ? `
+                    <div style="background: rgba(16, 185, 129, 0.1); padding: 20px; border-radius: 12px; border-left: 4px solid #10b981;">
+                        <h4 style="color: #10b981; margin-bottom: 10px;">🤖 Your AI Integration Opportunity:</h4>
+                        <p style="color: #064e3b;">${aiRecommendation}</p>
+                    </div>
+                    ` : ''}
+                </div>
+                
+                <!-- Membership CTA Section -->
+                <div style="background: linear-gradient(135deg, #1e1b4b 0%, #7c3aed 50%, #f472b6 100%); padding: 40px; border-radius: 20px; margin: 40px 0; color: white; text-align: center;">
+                    <h3 style="font-size: 2rem; margin-bottom: 20px; background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                        🗺️ Ready to Turn Your Dreams Into Reality?
+                    </h3>
+                    <p style="font-size: 1.2rem; opacity: 0.95; margin-bottom: 30px; line-height: 1.6;">
+                        Join the MogulMomma Dream Mapping Community and get the tools, support, and sisterhood you need to make your transition happen.
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 30px 0;">
+                        <div style="background: rgba(255, 255, 255, 0.15); padding: 25px; border-radius: 16px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
+                            <h4 style="margin-bottom: 15px; font-size: 1.3rem;">🎯 Dream Mapping Method</h4>
+                            <p style="opacity: 0.9; font-size: 0.95rem;">Step-by-step system to turn your dreams into actionable plans</p>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.15); padding: 25px; border-radius: 16px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
+                            <h4 style="margin-bottom: 15px; font-size: 1.3rem;">👥 Sisterhood Community</h4>
+                            <p style="opacity: 0.9; font-size: 0.95rem;">Connect with accomplished women on similar journeys</p>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.15); padding: 25px; border-radius: 16px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2);">
+                            <h4 style="margin-bottom: 15px; font-size: 1.3rem;">🤖 AI Integration Training</h4>
+                            <p style="opacity: 0.9; font-size: 0.95rem;">Learn to leverage AI tools for your new venture</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <a href="mogulmomma-membership.html" style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); color: #7c3aed; padding: 18px 40px; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 1.2rem; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; display: inline-block; margin-right: 15px;">
+                            💎 Join MogulMomma Community
+                        </a>
+                        <a href="#call" style="background: rgba(255, 255, 255, 0.2); color: white; padding: 18px 40px; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 1.2rem; border: 2px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease; display: inline-block;">
+                            📞 Book Strategy Call
+                        </a>
+                    </div>
+                    
+                    <p style="margin-top: 25px; opacity: 0.8; font-size: 0.9rem;">
+                        ✨ Special Launch Pricing: $97/month • 30-Day Money-Back Guarantee
+                    </p>
+                </div>
+            `;
+
+            document.getElementById('detailedResults').innerHTML = resultsHTML;
+            
+            window.assessmentResults = {
+                archetype: archetype,
+                assessmentData: assessmentData,
+                customNotes: customNotes,
+                completedDate: new Date().toLocaleDateString()
+            };
+        }
+
+        function calculateArchetype() {
+            let identityScores = [0, 0, 0, 0];
+            let directionScores = [0, 0, 0, 0];
+            let craftScores = [0, 0, 0, 0];
+            
+            for (let i = 1; i <= 5; i++) {
+                const value = assessmentData[`identity${i}`];
+                if (value !== undefined) {
+                    identityScores[value]++;
+                }
+            }
+            
+            for (let i = 1; i <= 5; i++) {
+                const value = assessmentData[`direction${i}`];
+                if (value !== undefined) {
+                    directionScores[value]++;
+                }
+            }
+            
+            for (let i = 1; i <= 7; i++) {
+                const value = assessmentData[`craft${i}`];
+                if (value !== undefined) {
+                    craftScores[value]++;
+                }
+            }
+            
+            const totalScores = identityScores.map((score, index) => 
+                score + directionScores[index] + craftScores[index]
+            );
+            
+            const dominantIndex = totalScores.indexOf(Math.max(...totalScores));
+            
+            // Check AI interest level for personalized recommendations
+            const aiInterest = assessmentData['craft6'];
+            const aiLearning = assessmentData['craft7'];
+            
+            const archetypes = [
+                {
+                    name: "The Strategic Builder",
+                    description: "You're a natural business leader who thrives on creating sustainable, profitable ventures. Your decades of experience have given you a unique ability to see opportunities others miss and execute with precision. You're ready to build something that leverages your strategic mindset and creates lasting impact.",
+                    pathForward: `Focus on consulting, business coaching, or starting your own venture in an industry you know well. Your strength lies in helping others scale and systematize their success.${aiInterest === 0 ? ' AI Integration Opportunity: Use AI tools like automation software, predictive analytics, and workflow optimization to scale your business operations efficiently.' : ''}`
+                },
+                {
+                    name: "The Transformational Guide", 
+                    description: "You're a natural mentor and coach who lights up when helping other women breakthrough their barriers and step into their power. Your own journey through corporate challenges has given you wisdom and empathy that others desperately need. You're meant to guide others through their own transformations.",
+                    pathForward: `Consider life coaching, career transition coaching, or creating programs for women in similar situations. Your authentic story of growth is your greatest asset.${aiInterest === 1 ? ' AI Integration Opportunity: Leverage AI coaching tools, personalized assessment platforms, and automated client check-ins to serve more people while maintaining your personal touch.' : ''}`
+                },
+                {
+                    name: "The Expert Authority",
+                    description: "You have deep, valuable expertise that others need and want. You're passionate about sharing knowledge and being recognized as a thought leader in your field. Your years of experience have made you an expert others look up to, and you're ready to step into that authority role.",
+                    pathForward: `Focus on speaking, writing, consulting, or teaching in your area of expertise. Consider creating courses, becoming a keynote speaker, or starting a consulting practice.${aiInterest === 2 ? ' AI Integration Opportunity: Become the go-to expert on AI adoption in your industry. Create content, courses, and consulting services around AI implementation.' : ''}`
+                },
+                {
+                    name: "The Innovative Creator",
+                    description: "You see possibilities others miss and aren't afraid to challenge the status quo. You're energized by creating something new and groundbreaking. Your creative thinking combined with your business experience makes you uniquely positioned to pioneer new solutions.",
+                    pathForward: `Consider launching an innovative product or service, starting a creative business, or consulting on innovation and change management. Your fresh perspective is your competitive advantage.${aiInterest === 3 ? ' AI Integration Opportunity: Pioneer AI-powered solutions in your field. Experiment with cutting-edge AI tools to create breakthrough products and services.' : ''}`
+                }
+            ];
+            
+            return archetypes[dominantIndex];
+        }
+
+        document.addEventListener('change', function(e) {
+            if (e.target.type === 'radio') {
+                const questionDiv = e.target.closest('.question');
+                questionDiv.querySelectorAll('.answer-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                e.target.closest('.answer-option').classList.add('selected');
+                assessmentData[e.target.name] = parseInt(e.target.value);
+                updateNavigation();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailForm = document.getElementById('emailForm');
+            if (emailForm) {
+                emailForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const firstName = document.getElementById('firstName').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const currentRole = document.getElementById('currentRole').value.trim();
+                    const dreamRole = document.getElementById('dreamRole').value.trim();
+                    
+                    if (!firstName || !email) {
+                        showError('Please fill in your name and email address.');
+                        return;
+                    }
+                    
+                    if (!isValidEmail(email)) {
+                        showError('Please enter a valid email address.');
+                        return;
+                    }
+                    
+                    // Simulate email sending (replace with actual email service)
+                    simulateEmailSending(firstName, email, currentRole, dreamRole);
+                });
+            }
+        });
+
+        function simulateEmailSending(firstName, email, currentRole, dreamRole) {
+            // Hide email form and show success message
+            document.getElementById('emailCapture').style.display = 'none';
+            document.getElementById('ctaSection').style.display = 'block';
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('emailError');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        updateNavigation();
+    </script>
+</body>
+</html>

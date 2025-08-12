@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Community - Transform Your Dreams Into Reality</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 50%, #f472b6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(196, 181, 253, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: 600;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            opacity: 0.95;
+            margin-bottom: 35px;
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px 30px;
+            border-radius: 16px;
+            margin: 30px auto;
+            max-width: 500px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .price-details {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            color: #7c3aed;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .feature-list li {
+            color: #64748b;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .feature-list li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            top: 8px;
+        }
+
+        /* AI Features Section */
+        .ai-features {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #1e1b4b 0%, #7c3aed 50%, #f472b6 100%);
+            color: white;
+        }
+
+        .ai-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .ai-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .ai-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .ai-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 20px;
+            border-left: 6px solid #7c3aed;
+        }
+
+        .testimonial-text {
+            color: #64748b;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            border: 3px solid #7c3aed;
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .pricing-price {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #7c3aed;
+            margin: 20px 0;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .pricing-features li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+            top: 12px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e293b;
+            color: white;
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .features-grid,
+            .ai-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card {
+                padding: 30px;
+                margin: 0 20px;
+            }
+            
+            .cta-button {
+                display: block;
+                margin: 10px auto;
+                width: fit-content;
+            }
+        }
+
+        /* Demo AI Tools Styles */
+        .ai-demo-section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .demo-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .demo-tab {
+            background: white;
+            border: 2px solid #e2e8f0;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .demo-tab.active {
+            background: #7c3aed;
+            color: white;
+            border-color: #7c3aed;
+        }
+
+        .demo-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .ai-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .ai-button {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .ai-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .ai-output {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            line-height: 1.7;
+            min-height: 150px;
+        }
+
+        .roadmap-step {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 6px solid #7c3aed;
+        }
+
+        .step-number {
+            background: #7c3aed;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">💎 Exclusive MogulMomma Community</div>
+            <h1>Transform Your Dreams Into Your Next Success Story</h1>
+            <p class="hero-subtitle">
+                Join accomplished women who are turning their biggest dreams into reality with our proven Dream Mapping system, 
+                AI-powered tools, and supportive sisterhood community.
+            </p>
+            
+            <div class="pricing-highlight">
+                <div class="price">$97<span style="font-size: 1.5rem; opacity: 0.8;">/month</span></div>
+                <div class="price-details">30-Day Money-Back Guarantee • Cancel Anytime</div>
+            </div>
+            
+            <a href="#pricing" class="cta-button">🚀 Start Your Transformation</a>
+            <a href="#features" class="cta-button secondary">📖 Learn More</a>
+            
+            <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9rem;">
+                ✨ Join 500+ women who've already transformed their careers
+            </p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="section-content">
+            <div class="section-header">
+                <h2>Everything You Need to Make Your Dreams Reality</h2>
+                <p style="color: #64748b; font-size: 1.3rem; max-width: 800px; margin: 0 auto;">
+                    Our comprehensive platform combines proven methodology, AI-powered tools, and human support 
+                    to accelerate your transformation journey.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🗺️</span>
+                    <h3>Dream Mapping Sessions</h3>
+                    <p>Monthly live group sessions where we transform your dreams into detailed, actionable roadmaps.</p>
+                    <ul class="feature-list">
+                        <li>Live monthly group sessions</li>
+                        <li>Step-by-step dream mapping process</li>
+                        <li>Personalized action plans</li>
+                        <li>Progress tracking & accountability</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">👥</span>
+                    <h3>Sisterhood Community</h3>
+                    <p>Connect with like-minded accomplished women on similar transformation journeys.</p>
+                    <ul class="feature-list">
+                        <li>Private online community</li>
+                        <li>Peer support & networking</li>
+                        <li>Success celebrations</li>
+                        <li>Resource sharing</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3>Personal Accountability Coach</h3>
+                    <p>Get personalized guidance and accountability to keep you moving toward your goals.</p>
+                    <ul class="feature-list">
+                        <li>Weekly check-ins</li>
+                        <li>Goal setting & tracking</li>
+                        <li>Obstacle problem-solving</li>
+                        <li>Motivation & encouragement</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">📚</span>
+                    <h3>Resource Library</h3>
+                    <p>Access our complete collection of templates, guides, and tools for every stage of your journey.</p>
+                    <ul class="feature-list">
+                        <li>Dream mapping templates</li>
+                        <li>Business planning guides</li>
+                        <li>Financial transition tools</li>
+                        <li>Video training library</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🤖</span>
+                    <h3>AI Clarity Coach</h3>
+                    <p>Get instant answers and personalized guidance 24/7 from our AI-powered coaching assistant.</p>
+                    <ul class="feature-list">
+                        <li>24/7 instant support</li>
+                        <li>Personalized advice</li>
+                        <li>Decision-making support</li>
+                        <li>Progress insights</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🎨</span>
+                    <h3>AI Creation Studio</h3>
+                    <p>Design your brand, create content, and build your roadmap with our AI-powered creative tools.</p>
+                    <ul class="feature-list">
+                        <li>Brand identity creation</li>
+                        <li>Content generation</li>
+                        <li>Visual roadmap builder</li>
+                        <li>Document templates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Features Demo Section -->
+    <section class="ai-demo-section">
+        <div class="section-content">
+            <div class="section-header">
+                <h2>🤖 AI-Powered Tools Demo</h2>
+                <p style="color: #64748b; font-size: 1.3rem; max-width: 800px; margin: 0 auto;">
+                    Experience the power of our AI tools designed specifically for accomplished women in transition.
+                </p>
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-tabs">
+                    <div class="demo-tab active" onclick="showDemo('roadmap')">🗺️ Roadmap Builder</div>
+                    <div class="demo-tab" onclick="showDemo('brand')">🎨 Brand Creator</div>
+                    <div class="demo-tab" onclick="showDemo('coach')">💬 AI Coach</div>
+                    <div class="demo-tab" onclick="showDemo('content')">📝 Content Generator</div>
+                </div>
+
+                <!-- Roadmap Builder Demo -->
+                <div id="roadmap-demo" class="demo-content">
+                    <h3>🗺️ AI Roadmap Builder</h3>
+                    <p style="margin-bottom: 20px; color: #64748b;">Tell us about your dream and get a personalized step-by-step roadmap:</p>
+                    
+                    <textarea class="ai-input" placeholder="Example: I want to start a coaching business helping women in tech transition to leadership roles. I have 15 years of experience but I'm not sure how to begin..."></textarea>
+                    
+                    <button class="ai-button" onclick="generateRoadmap()">✨ Generate My Roadmap</button>
+                    
+                    <div class="ai-output" id="roadmap-output">
+                        <div style="color: #94a3b8; text-align: center; padding: 40px;">
+                            Enter your dream above and click "Generate My Roadmap" to see the AI in action!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brand Creator Demo -->
+                <div id="brand-demo" class="demo-content" style="display: none;">
+                    <h3>🎨 AI Brand Creator</h3>
+                    <p style="margin-bottom: 20px; color: #64748b;">Describe your vision and get brand identity suggestions:</p>
+                    
+                    <textarea class="ai-input" placeholder="Example: I'm creating a wellness coaching business for busy executive women. I want something that feels luxurious but approachable, modern but trustworthy..."></textarea>
+                    
+                    <button class="ai-button" onclick="generateBrand()">🎨 Create My Brand</button>
+                    
+                    <div class="ai-output" id="brand-output">
+                        <div style="color: #94a3b8; text-align: center; padding: 40px;">
+                            Describe your vision to generate brand identity suggestions!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Coach Demo -->
+                <div id="coach-demo" class="demo-content" style="display: none;">
+                    <h3>💬 AI Clarity Coach</h3>
+                    <p style="margin-bottom: 20px; color: #64748b;">Ask any question about your transition or dreams:</p>
+                    
+                    <textarea class="ai-input" placeholder="Example: I'm scared to leave my corporate job because of financial security. How do I know if I'm ready to make the leap?"></textarea>
+                    
+                    <button class="ai-button" onclick="askCoach()">💬 Get Coach Guidance</button>
+                    
+                    <div class="ai-output" id="coach-output">
+                        <div style="color: #94a3b8; text-align: center; padding: 40px;">
+                            Ask your question to get personalized coaching guidance!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Generator Demo -->
+                <div id="content-demo" class="demo-content" style="display: none;">
+                    <h3>📝 Content Generator</h3>
+                    <p style="margin-bottom: 20px; color: #64748b;">Generate content for your new venture:</p>
+                    
+                    <select style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; margin-bottom: 15px; font-size: 1rem;">
+                        <option>LinkedIn Post</option>
+                        <option>Email Newsletter</option>
+                        <option>Website About Page</option>
+                        <option>Mission Statement</option>
+                    </select>
+                    
+                    <textarea class="ai-input" placeholder="Example: I want to write a LinkedIn post about why I'm transitioning from corporate marketing to starting my own agency..."></textarea>
+                    
+                    <button class="ai-button" onclick="generateContent()">📝 Generate Content</button>
+                    
+                    <div class="ai-output" id="content-output">
+                        <div style="color: #94a3b8; text-align: center; padding: 40px;">
+                            Choose content type and describe what you need!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 20px;">
+                    This is just a preview! Members get access to advanced AI tools with personalization based on your assessment results.
+                </p>
+                <a href="#pricing" class="cta-button">🚀 Unlock Full AI Suite</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Features Section -->
+    <section class="ai-features">
+        <div class="section-content">
+            <div class="section-header">
+                <h2 style="color: white;">🤖 MogulMomma AI Creation Studio</h2>
+                <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.3rem; max-width: 800px; margin: 0 auto;">
+                    Our AI tools are specifically trained to understand accomplished women's unique challenges and goals.
+                </p>
+            </div>
+
+            <div class="ai-grid">
+                <div class="ai-card">
+                    <h3>🗺️ Smart Roadmap Builder</h3>
+                    <p>Turn any dream into a step-by-step action plan with timelines, milestones, and resource recommendations.</p>
+                </div>
+
+                <div class="ai-card">
+                    <h3>🎨 Brand Identity Generator</h3>
+                    <p>Create your visual brand, messaging, and positioning that reflects your authentic professional identity.</p>
+                </div>
+
+                <div class="ai-card">
+                    <h3>📝 Content Creation Suite</h3>
+                    <p>Generate social media posts, website copy, email newsletters, and marketing materials in your voice.</p>
+                </div>
+
+                <div class="ai-card">
+                    <h3>💰 Financial Planning Assistant</h3>
+                    <p>Create transition budgets, pricing strategies, and financial projections for your new venture.</p>
+                </div>
+
+                <div class="ai-card">
+                    <h3>📋 Document Templates</h3>
+                    <p>Generate contracts, proposals, business plans, and other professional documents you need.</p>
+                </div>
+
+                <div class="ai-card">
+                    <h3>🎯 Goal Tracking & Insights</h3>
+                    <p>Monitor your progress and get AI-powered recommendations to accelerate your success.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="section-content">
+            <div class="section-header">
+                <h2>Success Stories from Our Community</h2>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "The AI roadmap builder saved me months of planning. In one session, it mapped out my entire consulting business launch with specific steps and timelines. I'm now booked solid with clients!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">CM</div>
+                        <div>
+                            <h5 style="color: #1e293b; font-weight: 600;">Christina Moore</h5>
+                            <p style="color: #64748b;">Former Operations Director → Business Consultant</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "Having an AI coach available 24/7 was a game-changer. Whenever I had doubts or needed clarity, I could get instant, personalized guidance. It kept me moving forward when I wanted to quit."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">LT</div>
+                        <div>
+                            <h5 style="color: #1e293b; font-weight: 600;">Lisa Thompson</h5>
+                            <p style="color: #64748b;">Former Finance Manager → Life Coach</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-text">
+                        "The community and AI tools together are incredible. I get the human connection and support, plus powerful technology to help me execute. I launched my online course in 3 months!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RK</div>
+                        <div>
+                            <h5 style="color: #1e293b; font-weight: 600;">Rachel Kim</h5>
+                            <p style="color: #64748b;">Former Marketing VP → Course Creator</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="section-content">
+            <div class="section-header">
+                <h2>Ready to Transform Your Dreams?</h2>
+                <p style="color: #64748b; font-size: 1.3rem;">
+                    Join the MogulMomma Community and get everything you need to succeed.
+                </p>
+            </div>
+
+            <div class="pricing-card">
+                <div class="popular-badge">✨ Most Popular</div>
+                
+                <h3 style="color: #7c3aed; font-size: 2rem; margin-bottom: 10px;">MogulMomma Community</h3>
+                <p style="color: #64748b; margin-bottom: 20px;">Complete transformation system with AI-powered tools</p>
+                
+                <div class="pricing-price">$97<span style="font-size: 1.5rem; color: #64748b;">/month</span></div>
+                
+                <ul class="pricing-features">
+                    <li>Monthly live Dream Mapping sessions</li>
+                    <li>Personal accountability coach</li>
+                    <li>24/7 AI clarity coach access</li>
+                    <li>Complete AI Creation Studio</li>
+                    <li>Private sisterhood community</li>
+                    <li>Resource library & templates</li>
+                    <li>Weekly group coaching calls</li>
+                    <li>Personalized roadmap creation</li>
+                    <li>Brand & content creation tools</li>
+                    <li>Financial planning assistance</li>
+                </ul>
+                
+                <a href="#join" class="cta-button" style="margin: 30px 0; padding: 20px 50px; font-size: 1.3rem;">
+                    🚀 Start My Transformation
+                </a>
+                
+                <p style="color: #64748b; font-size: 0.9rem; margin-top: 20px;">
+                    30-day money-back guarantee • Cancel anytime • No long-term contracts
+                </p>
+                
+                <div style="background: #f8fafc; padding: 20px; border-radius: 12px; margin-top: 30px; text-align: left;">
+                    <h4 style="color: #7c3aed; margin-bottom: 10px;">🎁 Special Launch Bonus:</h4>
+                    <p style="color: #64748b; font-size: 0.95rem;">
+                        Join this month and get a FREE one-on-one Dream Mapping session with our founder (valued at $500)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="section-content">
+            <h3 style="color: #7c3aed; font-size: 2rem; margin-bottom: 20px;">👑 MogulMomma</h3>
+            <p style="color: #94a3b8; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Empowering accomplished women to transform their dreams into reality with proven systems, AI-powered tools, and sisterhood support.
+            </p>
+            
+            <div style="border-top: 1px solid #334155; padding-top: 30px; color: #64748b;">
+                <p>&copy; 2024 MogulMomma. All rights reserved. Made with ❤️ for extraordinary women.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Demo functionality
+        function showDemo(demoType) {
+            // Hide all demos
+            document.querySelectorAll('.demo-content').forEach(demo => {
+                demo.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.demo-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected demo
+            document.getElementById(demoType + '-demo').style.display = 'block';
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        function generateRoadmap() {
+            const input = document.querySelector('#roadmap-demo .ai-input').value;
+            const output = document.getElementById('roadmap-output');
+            
+            if (!input.trim()) {
+                output.innerHTML = '<div style="color: #ef4444; text-align: center; padding: 20px;">Please enter your dream first!</div>';
+                return;
+            }
+            
+            output.innerHTML = '<div style="color: #7c3aed; text-align: center; padding: 20px;">🤖 AI is generating your personalized roadmap...</div>';
+            
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4 style="color: #7c3aed; margin-bottom: 15px;">Your Personalized Roadmap</h4>
+                    <div class="roadmap-step">
+                        <span class="step-number">1</span>
+                        <strong>Foundation Phase (Months 1-2)</strong><br>
+                        Define your coaching niche and ideal client avatar. Research competitors and validate demand through surveys and conversations.
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="step-number">2</span>
+                        <strong>Certification & Skills (Months 2-3)</strong><br>
+                        Obtain relevant coaching certifications. Develop your signature coaching methodology based on your tech leadership experience.
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="step-number">3</span>
+                        <strong>Brand Development (Months 3-4)</strong><br>
+                        Create your brand identity, website, and content strategy. Start building your thought leadership on LinkedIn.
+                    </div>
+                    <div class="roadmap-step">
+                        <span class="step-number">4</span>
+                        <strong>Client Acquisition (Months 4-6)</strong><br>
+                        Launch pilot programs, gather testimonials, and refine your services. Build referral partnerships and scale marketing efforts.
+                    </div>
+                    <p style="margin-top: 20px; color: #64748b; font-style: italic;">
+                        💡 This is a simplified preview. Members get detailed action items, resources, and timeline adjustments based on their specific situation.
+                    </p>
+                `;
+            }, 2000);
+        }
+
+        function generateBrand() {
+            const input = document.querySelector('#brand-demo .ai-input').value;
+            const output = document.getElementById('brand-output');
+            
+            if (!input.trim()) {
+                output.innerHTML = '<div style="color: #ef4444; text-align: center; padding: 20px;">Please describe your vision first!</div>';
+                return;
+            }
+            
+            output.innerHTML = '<div style="color: #7c3aed; text-align: center; padding: 20px;">🎨 AI is creating your brand identity...</div>';
+            
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4 style="color: #7c3aed; margin-bottom: 15px;">Your Brand Identity</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px;">
+                            <h5 style="color: #1e293b; margin-bottom: 10px;">Brand Name Ideas</h5>
+                            <ul style="list-style: none; color: #64748b;">
+                                <li>• Elevated Wellness Co.</li>
+                                <li>• Executive Zen</li>
+                                <li>• PowerWell Coaching</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px;">
+                            <h5 style="color: #1e293b; margin-bottom: 10px;">Color Palette</h5>
+                            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                <div style="width: 30px; height: 30px; background: #7c3aed; border-radius: 50%;"></div>
+                                <div style="width: 30px; height: 30px; background: #f472b6; border-radius: 50%;"></div>
+                                <div style="width: 30px; height: 30px; background: #10b981; border-radius: 50%;"></div>
+                            </div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 12px;">
+                            <h5 style="color: #1e293b; margin-bottom: 10px;">Brand Voice</h5>
+                            <p style="color: #64748b; font-size: 0.9rem;">Confident, nurturing, and results-oriented with a touch of luxury</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; background: #f8fafc; padding: 20px; border-radius: 12px;">
+                        <h5 style="color: #1e293b; margin-bottom: 10px;">Tagline Options</h5>
+                        <ul style="list-style: none; color: #64748b;">
+                            <li>• "Where Executive Excellence Meets Personal Wellness"</li>
+                            <li>• "Empowering Leaders to Thrive, Not Just Survive"</li>
+                            <li>• "Your Success Includes Your Wellbeing"</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top: 20px; color: #64748b; font-style: italic;">
+                        💡 Members get complete brand packages with logos, templates, and detailed brand guidelines.
+                    </p>
+                `;
+            }, 2000);
+        }
+
+        function askCoach() {
+            const input = document.querySelector('#coach-demo .ai-input').value;
+            const output = document.getElementById('coach-output');
+            
+            if (!input.trim()) {
+                output.innerHTML = '<div style="color: #ef4444; text-align: center; padding: 20px;">Please ask your question first!</div>';
+                return;
+            }
+            
+            output.innerHTML = '<div style="color: #7c3aed; text-align: center; padding: 20px;">💬 AI Coach is thinking about your situation...</div>';
+            
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4 style="color: #7c3aed; margin-bottom: 15px;">Your AI Coach Response</h4>
+                    <p style="color: #475569; line-height: 1.7; margin-bottom: 20px;">
+                        I understand your concern about financial security - this is one of the most common fears for accomplished women considering a career transition. Your caution actually shows wisdom, not weakness.
+                    </p>
+                    <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 20px; margin: 20px 0;">
+                        <h5 style="color: #1e40af; margin-bottom: 10px;">Here's how to know if you're ready:</h5>
+                        <ul style="color: #1e40af; line-height: 1.6;">
+                            <li>You have 6-12 months of expenses saved</li>
+                            <li>You've validated your new direction through small experiments</li>
+                            <li>You have a transition plan, not just a leap of faith</li>
+                            <li>Your current situation is costing you more than money (energy, joy, fulfillment)</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 20px; margin: 20px 0;">
+                        <h5 style="color: #065f46; margin-bottom: 10px;">Recommended next steps:</h5>
+                        <ol style="color: #065f46; line-height: 1.6;">
+                            <li>Create a detailed transition budget and timeline</li>
+                            <li>Start building your new venture while still employed</li>
+                            <li>Set specific financial milestones before you leave</li>
+                            <li>Connect with others who've made similar transitions</li>
+                        </ol>
+                    </div>
+                    <p style="color: #64748b; font-style: italic; margin-top: 20px;">
+                        💡 Want to dive deeper? Members get unlimited coaching conversations with follow-up questions and personalized action plans.
+                    </p>
+                `;
+            }, 2500);
+        }
+
+        function generateContent() {
+            const input = document.querySelector('#content-demo .ai-input').value;
+            const output = document.getElementById('content-output');
+            
+            if (!input.trim()) {
+                output.innerHTML = '<div style="color: #ef4444; text-align: center; padding: 20px;">Please describe what content you need!</div>';
+                return;
+            }
+            
+            output.innerHTML = '<div style="color: #7c3aed; text-align: center; padding: 20px;">📝 AI is crafting your content...</div>';
+            
+            setTimeout(() => {
+                output.innerHTML = `
+                    <h4 style="color: #7c3aed; margin-bottom: 15px;">Your LinkedIn Post</h4>
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+                        <p style="color: #1e293b; line-height: 1.6; margin-bottom: 15px;">
+                            After 12 years climbing the corporate marketing ladder, I'm making a leap that feels both terrifying and absolutely right. 🚀
+                        </p>
+                        <p style="color: #1e293b; line-height: 1.6; margin-bottom: 15px;">
+                            I'm launching my own marketing agency, focused on helping businesses build authentic connections with their customers. Why now? Because I've learned that the best marketing doesn't feel like marketing at all - it feels like genuine value.
+                        </p>
+                        <p style="color: #1e293b; line-height: 1.6; margin-bottom: 15px;">
+                            To my former colleagues: thank you for teaching me that strategy without soul is just noise.<br>
+                            To my future clients: let's build something meaningful together.<br>
+                            To anyone considering their own leap: the bridge appears as you walk.
+                        </p>
+                        <p style="color: #7c3aed; font-weight: 600;">
+                            #entrepreneurship #marketingagency #careerchange #authenticity
+                        </p>
+                    </div>
+                    <div style="margin-top: 20px; background: #f0f9ff; border-radius: 12px; padding: 15px;">
+                        <h5 style="color: #1e40af; margin-bottom: 10px;">✨ AI Recommendations:</h5>
+                        <ul style="color: #1e40af; font-size: 0.9rem; line-height: 1.5;">
+                            <li>Post timing: Tuesday-Thursday, 9-11 AM for best engagement</li>
+                            <li>Consider adding a carousel with your journey highlights</li>
+                            <li>Engage with comments within the first hour for maximum reach</li>
+                        </ul>
+                    </div>
+                    <p style="margin-top: 20px; color: #64748b; font-style: italic;">
+                        💡 Members get unlimited content generation with A/B testing suggestions and performance tracking.
+                    </p>
+                `;
+            }, 2000);
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.feature-card, .ai-card, .testimonial-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
