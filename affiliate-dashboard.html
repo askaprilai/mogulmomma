@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Affiliate Dashboard - Track Your Earnings</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 50%, #f472b6 100%);
+            color: white;
+            padding: 30px 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        .login-form {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #7c3aed;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .links-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .affiliate-link {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #7c3aed;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .referrals-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .referral-item {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .referral-item:last-child {
+            border-bottom: none;
+        }
+
+        .referral-date {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .referral-amount {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #1e293b;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error {
+            color: #ef4444;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .referral-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">👑 MogulMomma Affiliate Dashboard</div>
+            <div class="user-info">
+                <div id="userWelcome" style="display: none;">
+                    <span id="userName"></span>
+                    <button onclick="logout()" style="background: rgba(255,255,255,0.2); color: white; border: none; padding: 8px 15px; border-radius: 20px; margin-left: 15px; cursor: pointer;">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div class="login-form" id="loginForm">
+            <a href="/" class="back-link">← Back to MogulMomma</a>
+            
+            <h2 style="text-align: center; margin-bottom: 30px; color: #1e293b;">Affiliate Login</h2>
+            
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="affiliateCode">Your Affiliate Code</label>
+                    <input type="text" id="affiliateCode" placeholder="e.g., SARAH123" required>
+                </div>
+                
+                <button type="submit" class="btn" id="loginBtn">
+                    Access Dashboard
+                </button>
+                
+                <div id="loginError" class="error"></div>
+            </form>
+            
+            <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+                <p style="color: #64748b;">Don't have an affiliate account?</p>
+                <a href="affiliate-signup.html" style="color: #7c3aed; text-decoration: none; font-weight: 600;">Join the Affiliate Program →</a>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard" id="dashboard">
+            <h1 style="margin-bottom: 30px; color: #1e293b;">Your Affiliate Performance</h1>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalEarnings">$0</div>
+                    <div class="stat-label">Total Earnings</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" id="monthlyEarnings">$0</div>
+                    <div class="stat-label">This Month</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" id="totalReferrals">0</div>
+                    <div class="stat-label">Total Referrals</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-value" id="activeReferrals">0</div>
+                    <div class="stat-label">Active Subscriptions</div>
+                </div>
+            </div>
+
+            <div class="links-section">
+                <h3 style="margin-bottom: 20px; color: #1e293b;">Your Affiliate Links</h3>
+                <p style="color: #64748b; margin-bottom: 20px;">Share these links to earn $48.50 per month for every referral:</p>
+                
+                <div>
+                    <strong>Main Page:</strong>
+                    <div class="affiliate-link" id="mainLinkDash">
+                        <button class="copy-btn" onclick="copyLink('mainLinkDash')">Copy</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <strong>Direct to Membership:</strong>
+                    <div class="affiliate-link" id="membershipLinkDash">
+                        <button class="copy-btn" onclick="copyLink('membershipLinkDash')">Copy</button>
+                    </div>
+                </div>
+                
+                <div>
+                    <strong>Assessment Page:</strong>
+                    <div class="affiliate-link" id="assessmentLinkDash">
+                        <button class="copy-btn" onclick="copyLink('assessmentLinkDash')">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="referrals-section">
+                <h3 style="margin-bottom: 20px; color: #1e293b;">Recent Referrals</h3>
+                <div id="referralsList">
+                    <p style="color: #64748b; text-align: center; padding: 40px;">No referrals yet. Start sharing your links!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script>
+        let currentAffiliate = null;
+
+        document.getElementById('loginFormElement').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const originalText = loginBtn.textContent;
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Checking...';
+            
+            const email = document.getElementById('loginEmail').value;
+            const code = document.getElementById('affiliateCode').value;
+            
+            try {
+                // Find affiliate by email and code
+                const { data, error } = await supabaseClient
+                    .from('affiliates')
+                    .select('*')
+                    .eq('email', email)
+                    .eq('affiliate_code', code)
+                    .single();
+                
+                if (error || !data) {
+                    throw new Error('Invalid email or affiliate code');
+                }
+                
+                currentAffiliate = data;
+                showDashboard();
+                
+            } catch (error) {
+                document.getElementById('loginError').textContent = 'Invalid email or affiliate code. Please try again.';
+                loginBtn.disabled = false;
+                loginBtn.textContent = originalText;
+            }
+        });
+
+        async function showDashboard() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('userWelcome').style.display = 'block';
+            document.getElementById('userName').textContent = `Welcome, ${currentAffiliate.full_name}`;
+            
+            // Show affiliate links
+            const baseUrl = 'https://mogulmomma.com';
+            const code = currentAffiliate.affiliate_code;
+            
+            document.getElementById('mainLinkDash').innerHTML = `${baseUrl}?ref=${code} <button class="copy-btn" onclick="copyLink('mainLinkDash')">Copy</button>`;
+            document.getElementById('membershipLinkDash').innerHTML = `${baseUrl}/mogulmomma-membership.html?ref=${code} <button class="copy-btn" onclick="copyLink('membershipLinkDash')">Copy</button>`;
+            document.getElementById('assessmentLinkDash').innerHTML = `${baseUrl}/mogul-mama-assessment.html?ref=${code} <button class="copy-btn" onclick="copyLink('assessmentLinkDash')">Copy</button>`;
+            
+            // Load affiliate stats
+            await loadAffiliateStats();
+        }
+
+        async function loadAffiliateStats() {
+            try {
+                // Get affiliate commissions
+                const { data: commissions, error } = await supabaseClient
+                    .from('affiliate_commissions')
+                    .select('*')
+                    .eq('affiliate_code', currentAffiliate.affiliate_code);
+                
+                if (error) {
+                    console.error('Error loading stats:', error);
+                    return;
+                }
+                
+                // Calculate stats
+                const totalEarnings = commissions.reduce((sum, c) => sum + parseFloat(c.commission_amount), 0);
+                const currentMonth = new Date().getMonth();
+                const currentYear = new Date().getFullYear();
+                
+                const monthlyEarnings = commissions
+                    .filter(c => {
+                        const date = new Date(c.created_at);
+                        return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+                    })
+                    .reduce((sum, c) => sum + parseFloat(c.commission_amount), 0);
+                
+                const totalReferrals = commissions.length;
+                const activeReferrals = commissions.filter(c => c.status === 'pending' || c.status === 'active').length;
+                
+                // Update UI
+                document.getElementById('totalEarnings').textContent = `$${totalEarnings.toFixed(2)}`;
+                document.getElementById('monthlyEarnings').textContent = `$${monthlyEarnings.toFixed(2)}`;
+                document.getElementById('totalReferrals').textContent = totalReferrals;
+                document.getElementById('activeReferrals').textContent = activeReferrals;
+                
+                // Show recent referrals
+                displayReferrals(commissions.slice(-10).reverse());
+                
+            } catch (error) {
+                console.error('Error loading affiliate stats:', error);
+            }
+        }
+
+        function displayReferrals(referrals) {
+            const container = document.getElementById('referralsList');
+            
+            if (referrals.length === 0) {
+                container.innerHTML = '<p style="color: #64748b; text-align: center; padding: 40px;">No referrals yet. Start sharing your links!</p>';
+                return;
+            }
+            
+            container.innerHTML = referrals.map(ref => `
+                <div class="referral-item">
+                    <div>
+                        <div style="font-weight: 600;">Subscription: ${ref.subscription_id}</div>
+                        <div class="referral-date">${new Date(ref.created_at).toLocaleDateString()}</div>
+                    </div>
+                    <div class="referral-amount">+$${ref.commission_amount}</div>
+                </div>
+            `).join('');
+        }
+
+        function copyLink(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent.replace('Copy', '').trim();
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = element.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#7c3aed';
+                }, 2000);
+            });
+        }
+
+        function logout() {
+            currentAffiliate = null;
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('userWelcome').style.display = 'none';
+            document.getElementById('loginFormElement').reset();
+            document.getElementById('loginError').textContent = '';
+        }
+    </script>
+</body>
+</html>
