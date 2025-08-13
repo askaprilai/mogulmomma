@@ -82,7 +82,7 @@
         }
 
         .hero-subtitle {
-            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+            font-size: clamp(1rem, 2vw, 1.3rem);
             opacity: 0.95;
             margin-bottom: 35px;
             font-weight: 300;
@@ -193,6 +193,75 @@
 
         .nav-links a:hover {
             color: #7c3aed;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: #7c3aed;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            transition: left 0.3s ease;
+            padding-top: 80px;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu-links {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 50px 30px;
+        }
+
+        .mobile-menu-links a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 15px 30px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .mobile-menu-links a:hover {
+            background: #f8fafc;
+            color: #7c3aed;
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            color: #64748b;
+            cursor: pointer;
         }
 
         /* Problem Section */
@@ -545,10 +614,15 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            .hero {
+                padding-top: 80px; /* More space for mobile header */
+            }
+
             .hero-content {
                 grid-template-columns: 1fr;
                 gap: 40px;
                 text-align: center;
+                padding: 0 20px; /* Less side padding on mobile */
             }
 
             .solution-content {
@@ -560,9 +634,30 @@
                 display: none;
             }
 
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-content {
+                padding: 15px 20px; /* Less padding on mobile */
+            }
+
+            .logo {
+                font-size: 1.5rem; /* Smaller logo on mobile */
+            }
+
             .problems-grid,
             .testimonials-grid {
                 grid-template-columns: 1fr;
+            }
+
+            /* Fix hero text cutoff on mobile */
+            .hero h1 {
+                margin-top: 20px;
+            }
+
+            .hero-badge {
+                margin-bottom: 20px;
             }
         }
 
@@ -596,13 +691,30 @@
             <div class="logo">👑 MogulMomma</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#problem">Why This Matters</a></li>
                 <li><a href="#assessment">Free Assessment</a></li>
                 <li><a href="ai-tools.html">AI Tools</a></li>
+                <li><a href="affiliate-signup.html">💰 Affiliates</a></li>
                 <li><a href="login.html">Member Login</a></li>
             </ul>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <span class="mobile-close" id="mobileClose">&times;</span>
+        <div class="mobile-menu-links">
+            <a href="#home" onclick="closeMobileMenu()">🏠 Home</a>
+            <a href="#assessment" onclick="closeMobileMenu()">📋 Free Assessment</a>
+            <a href="ai-tools.html" onclick="closeMobileMenu()">🤖 AI Tools</a>
+            <a href="affiliate-signup.html" onclick="closeMobileMenu()">💰 Affiliates</a>
+            <a href="login.html" onclick="closeMobileMenu()">👤 Member Login</a>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -611,8 +723,7 @@
                 <div class="hero-badge">✨ For Extraordinary Women Ready for More</div>
                 <h1>You Bring the Dream, We Bring You the Map</h1>
                 <p class="hero-subtitle">
-                    You have incredible dreams brewing inside you. We have the proven Dream Mapping system to turn those dreams into your reality. 
-                    Join accomplished women who are transforming their biggest visions into their next successful chapter.
+                    Turn Your Big Vision into Your Next Successful Chapter. Stop waiting for "someday." Using our proven Dream Mapping System, you'll transform your ideas into a concrete, actionable plan. Join a powerhouse community of accomplished women who are already building the businesses, careers, and lives they once only dreamed about.
                 </p>
                 <a href="mogul-mama-assessment.html" class="cta-button">🗺️ Start Your Dream Mapping Journey (Free)</a>
                 <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9rem;">✅ 10-minute assessment • ✅ Personalized roadmap • ✅ Instant results</p>
@@ -975,6 +1086,7 @@
                 <a href="#terms">Terms of Service</a>
                 <a href="#contact">Contact Us</a>
                 <a href="#about">About</a>
+                <a href="admin-dashboard.html">👑 Admin</a>
             </div>
             
             <div class="footer-bottom">
@@ -1005,6 +1117,31 @@
                 navbar.style.background = 'rgba(255, 255, 255, 0.98)';
             } else {
                 navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileClose = document.getElementById('mobileClose');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        mobileClose.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking outside
+        mobileMenu.addEventListener('click', function(e) {
+            if (e.target === mobileMenu) {
+                closeMobileMenu();
             }
         });
 

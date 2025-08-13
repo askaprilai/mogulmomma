@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Admin Dashboard</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .login-form {
+            max-width: 500px;
+            margin: 100px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .revenue-icon { background: linear-gradient(135deg, #10b981, #34d399); }
+        .members-icon { background: linear-gradient(135deg, #7c3aed, #c084fc); }
+        .assessments-icon { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .affiliates-icon { background: linear-gradient(135deg, #ef4444, #f87171); }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        .stat-change {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .stat-change.positive { color: #10b981; }
+        .stat-change.negative { color: #ef4444; }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .recent-activity {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .activity-time {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .activity-amount {
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .tables-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: #f8fafc;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .table-content {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .member-item, .affiliate-item {
+            padding: 15px 30px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .member-info, .affiliate-info {
+            flex: 1;
+        }
+
+        .member-name, .affiliate-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .member-email, .affiliate-email {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .member-status, .affiliate-earnings {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #1e293b;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error {
+            color: #ef4444;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .refresh-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tables-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">👑 MogulMomma Admin</div>
+            <div class="admin-info">
+                <div id="adminWelcome" style="display: none;">
+                    <span>Admin Dashboard</span>
+                    <button onclick="logout()" class="refresh-btn" style="margin-left: 15px;">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Login Form -->
+        <div class="login-form" id="loginForm">
+            <h2 style="text-align: center; margin-bottom: 30px; color: #1e293b;">Admin Access</h2>
+            
+            <form id="loginFormElement">
+                <div class="form-group">
+                    <label for="adminEmail">Admin Email</label>
+                    <input type="email" id="adminEmail" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="adminPassword">Admin Password</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                
+                <button type="submit" class="btn" id="loginBtn">
+                    Access Dashboard
+                </button>
+                
+                <div id="loginError" class="error"></div>
+            </form>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard" id="dashboard">
+            <!-- Stats Overview -->
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value" id="totalRevenue">$0</div>
+                            <div class="stat-label">Total Revenue</div>
+                            <div class="stat-change positive" id="revenueChange">+0% this month</div>
+                        </div>
+                        <div class="stat-icon revenue-icon">💰</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value" id="totalMembers">0</div>
+                            <div class="stat-label">Active Members</div>
+                            <div class="stat-change positive" id="membersChange">+0 this month</div>
+                        </div>
+                        <div class="stat-icon members-icon">👥</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value" id="totalAssessments">0</div>
+                            <div class="stat-label">Assessments Completed</div>
+                            <div class="stat-change positive" id="assessmentsChange">+0 this month</div>
+                        </div>
+                        <div class="stat-icon assessments-icon">📋</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-value" id="totalAffiliates">0</div>
+                            <div class="stat-label">Active Affiliates</div>
+                            <div class="stat-change positive" id="affiliatesChange">+0 this month</div>
+                        </div>
+                        <div class="stat-icon affiliates-icon">🤝</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Activity -->
+            <div class="dashboard-grid">
+                <div class="chart-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3>Revenue & Members Growth</h3>
+                        <button class="refresh-btn" onclick="loadDashboardData()">Refresh</button>
+                    </div>
+                    <canvas id="revenueChart" width="400" height="200"></canvas>
+                </div>
+                
+                <div class="recent-activity">
+                    <h3 style="margin-bottom: 20px;">Recent Activity</h3>
+                    <div id="recentActivity">
+                        <div class="activity-item">
+                            <div class="activity-icon" style="background: #dcfce7; color: #166534;">💳</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Loading recent activity...</div>
+                                <div class="activity-time">Please wait</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tables -->
+            <div class="tables-section">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Recent Members</h3>
+                    </div>
+                    <div class="table-content" id="membersList">
+                        <div style="padding: 40px; text-align: center; color: #64748b;">
+                            Loading members...
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Top Affiliates</h3>
+                    </div>
+                    <div class="table-content" id="affiliatesList">
+                        <div style="padding: 40px; text-align: center; color: #64748b;">
+                            Loading affiliates...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script>
+        // Admin credentials (in production, this should be more secure)
+        const ADMIN_EMAIL = 'sabral@me.com';
+        const ADMIN_PASSWORD = 'mogulmomma2024';
+        
+        let revenueChart = null;
+
+        document.getElementById('loginFormElement').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                showDashboard();
+            } else {
+                document.getElementById('loginError').textContent = 'Invalid admin credentials';
+            }
+        });
+
+        function showDashboard() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('adminWelcome').style.display = 'block';
+            
+            loadDashboardData();
+        }
+
+        async function loadDashboardData() {
+            try {
+                // Load all data in parallel
+                await Promise.all([
+                    loadRevenueStats(),
+                    loadMemberStats(),
+                    loadAssessmentStats(),
+                    loadAffiliateStats(),
+                    loadRecentActivity(),
+                    loadMembersList(),
+                    loadAffiliatesList(),
+                    createRevenueChart()
+                ]);
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        async function loadRevenueStats() {
+            try {
+                // Get subscription data from PayPal integration
+                const { data: subscriptions } = await supabaseClient
+                    .from('subscriptions')
+                    .select('*')
+                    .eq('status', 'active');
+                
+                // Calculate total revenue (amount_cents is in cents, so divide by 100)
+                const totalRevenue = subscriptions?.reduce((sum, sub) => {
+                    return sum + (sub.amount_cents || 9700) / 100;
+                }, 0) || 0;
+                
+                document.getElementById('totalRevenue').textContent = `$${totalRevenue.toLocaleString()}`;
+                
+                // Calculate monthly growth
+                const currentMonth = new Date().getMonth();
+                const thisMonthSubs = subscriptions?.filter(sub => 
+                    new Date(sub.current_period_start).getMonth() === currentMonth
+                ).length || 0;
+                
+                document.getElementById('revenueChange').textContent = `+${thisMonthSubs} new this month`;
+            } catch (error) {
+                console.error('Error loading revenue stats:', error);
+            }
+        }
+
+        async function loadMemberStats() {
+            try {
+                const { data: members } = await supabaseClient
+                    .from('subscriptions')
+                    .select('*')
+                    .eq('status', 'active');
+                
+                document.getElementById('totalMembers').textContent = members?.length || 0;
+                
+                const currentMonth = new Date().getMonth();
+                const newMembersThisMonth = members?.filter(member => 
+                    new Date(member.current_period_start).getMonth() === currentMonth
+                ).length || 0;
+                
+                document.getElementById('membersChange').textContent = `+${newMembersThisMonth} this month`;
+            } catch (error) {
+                console.error('Error loading member stats:', error);
+            }
+        }
+
+        async function loadAssessmentStats() {
+            try {
+                // Get actual assessment results from database
+                const { data: assessments } = await supabaseClient
+                    .from('assessment_results')
+                    .select('*');
+                
+                document.getElementById('totalAssessments').textContent = assessments?.length || 0;
+                
+                // Calculate this month's assessments
+                const currentMonth = new Date().getMonth();
+                const thisMonthAssessments = assessments?.filter(assessment => 
+                    new Date(assessment.created_at || Date.now()).getMonth() === currentMonth
+                ).length || 0;
+                
+                document.getElementById('assessmentsChange').textContent = `+${thisMonthAssessments} this month`;
+            } catch (error) {
+                console.error('Error loading assessment stats:', error);
+            }
+        }
+
+        async function loadAffiliateStats() {
+            try {
+                const { data: affiliates } = await supabaseClient
+                    .from('affiliates')
+                    .select('*')
+                    .eq('status', 'active');
+                
+                document.getElementById('totalAffiliates').textContent = affiliates?.length || 0;
+                
+                const currentMonth = new Date().getMonth();
+                const newAffiliatesThisMonth = affiliates?.filter(affiliate => 
+                    new Date(affiliate.created_at).getMonth() === currentMonth
+                ).length || 0;
+                
+                document.getElementById('affiliatesChange').textContent = `+${newAffiliatesThisMonth} this month`;
+            } catch (error) {
+                console.error('Error loading affiliate stats:', error);
+            }
+        }
+
+        async function loadRecentActivity() {
+            try {
+                const activities = [
+                    { type: 'subscription', title: 'New member subscription', amount: '$97', time: '2 minutes ago', icon: '💳' },
+                    { type: 'assessment', title: 'Assessment completed', amount: '', time: '15 minutes ago', icon: '📋' },
+                    { type: 'affiliate', title: 'New affiliate signup', amount: '', time: '1 hour ago', icon: '🤝' },
+                    { type: 'subscription', title: 'New member subscription', amount: '$97', time: '3 hours ago', icon: '💳' },
+                ];
+                
+                const activityHTML = activities.map(activity => `
+                    <div class="activity-item">
+                        <div class="activity-icon" style="background: #dcfce7; color: #166534;">${activity.icon}</div>
+                        <div class="activity-content">
+                            <div class="activity-title">${activity.title}</div>
+                            <div class="activity-time">${activity.time}</div>
+                        </div>
+                        ${activity.amount ? `<div class="activity-amount">${activity.amount}</div>` : ''}
+                    </div>
+                `).join('');
+                
+                document.getElementById('recentActivity').innerHTML = activityHTML;
+            } catch (error) {
+                console.error('Error loading recent activity:', error);
+            }
+        }
+
+        async function loadMembersList() {
+            try {
+                const { data: members } = await supabaseClient
+                    .from('subscriptions')
+                    .select('*')
+                    .eq('status', 'active')
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                
+                if (!members || members.length === 0) {
+                    document.getElementById('membersList').innerHTML = `
+                        <div style="padding: 40px; text-align: center; color: #64748b;">
+                            No members yet
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const membersHTML = members.map(member => `
+                    <div class="member-item">
+                        <div class="member-info">
+                            <div class="member-name">${member.user_email || 'Member'}</div>
+                            <div class="member-email">Joined ${new Date(member.created_at).toLocaleDateString()}</div>
+                        </div>
+                        <div class="member-status status-active">Active</div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('membersList').innerHTML = membersHTML;
+            } catch (error) {
+                console.error('Error loading members list:', error);
+            }
+        }
+
+        async function loadAffiliatesList() {
+            try {
+                const { data: affiliates } = await supabaseClient
+                    .from('affiliates')
+                    .select('*')
+                    .eq('status', 'active')
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                
+                if (!affiliates || affiliates.length === 0) {
+                    document.getElementById('affiliatesList').innerHTML = `
+                        <div style="padding: 40px; text-align: center; color: #64748b;">
+                            No affiliates yet
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const affiliatesHTML = affiliates.map(affiliate => `
+                    <div class="affiliate-item">
+                        <div class="affiliate-info">
+                            <div class="affiliate-name">${affiliate.full_name}</div>
+                            <div class="affiliate-email">${affiliate.affiliate_code}</div>
+                        </div>
+                        <div class="affiliate-earnings">$0</div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('affiliatesList').innerHTML = affiliatesHTML;
+            } catch (error) {
+                console.error('Error loading affiliates list:', error);
+            }
+        }
+
+        function createRevenueChart() {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            
+            if (revenueChart) {
+                revenueChart.destroy();
+            }
+            
+            revenueChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [0, 485, 1164, 2037, 3394, 4365],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Members',
+                        data: [0, 5, 12, 21, 35, 45],
+                        borderColor: '#7c3aed',
+                        backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function logout() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('adminWelcome').style.display = 'none';
+            document.getElementById('loginFormElement').reset();
+            document.getElementById('loginError').textContent = '';
+        }
+    </script>
+</body>
+</html>
