@@ -2146,12 +2146,12 @@
                 
                 <h3>💪 Your Strengths</h3>
                 <ul>
-                    ${archetype.strengths.map(strength => `<li>${strength}</li>`).join('')}
+                    ${(archetype.strengths || ['Natural leadership abilities', 'Strategic thinking', 'Problem-solving skills', 'Professional experience']).map(strength => `<li>${strength}</li>`).join('')}
                 </ul>
                 
                 <h3>🎯 Your Focus Areas</h3>
                 <ul>
-                    ${archetype.challenges.map(challenge => `<li>${challenge}</li>`).join('')}
+                    ${(archetype.challenges || ['Building confidence in new direction', 'Developing new skills', 'Creating clear action plan', 'Building supportive network']).map(challenge => `<li>${challenge}</li>`).join('')}
                 </ul>
             </div>
             
