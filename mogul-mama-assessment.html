@@ -1769,11 +1769,8 @@
                     </div>
                     
                     <div style="margin-top: 30px;">
-                        <a href="mogulmomma-membership.html" style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); color: #7c3aed; padding: 18px 40px; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 1.2rem; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; display: inline-block; margin-right: 15px;">
+                        <a href="mogulmomma-membership.html" style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); color: #7c3aed; padding: 18px 40px; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 1.2rem; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); transition: all 0.3s ease; display: inline-block;">
                             💎 Join MogulMomma Community
-                        </a>
-                        <a href="#call" style="background: rgba(255, 255, 255, 0.2); color: white; padding: 18px 40px; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 1.2rem; border: 2px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease; display: inline-block;">
-                            📞 Book Strategy Call
                         </a>
                     </div>
                     
@@ -1908,42 +1905,92 @@
                 </div>
             `;
             
-            // Send personalized assessment report
-            const success = await sendAssessmentReport(firstName, email, currentRole, dreamRole);
-            
-            if (success) {
-                // Hide email form and show success message
-                document.getElementById('emailCapture').style.display = 'none';
-                document.getElementById('ctaSection').style.display = 'block';
-            } else {
-                // Show error message
+            try {
+                // Send personalized assessment report
+                console.log('=== ASSESSMENT EMAIL DEBUG ===');
+                console.log('Attempting to send assessment report...');
+                console.log('Email:', email);
+                console.log('First Name:', firstName);
+                console.log('Current Role:', currentRole);
+                console.log('Dream Role:', dreamRole);
+                console.log('Archetype:', window.assessmentResults?.archetype?.name);
+                
+                const success = await sendAssessmentReport(firstName, email, currentRole, dreamRole);
+                
+                if (success) {
+                    console.log('✅ Assessment report sent successfully');
+                    // Hide email form and show success message
+                    document.getElementById('emailCapture').style.display = 'none';
+                    document.getElementById('ctaSection').style.display = 'block';
+                    
+                    // Show success notification
+                    emailForm.innerHTML = `
+                        <div style="text-align: center; padding: 40px; background: #f0f9ff; border-radius: 12px; margin-bottom: 20px;">
+                            <h3 style="color: #0369a1;">✅ Assessment Report Sent!</h3>
+                            <p style="color: #0369a1;">Check your email (including spam folder) for your personalized career transition report.</p>
+                            <p style="color: #0369a1; font-size: 0.9rem; margin-top: 10px;">📧 Sent to: ${email}</p>
+                        </div>
+                    `;
+                } else {
+                    console.error('❌ Assessment report sending failed');
+                    // Show error message but still allow them to see results
+                    emailForm.innerHTML = `
+                        <div style="text-align: center; padding: 40px; background: #fef2f2; border-radius: 12px;">
+                            <h3 style="color: #dc2626;">📧 Email Issue</h3>
+                            <p style="color: #dc2626;">We're having trouble sending emails right now. Your results are saved and we'll send your report manually within 24 hours to: <strong>${email}</strong></p>
+                            <p style="color: #dc2626; font-weight: 600; margin-top: 10px;">Bookmark this page to view your results anytime!</p>
+                        </div>
+                    `;
+                    // Still show the CTA section
+                    document.getElementById('ctaSection').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('💥 Error in email capture process:', error);
                 emailForm.innerHTML = `
-                    <div style="text-align: center; padding: 40px;">
-                        <h3 style="color: #ef4444;">❌ Email sending failed</h3>
-                        <p style="color: #64748b;">We had trouble sending your report. Please contact support at hello@mogulmomma.com</p>
-                        <button onclick="location.reload()" style="margin-top: 15px; padding: 10px 20px; background: #7c3aed; color: white; border: none; border-radius: 8px; cursor: pointer;">Try Again</button>
+                    <div style="text-align: center; padding: 40px; background: #fef2f2; border-radius: 12px;">
+                        <h3 style="color: #dc2626;">⚠️ Technical Issue</h3>
+                        <p style="color: #dc2626;">There was a technical issue, but your assessment is complete! We'll send your results manually to: <strong>${email}</strong></p>
                     </div>
                 `;
+                document.getElementById('ctaSection').style.display = 'block';
             }
         }
 
         async function sendAssessmentReport(firstName, email, currentRole, dreamRole) {
+            console.log('🔥 STARTING sendAssessmentReport function');
+            console.log('Parameters:', { firstName, email, currentRole, dreamRole });
+            
             const archetype = window.assessmentResults?.archetype;
+            console.log('Archetype from window:', archetype);
+            
             if (!archetype) {
-                console.error('No archetype found');
+                console.error('❌ No archetype found in window.assessmentResults');
+                console.log('Full assessmentResults:', window.assessmentResults);
                 return false;
             }
 
+            console.log('✅ Archetype found:', archetype.name);
+
             // Create the HTML email content
+            console.log('📝 Creating email template...');
             const emailTemplate = createAssessmentEmailTemplate(firstName, currentRole, dreamRole, archetype);
+            console.log('📧 Email template created, length:', emailTemplate.length);
             
             try {
-                console.log('Attempting to send assessment report to:', email);
-                console.log('Archetype:', archetype.name);
+                console.log('🚀 Attempting to send assessment report to:', email);
+                console.log('📊 Archetype:', archetype.name);
+                
+                // Check if emailjs is available
+                if (typeof emailjs === 'undefined') {
+                    console.error('❌ EmailJS library not loaded!');
+                    return false;
+                }
+                
+                console.log('✅ EmailJS library is available');
                 
                 // Check if MogulMommaEmail is available from emailjs-config.js
                 if (typeof MogulMommaEmail !== 'undefined') {
-                    console.log('Using MogulMommaEmail helper');
+                    console.log('🎯 Using MogulMommaEmail helper');
                     
                     const emailParams = {
                         to_email: email,
@@ -1952,8 +1999,15 @@
                         from_name: 'MogulMomma Team'
                     };
                     
+                    console.log('📤 Sending via MogulMommaEmail with params:', {
+                        to_email: email,
+                        subject: emailParams.subject,
+                        from_name: emailParams.from_name,
+                        message_length: emailTemplate.length
+                    });
+                    
                     const result = await MogulMommaEmail.sendTestEmail(emailParams);
-                    console.log('Assessment report sent successfully via MogulMommaEmail:', result);
+                    console.log('✅ Assessment report sent successfully via MogulMommaEmail:', result);
                     
                     // Also save to backup system
                     await saveEmailBackup(email, firstName, emailTemplate);
@@ -1961,28 +2015,39 @@
                     
                 } else {
                     // Fallback to direct EmailJS with correct service ID
-                    console.log('MogulMommaEmail not available, using direct EmailJS');
-                    console.log('Using service: service_vntq4ai');
-                    console.log('Using template: template_tcyaiym');
+                    console.log('⚠️ MogulMommaEmail not available, using direct EmailJS');
+                    console.log('🔧 Using service: service_vntq4ai');
+                    console.log('📋 Using template: template_tcyaiym');
+                    
+                    const emailParams = {
+                        to_email: email,
+                        subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
+                        message: emailTemplate,
+                        from_name: "MogulMomma Team"
+                    };
+                    
+                    console.log('📤 Sending via direct EmailJS with params:', {
+                        service: "service_vntq4ai",
+                        template: "template_tcyaiym",
+                        to_email: email,
+                        subject: emailParams.subject,
+                        from_name: emailParams.from_name,
+                        message_length: emailTemplate.length
+                    });
                     
                     const emailPromise = emailjs.send(
                         "service_vntq4ai",
                         "template_tcyaiym",
-                        {
-                            to_email: email,
-                            subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
-                            message: emailTemplate,
-                            from_name: "MogulMomma Team"
-                        }
+                        emailParams
                     );
                     
                     // Add 10 second timeout
                     const timeoutPromise = new Promise((_, reject) => 
-                        setTimeout(() => reject(new Error('Email timeout')), 10000)
+                        setTimeout(() => reject(new Error('Email timeout after 10 seconds')), 10000)
                     );
                     
                     const result = await Promise.race([emailPromise, timeoutPromise]);
-                    console.log('Assessment report sent successfully via direct EmailJS:', result);
+                    console.log('✅ Assessment report sent successfully via direct EmailJS:', result);
                     
                     // Also save to backup system
                     await saveEmailBackup(email, firstName, emailTemplate);
@@ -1990,14 +2055,20 @@
                 }
                 
             } catch (error) {
-                console.error('Assessment email failed:', error);
+                console.error('💥 Assessment email failed with error:', error);
+                console.error('Error details:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
                 
                 // Fallback: Save assessment results for manual sending
+                console.log('💾 Saving to backup system...');
                 await saveEmailBackup(email, firstName, emailTemplate);
                 
-                // Show success to user (we'll handle the email issue separately)
-                console.log('Email saved to backup system for manual sending');
-                return true;
+                // Return false so user knows there was an issue
+                console.log('❌ Returning false due to email sending failure');
+                return false;
             }
         }
 
