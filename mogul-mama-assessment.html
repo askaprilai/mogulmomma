@@ -1970,6 +1970,11 @@
             }
 
             console.log('✅ Archetype found:', archetype.name);
+            console.log('📊 FULL ARCHETYPE OBJECT:', JSON.stringify(archetype, null, 2));
+            console.log('📊 Archetype properties:', Object.keys(archetype));
+            console.log('📊 Archetype.description:', archetype.description);
+            console.log('📊 Archetype.strengths:', archetype.strengths);
+            console.log('📊 Archetype.challenges:', archetype.challenges);
 
             // Create the HTML email content
             console.log('📝 Creating email template...');
@@ -2035,6 +2040,16 @@ Week 7-8: Create a transition timeline with specific milestones`,
                     console.log('🔧 Using service: service_vntq4ai');
                     console.log('📋 Using template: template_tcyaiym');
                     
+                    const strengthsList = (archetype.strengths || ['Natural leadership abilities', 'Strategic thinking', 'Problem-solving skills', 'Professional experience']).map((strength, index) => `${index + 1}. ${strength}`).join('\n');
+                    const focusAreas = (archetype.challenges || ['Building confidence in new direction', 'Developing new skills', 'Creating clear action plan', 'Building supportive network']).map((area, index) => `${index + 1}. ${area}`).join('\n');
+                    
+                    console.log('🔍 DEBUGGING EMAIL PARAMS:');
+                    console.log('archetype.name:', archetype.name);
+                    console.log('archetype.description:', archetype.description);
+                    console.log('strengthsList:', strengthsList);
+                    console.log('focusAreas:', focusAreas);
+                    console.log('dreamRole:', dreamRole);
+                    
                     const emailParams = {
                         to_name: firstName,
                         to_email: email,
@@ -2042,8 +2057,8 @@ Week 7-8: Create a transition timeline with specific milestones`,
                         subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
                         archetype_name: archetype.name,
                         archetype_description: archetype.description,
-                        strengths_list: (archetype.strengths || ['Natural leadership abilities', 'Strategic thinking', 'Problem-solving skills', 'Professional experience']).map((strength, index) => `${index + 1}. ${strength}`).join('\n'),
-                        focus_areas: (archetype.challenges || ['Building confidence in new direction', 'Developing new skills', 'Creating clear action plan', 'Building supportive network']).map((area, index) => `${index + 1}. ${area}`).join('\n'),
+                        strengths_list: strengthsList,
+                        focus_areas: focusAreas,
                         action_plan: `Week 1-2: Clarify your vision for ${dreamRole || 'your new direction'} - write down exactly what success looks like
 Week 3-4: Identify 3 people in your target field and reach out for informational interviews
 Week 5-6: Start building one new skill relevant to ${dreamRole || 'your goals'}
@@ -2054,6 +2069,8 @@ Week 7-8: Create a transition timeline with specific milestones`,
 • Consider working with a mentor for accountability`,
                         reply_to: "hello@mogulmomma.com"
                     };
+                    
+                    console.log('📧 FINAL EMAIL PARAMS:', JSON.stringify(emailParams, null, 2));
                     
                     console.log('📤 Sending via direct EmailJS with params:', {
                         service: "service_vntq4ai",
