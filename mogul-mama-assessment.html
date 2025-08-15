@@ -1975,6 +1975,9 @@
             console.log('📝 Creating email template...');
             const emailTemplate = createAssessmentEmailTemplate(firstName, currentRole, dreamRole, archetype);
             console.log('📧 Email template created, length:', emailTemplate.length);
+            console.log('📧 First 200 characters:', emailTemplate.substring(0, 200));
+            console.log('📧 Template contains HTML:', emailTemplate.includes('<html>'));
+            console.log('📧 Template contains archetype name:', emailTemplate.includes(archetype.name));
             
             try {
                 console.log('🚀 Attempting to send assessment report to:', email);

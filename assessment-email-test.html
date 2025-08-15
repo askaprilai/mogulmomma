@@ -21,7 +21,8 @@
     <input type="text" id="firstName" placeholder="First Name" value="Test User">
     
     <button onclick="sendSimpleTest()">Send Simple Email</button>
-    <button onclick="sendWithHTML()">Send HTML Email</button>
+    <button onclick="sendWithHTML()">Send Simple HTML</button>
+    <button onclick="sendMinimalHTML()">Send Minimal HTML Test</button>
     
     <div id="status"></div>
     
@@ -76,28 +77,7 @@
             
             status.innerHTML = '<div class="status">Sending HTML email...</div>';
             
-            const htmlContent = `
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        .header { background: #7c3aed; color: white; padding: 20px; text-align: center; }
-        .content { padding: 20px; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>🎯 Your Assessment Results</h1>
-    </div>
-    <div class="content">
-        <h2>Hi ${firstName}!</h2>
-        <p>This is a test HTML email from the MogulMomma assessment system.</p>
-        <p><strong>Your Archetype:</strong> The Strategist</p>
-        <p>This email confirms that HTML templates are working correctly.</p>
-    </div>
-</body>
-</html>`;
+            const htmlContent = `<h1>Hi ${firstName}!</h1><p>This is a <strong>simple HTML test</strong> from MogulMomma.</p><p style="color: #7c3aed;">Your archetype: The Strategist</p><p>If you can see this formatted text, HTML is working!</p>`;
             
             try {
                 const result = await emailjs.send(
@@ -115,6 +95,43 @@
                 
                 console.log('Success:', result);
                 status.innerHTML = '<div class="status success">✅ HTML email sent successfully!</div>';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                status.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function sendMinimalHTML() {
+            const email = document.getElementById('testEmail').value;
+            const firstName = document.getElementById('firstName').value;
+            const status = document.getElementById('status');
+            
+            if (!email) {
+                status.innerHTML = '<div class="status error">Please enter an email</div>';
+                return;
+            }
+            
+            status.innerHTML = '<div class="status">Sending minimal HTML...</div>';
+            
+            const minimalHTML = `Hello ${firstName}! This is just plain text with no HTML tags to test if the issue is with HTML complexity.`;
+            
+            try {
+                const result = await emailjs.send(
+                    "service_vntq4ai",
+                    "template_tcyaiym",
+                    {
+                        to_name: firstName,
+                        to_email: email,
+                        from_name: "MogulMomma Test",
+                        subject: "Minimal Test - No HTML",
+                        message: minimalHTML,
+                        reply_to: "hello@mogulmomma.com"
+                    }
+                );
+                
+                console.log('Success:', result);
+                status.innerHTML = '<div class="status success">✅ Minimal content sent!</div>';
                 
             } catch (error) {
                 console.error('Error:', error);
