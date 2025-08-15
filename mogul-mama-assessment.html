@@ -1993,10 +1993,12 @@
                     console.log('🎯 Using MogulMommaEmail helper');
                     
                     const emailParams = {
+                        to_name: firstName,
                         to_email: email,
+                        from_name: 'MogulMomma Team',
                         subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
                         message: emailTemplate,
-                        from_name: 'MogulMomma Team'
+                        reply_to: "hello@mogulmomma.com"
                     };
                     
                     console.log('📤 Sending via MogulMommaEmail with params:', {
@@ -2020,10 +2022,12 @@
                     console.log('📋 Using template: template_tcyaiym');
                     
                     const emailParams = {
+                        to_name: firstName,
                         to_email: email,
+                        from_name: "MogulMomma Team",
                         subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
                         message: emailTemplate,
-                        from_name: "MogulMomma Team"
+                        reply_to: "hello@mogulmomma.com"
                     };
                     
                     console.log('📤 Sending via direct EmailJS with params:', {

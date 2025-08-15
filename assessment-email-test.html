@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Email Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        input, button { margin: 10px 0; padding: 10px; width: 100%; }
+        button { background: #7c3aed; color: white; border: none; cursor: pointer; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #dc2626; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Simple Assessment Email Test</h1>
+    
+    <input type="email" id="testEmail" placeholder="Your email address" required>
+    <input type="text" id="firstName" placeholder="First Name" value="Test User">
+    
+    <button onclick="sendSimpleTest()">Send Simple Email</button>
+    <button onclick="sendWithHTML()">Send HTML Email</button>
+    
+    <div id="status"></div>
+    
+    <script>
+        // Initialize EmailJS
+        emailjs.init("SAU17WFhPmeQLrng7");
+        
+        async function sendSimpleTest() {
+            const email = document.getElementById('testEmail').value;
+            const firstName = document.getElementById('firstName').value;
+            const status = document.getElementById('status');
+            
+            if (!email) {
+                status.innerHTML = '<div class="status error">Please enter an email</div>';
+                return;
+            }
+            
+            status.innerHTML = '<div class="status">Sending simple email...</div>';
+            
+            try {
+                const result = await emailjs.send(
+                    "service_vntq4ai",
+                    "template_tcyaiym",
+                    {
+                        to_name: firstName,
+                        to_email: email,
+                        from_name: "MogulMomma Test",
+                        subject: "Simple Test Email",
+                        message: `Hi ${firstName}! This is a simple test email to verify EmailJS is working with template_tcyaiym.`,
+                        reply_to: "hello@mogulmomma.com"
+                    }
+                );
+                
+                console.log('Success:', result);
+                status.innerHTML = '<div class="status success">✅ Simple email sent successfully!</div>';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                status.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function sendWithHTML() {
+            const email = document.getElementById('testEmail').value;
+            const firstName = document.getElementById('firstName').value;
+            const status = document.getElementById('status');
+            
+            if (!email) {
+                status.innerHTML = '<div class="status error">Please enter an email</div>';
+                return;
+            }
+            
+            status.innerHTML = '<div class="status">Sending HTML email...</div>';
+            
+            const htmlContent = `
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .header { background: #7c3aed; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 Your Assessment Results</h1>
+    </div>
+    <div class="content">
+        <h2>Hi ${firstName}!</h2>
+        <p>This is a test HTML email from the MogulMomma assessment system.</p>
+        <p><strong>Your Archetype:</strong> The Strategist</p>
+        <p>This email confirms that HTML templates are working correctly.</p>
+    </div>
+</body>
+</html>`;
+            
+            try {
+                const result = await emailjs.send(
+                    "service_vntq4ai",
+                    "template_tcyaiym",
+                    {
+                        to_name: firstName,
+                        to_email: email,
+                        from_name: "MogulMomma Assessment",
+                        subject: "HTML Assessment Test",
+                        message: htmlContent,
+                        reply_to: "hello@mogulmomma.com"
+                    }
+                );
+                
+                console.log('Success:', result);
+                status.innerHTML = '<div class="status success">✅ HTML email sent successfully!</div>';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                status.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
