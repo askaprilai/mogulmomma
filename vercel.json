@@ -22,6 +22,7 @@
     { "source": "/email-test", "destination": "/email-test.html" },
     { "source": "/email-debug", "destination": "/email-debug.html" },
     { "source": "/email-test-simple", "destination": "/assessment-email-test.html" },
+    { "source": "/template-test", "destination": "/template-test.html" },
     { "source": "/community-demo", "destination": "/community-page.html?demo=true" },
     { "source": "/test-guide", "destination": "/test-member-guide.html" }
   ]

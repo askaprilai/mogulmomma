@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Variable Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        input, button { margin: 10px 0; padding: 10px; width: 100%; }
+        button { background: #7c3aed; color: white; border: none; cursor: pointer; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #dc2626; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Template Variable Test</h1>
+    <p>Test if your EmailJS template recognizes the new variables</p>
+    
+    <input type="email" id="testEmail" placeholder="Your email address" required>
+    
+    <button onclick="testNewVariables()">Test New Template Variables</button>
+    <button onclick="testBasicVariables()">Test Basic Variables Only</button>
+    
+    <div id="status"></div>
+    
+    <script>
+        // Initialize EmailJS
+        emailjs.init("SAU17WFhPmeQLrng7");
+        
+        async function testNewVariables() {
+            const email = document.getElementById('testEmail').value;
+            const status = document.getElementById('status');
+            
+            if (!email) {
+                status.innerHTML = '<div class="status error">Please enter an email</div>';
+                return;
+            }
+            
+            status.innerHTML = '<div class="status">Testing new variables...</div>';
+            
+            try {
+                const result = await emailjs.send(
+                    "service_vntq4ai",
+                    "template_tcyaiym",
+                    {
+                        to_name: "Test User",
+                        to_email: email,
+                        from_name: "MogulMomma Test",
+                        archetype_name: "The Strategic Builder",
+                        archetype_description: "You are a natural born leader who thinks strategically and builds systems.",
+                        strengths_list: "1. Strategic thinking\n2. Leadership skills\n3. Problem solving",
+                        focus_areas: "1. Building confidence\n2. Networking skills",
+                        action_plan: "Week 1: Do this\nWeek 2: Do that",
+                        next_steps: "• Step 1\n• Step 2"
+                    }
+                );
+                
+                console.log('Success:', result);
+                status.innerHTML = '<div class="status success">✅ New variables test sent!</div>';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                status.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testBasicVariables() {
+            const email = document.getElementById('testEmail').value;
+            const status = document.getElementById('status');
+            
+            if (!email) {
+                status.innerHTML = '<div class="status error">Please enter an email</div>';
+                return;
+            }
+            
+            status.innerHTML = '<div class="status">Testing basic variables...</div>';
+            
+            try {
+                const result = await emailjs.send(
+                    "service_vntq4ai",
+                    "template_tcyaiym",
+                    {
+                        to_name: "Test User",
+                        to_email: email,
+                        from_name: "MogulMomma Test",
+                        message: "This is a basic test with just the message field."
+                    }
+                );
+                
+                console.log('Success:', result);
+                status.innerHTML = '<div class="status success">✅ Basic variables test sent!</div>';
+                
+            } catch (error) {
+                console.error('Error:', error);
+                status.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
