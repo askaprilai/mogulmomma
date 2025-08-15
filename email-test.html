@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Email Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .test-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .test-btn {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .test-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 2px solid #10b981;
+        }
+
+        .result.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #ef4444;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            color: #7c3aed;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="logo">MogulMomma</div>
+        <h1>Email System Test</h1>
+        <p style="text-align: center; color: #64748b; margin-bottom: 30px;">
+            Test the email functionality to ensure connection requests and notifications are working properly.
+        </p>
+
+        <form id="emailTestForm">
+            <div class="form-group">
+                <label for="testEmail">Your Email Address</label>
+                <input type="email" id="testEmail" required placeholder="Enter your email to receive test message">
+            </div>
+
+            <div class="form-group">
+                <label for="testSubject">Test Subject</label>
+                <input type="text" id="testSubject" value="MogulMomma Platform Test" placeholder="Email subject line">
+            </div>
+
+            <div class="form-group">
+                <label for="testMessage">Test Message</label>
+                <textarea id="testMessage" rows="4" placeholder="This is a test message from the MogulMomma platform to verify email functionality is working correctly.">This is a test message from the MogulMomma platform to verify email functionality is working correctly.
+
+If you receive this email, the system is working properly!
+
+Best regards,
+MogulMomma Team</textarea>
+            </div>
+
+            <button type="submit" class="test-btn" id="sendButton">
+                📧 Send Test Email
+            </button>
+        </form>
+
+        <div class="result" id="result"></div>
+
+        <div class="back-link">
+            <a href="/community">← Back to Community</a>
+        </div>
+    </div>
+
+    <script>
+        // EmailJS Configuration
+        (function() {
+            emailjs.init({
+                publicKey: "SAU17WFhPmeQLrng7",
+            });
+        })();
+
+        document.getElementById('emailTestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const sendButton = document.getElementById('sendButton');
+            const result = document.getElementById('result');
+            const originalText = sendButton.textContent;
+            
+            // Show loading state
+            sendButton.disabled = true;
+            sendButton.textContent = '📤 Sending...';
+            result.style.display = 'none';
+            
+            // Get form data
+            const templateParams = {
+                to_email: document.getElementById('testEmail').value,
+                subject: document.getElementById('testSubject').value,
+                message: document.getElementById('testMessage').value,
+                from_name: 'MogulMomma Platform',
+                reply_to: 'hello@mogulmomma.com'
+            };
+            
+            // Send email using EmailJS
+            emailjs.send('service_vntq4ai', 'template_tcyaiym', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully:', response);
+                    showResult('success', `✅ Test email sent successfully!\n\nCheck your inbox at ${templateParams.to_email}. If you don't see it, check your spam folder.\n\nEmailJS Response: ${response.status} - ${response.text}`);
+                })
+                .catch(function(error) {
+                    console.error('Email send failed:', error);
+                    
+                    // Provide helpful error messages
+                    let errorMessage = '❌ Email test failed.\n\n';
+                    
+                    if (error.text && error.text.includes('Invalid email')) {
+                        errorMessage += 'Error: Invalid email configuration. Please check your EmailJS setup.';
+                    } else if (error.text && error.text.includes('Template')) {
+                        errorMessage += 'Error: Email template not found. Please verify your EmailJS template ID.';
+                    } else if (error.text && error.text.includes('Service')) {
+                        errorMessage += 'Error: Email service not found. Please verify your EmailJS service ID.';
+                    } else {
+                        errorMessage += `Error: ${error.text || error.message || 'Unknown error occurred'}`;
+                    }
+                    
+                    errorMessage += '\n\nTo fix this:\n1. Verify EmailJS is properly configured\n2. Check your service ID and template ID\n3. Ensure your email service is active\n4. Contact support if issues persist';
+                    
+                    showResult('error', errorMessage);
+                })
+                .finally(function() {
+                    // Reset button
+                    sendButton.disabled = false;
+                    sendButton.textContent = originalText;
+                });
+        });
+        
+        function showResult(type, message) {
+            const result = document.getElementById('result');
+            result.className = `result ${type}`;
+            result.textContent = message;
+            result.style.display = 'block';
+        }
+        
+        // Auto-fill with user's email if available
+        document.addEventListener('DOMContentLoaded', function() {
+            const userEmail = localStorage.getItem('mogulmomma_user_email');
+            if (userEmail) {
+                document.getElementById('testEmail').value = userEmail;
+            }
+        });
+    </script>
+</body>
+</html>

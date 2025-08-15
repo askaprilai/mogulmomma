@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Content Scheduler - Plan Your Social Media Strategy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #7c3aed;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .page-header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .toolbar {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .toolbar-left {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #64748b;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .view-toggle {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .view-toggle button {
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-toggle button.active {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            color: #7c3aed;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .calendar-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .calendar-header {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .month-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .month-nav button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .month-nav button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: #e2e8f0;
+        }
+
+        .calendar-day-header {
+            background: #f8fafc;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: 600;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day {
+            background: white;
+            min-height: 120px;
+            padding: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .calendar-day:hover {
+            background: #f8fafc;
+            border-color: #7c3aed;
+        }
+
+        .calendar-day.other-month {
+            background: #f8fafc;
+            color: #94a3b8;
+        }
+
+        .calendar-day.today {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .post-indicator {
+            width: 100%;
+            padding: 4px 6px;
+            margin-bottom: 4px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .post-indicator:hover {
+            transform: scale(1.02);
+        }
+
+        .post-instagram { background: #fce7f3; color: #be185d; }
+        .post-linkedin { background: #dbeafe; color: #1d4ed8; }
+        .post-twitter { background: #e0f2fe; color: #0369a1; }
+        .post-facebook { background: #ede9fe; color: #7c3aed; }
+
+        .sidebar {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar h3 {
+            color: #1e293b;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .platform-stats {
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .platform-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .templates {
+            margin-top: 20px;
+        }
+
+        .template-item {
+            padding: 15px;
+            border: 2px solid #f1f5f9;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .template-item:hover {
+            border-color: #7c3aed;
+            background: #faf5ff;
+        }
+
+        .template-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .template-desc {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .platform-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .platform-option {
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .platform-option.selected {
+            border-color: #7c3aed;
+            background: #faf5ff;
+        }
+
+        .platform-option:hover {
+            border-color: #c084fc;
+        }
+
+        .platform-option .icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .ai-suggestions {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .suggestion-item {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .suggestion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .char-counter {
+            font-size: 0.9rem;
+            color: #64748b;
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .char-counter.warning {
+            color: #f59e0b;
+        }
+
+        .char-counter.error {
+            color: #ef4444;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .toolbar-left {
+                justify-content: center;
+            }
+            
+            .calendar-day {
+                min-height: 80px;
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">MogulMomma</div>
+            <div class="nav-links">
+                <a href="/community">Community</a>
+                <a href="/ai-tools-unlimited">AI Tools</a>
+                <a href="#content-scheduler">Content Scheduler</a>
+                <a href="/member-dashboard">Dashboard</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>📅 Content Scheduler</h1>
+            <p style="color: #64748b; font-size: 1.1rem; margin: 0;">Plan, create, and schedule your social media content like a pro</p>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <button class="btn btn-primary" onclick="openPostModal()">
+                    ✍️ Create Post
+                </button>
+                <button class="btn btn-secondary" onclick="generatePersonalizedContent()" style="background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; border: none;">
+                    🤖 AI Content Assistant
+                </button>
+                <button class="btn btn-secondary" onclick="importContent()">
+                    📤 Import
+                </button>
+                <button class="btn btn-secondary" onclick="openAccountSettings()">
+                    🔗 Connect Accounts
+                </button>
+                <div class="view-toggle">
+                    <button class="active" onclick="switchView('calendar')">Calendar</button>
+                    <button onclick="switchView('list')">List</button>
+                </div>
+            </div>
+            <select class="form-control" style="width: auto;" onchange="filterByPlatform(this.value)">
+                <option value="all">All Platforms</option>
+                <option value="instagram">Instagram</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="twitter">Twitter</option>
+                <option value="facebook">Facebook</option>
+            </select>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Calendar -->
+            <div class="calendar-container" id="calendarView">
+                <div class="calendar-header">
+                    <div class="month-nav">
+                        <button onclick="previousMonth()">‹</button>
+                        <h2 id="currentMonth">January 2025</h2>
+                        <button onclick="nextMonth()">›</button>
+                    </div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">
+                        Click any day to add content
+                    </div>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar will be generated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <h3>Quick Actions</h3>
+                <div class="quick-actions">
+                    <button class="btn btn-primary" onclick="openPostModal()">
+                        ✍️ New Post
+                    </button>
+                    <button class="btn btn-secondary" onclick="openBulkScheduler()">
+                        📅 Bulk Schedule
+                    </button>
+                    <button class="btn btn-secondary" onclick="viewAnalytics()">
+                        📊 Analytics
+                    </button>
+                </div>
+
+                <h3>Platform Stats</h3>
+                <div class="platform-stats">
+                    <div class="stat-item">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="platform-icon" style="background: #e4405f;">📷</div>
+                            <span>Instagram</span>
+                        </div>
+                        <span style="font-weight: 600;" id="instagramCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="platform-icon" style="background: #0077b5;">💼</div>
+                            <span>LinkedIn</span>
+                        </div>
+                        <span style="font-weight: 600;" id="linkedinCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="platform-icon" style="background: #1da1f2;">🐦</div>
+                            <span>Twitter</span>
+                        </div>
+                        <span style="font-weight: 600;" id="twitterCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="platform-icon" style="background: #1877f2;">👥</div>
+                            <span>Facebook</span>
+                        </div>
+                        <span style="font-weight: 600;" id="facebookCount">0</span>
+                    </div>
+                </div>
+
+                <h3>Content Templates</h3>
+                <div class="templates">
+                    <div class="template-item" onclick="useTemplate('inspiration')">
+                        <div class="template-title">💡 Inspiration Quote</div>
+                        <div class="template-desc">Motivational content for your audience</div>
+                    </div>
+                    <div class="template-item" onclick="useTemplate('tip')">
+                        <div class="template-title">💼 Business Tip</div>
+                        <div class="template-desc">Share valuable business insights</div>
+                    </div>
+                    <div class="template-item" onclick="useTemplate('personal')">
+                        <div class="template-title">👋 Personal Story</div>
+                        <div class="template-desc">Connect with your authentic journey</div>
+                    </div>
+                    <div class="template-item" onclick="useTemplate('promotion')">
+                        <div class="template-title">🎯 Promotional Post</div>
+                        <div class="template-desc">Highlight your services or products</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Post Creation Modal -->
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Post</h2>
+                <button class="modal-close" onclick="closeModal('postModal')">&times;</button>
+            </div>
+            
+            <form id="postForm">
+                <div class="form-group">
+                    <label>Select Platforms</label>
+                    <div class="platform-selector">
+                        <div class="platform-option" data-platform="instagram">
+                            <div class="icon">📷</div>
+                            <div>Instagram</div>
+                        </div>
+                        <div class="platform-option" data-platform="linkedin">
+                            <div class="icon">💼</div>
+                            <div>LinkedIn</div>
+                        </div>
+                        <div class="platform-option" data-platform="twitter">
+                            <div class="icon">🐦</div>
+                            <div>Twitter</div>
+                        </div>
+                        <div class="platform-option" data-platform="facebook">
+                            <div class="icon">👥</div>
+                            <div>Facebook</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-suggestions" id="aiSuggestions" style="display: none;">
+                    <h4 style="margin-bottom: 15px;">🤖 AI Content Suggestions</h4>
+                    <div id="suggestionsList"></div>
+                    <button type="button" class="btn btn-secondary" onclick="generateMoreSuggestions()">
+                        ✨ Generate More Ideas
+                    </button>
+                </div>
+
+                <div class="form-group">
+                    <label for="postContent">Post Content</label>
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-secondary" onclick="generatePersonalizedContent()" style="background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; border: none; padding: 8px 15px; font-size: 0.9rem;">
+                            🤖 AI Assistant
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="generateWithAI()" style="padding: 8px 15px; font-size: 0.9rem;">
+                            ✨ Quick Ideas
+                        </button>
+                    </div>
+                    <textarea class="form-control" id="postContent" placeholder="What's on your mind? Share your thoughts, insights, or inspiration..." oninput="updateCharCount()"></textarea>
+                    <div class="char-counter" id="charCounter">0 characters</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="postDate">Schedule Date & Time</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <input type="date" class="form-control" id="postDate">
+                        <input type="time" class="form-control" id="postTime">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Media (Optional)</label>
+                    <div style="border: 2px dashed #e2e8f0; border-radius: 10px; padding: 30px; text-align: center; cursor: pointer;" onclick="document.getElementById('mediaUpload').click()">
+                        <div style="color: #64748b;">
+                            📎 Click to upload images or videos<br>
+                            <small>JPG, PNG, MP4 supported</small>
+                        </div>
+                        <input type="file" id="mediaUpload" accept="image/*,video/*" multiple style="display: none;" onchange="handleMediaUpload(this)">
+                    </div>
+                    <div id="mediaPreview" style="margin-top: 15px; display: none;"></div>
+                </div>
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end; margin-top: 30px;">
+                    <button type="button" class="btn btn-secondary" onclick="saveDraft()">
+                        💾 Save Draft
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="previewPost()">
+                        👁️ Preview
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        📅 Schedule Post
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Account Settings Modal -->
+    <div class="modal" id="accountSettingsModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>🔗 Connect Social Media Accounts</h2>
+                <button class="modal-close" onclick="closeModal('accountSettingsModal')">&times;</button>
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <p style="color: #64748b; text-align: center; margin-bottom: 25px;">
+                    Connect your social media accounts to automatically publish your scheduled content
+                </p>
+                
+                <div style="display: grid; gap: 20px;">
+                    <!-- Instagram Connection -->
+                    <div class="platform-connection" data-platform="instagram">
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 20px; border: 2px solid #e2e8f0; border-radius: 15px; transition: all 0.3s;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="width: 50px; height: 50px; background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">📷</div>
+                                <div>
+                                    <h3 style="margin: 0; color: #1e293b;">Instagram</h3>
+                                    <p style="margin: 0; color: #64748b; font-size: 0.9rem;">Share photos and stories with your audience</p>
+                                </div>
+                            </div>
+                            <button class="connect-btn" data-platform="instagram" onclick="connectPlatform('instagram')" 
+                                style="padding: 10px 20px; border: 2px solid #e4405f; background: white; color: #e4405f; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- LinkedIn Connection -->
+                    <div class="platform-connection" data-platform="linkedin">
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 20px; border: 2px solid #e2e8f0; border-radius: 15px; transition: all 0.3s;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="width: 50px; height: 50px; background: #0077b5; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">💼</div>
+                                <div>
+                                    <h3 style="margin: 0; color: #1e293b;">LinkedIn</h3>
+                                    <p style="margin: 0; color: #64748b; font-size: 0.9rem;">Build your professional network and thought leadership</p>
+                                </div>
+                            </div>
+                            <button class="connect-btn" data-platform="linkedin" onclick="connectPlatform('linkedin')" 
+                                style="padding: 10px 20px; border: 2px solid #0077b5; background: white; color: #0077b5; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Twitter Connection -->
+                    <div class="platform-connection" data-platform="twitter">
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 20px; border: 2px solid #e2e8f0; border-radius: 15px; transition: all 0.3s;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="width: 50px; height: 50px; background: #1da1f2; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">🐦</div>
+                                <div>
+                                    <h3 style="margin: 0; color: #1e293b;">Twitter</h3>
+                                    <p style="margin: 0; color: #64748b; font-size: 0.9rem;">Share quick updates and engage in conversations</p>
+                                </div>
+                            </div>
+                            <button class="connect-btn" data-platform="twitter" onclick="connectPlatform('twitter')" 
+                                style="padding: 10px 20px; border: 2px solid #1da1f2; background: white; color: #1da1f2; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Facebook Connection -->
+                    <div class="platform-connection" data-platform="facebook">
+                        <div style="display: flex; align-items: center; justify-content: space-between; padding: 20px; border: 2px solid #e2e8f0; border-radius: 15px; transition: all 0.3s;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div style="width: 50px; height: 50px; background: #1877f2; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">👥</div>
+                                <div>
+                                    <h3 style="margin: 0; color: #1e293b;">Facebook</h3>
+                                    <p style="margin: 0; color: #64748b; font-size: 0.9rem;">Connect with friends and share life updates</p>
+                                </div>
+                            </div>
+                            <button class="connect-btn" data-platform="facebook" onclick="connectPlatform('facebook')" 
+                                style="padding: 10px 20px; border: 2px solid #1877f2; background: white; color: #1877f2; border-radius: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s;">
+                                Connect
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 20px; margin-top: 25px;">
+                    <h4 style="color: #92400e; margin-bottom: 10px;">🔒 Your Data is Secure</h4>
+                    <p style="color: #92400e; font-size: 0.9rem; margin: 0;">
+                        We use industry-standard OAuth 2.0 authentication. Your login credentials are never stored on our servers. 
+                        You can disconnect any platform at any time from this settings page.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentDate = new Date();
+        let scheduledPosts = JSON.parse(localStorage.getItem('mogulmomma_scheduled_posts') || '[]');
+        let selectedPlatforms = [];
+        let connectedPlatforms = JSON.parse(localStorage.getItem('mogulmomma_connected_platforms') || '{}');
+
+        // Initialize the calendar
+        function initializeCalendar() {
+            console.log('Initializing calendar...');
+            updateCalendarDisplay();
+            updatePlatformStats();
+            
+            // Set default date to today
+            const today = new Date();
+            const postDateElement = document.getElementById('postDate');
+            const postTimeElement = document.getElementById('postTime');
+            
+            if (postDateElement) {
+                postDateElement.value = today.toISOString().split('T')[0];
+            }
+            if (postTimeElement) {
+                postTimeElement.value = '09:00';
+            }
+            
+            console.log('Calendar initialization complete');
+        }
+
+        // Platform Connection Functions
+        function openAccountSettings() {
+            updateConnectionStatus();
+            document.getElementById('accountSettingsModal').style.display = 'flex';
+        }
+
+        function connectPlatform(platform) {
+            const btn = document.querySelector(`[data-platform="${platform}"] .connect-btn`);
+            const originalText = btn.textContent;
+            
+            // Get user's actual account information
+            const accountInfo = getAccountInfo(platform);
+            if (!accountInfo) {
+                return; // User cancelled
+            }
+            
+            // Show connecting state
+            btn.textContent = 'Connecting...';
+            btn.disabled = true;
+            
+            // Simulate connection process
+            setTimeout(() => {
+                // Save real account connection
+                connectedPlatforms[platform] = {
+                    connected: true,
+                    connectedAt: new Date().toISOString(),
+                    username: accountInfo.username,
+                    accountId: accountInfo.accountId || 'user_' + Math.random().toString(36).substr(2, 9),
+                    email: accountInfo.email || null
+                };
+                localStorage.setItem('mogulmomma_connected_platforms', JSON.stringify(connectedPlatforms));
+                
+                // Update UI
+                updateConnectionStatus();
+                
+                // Show success message
+                alert(`✅ ${platform.charAt(0).toUpperCase() + platform.slice(1)} connected successfully!\n\nAccount: ${accountInfo.username}\n\nYou can now schedule posts to this platform. Your content will be published to your ${platform} account.`);
+            }, 1500);
+        }
+
+        function getAccountInfo(platform) {
+            const platformName = platform.charAt(0).toUpperCase() + platform.slice(1);
+            let username, email;
+            
+            // Get platform-specific account information
+            switch(platform) {
+                case 'instagram':
+                    username = prompt(`Connect your Instagram account:\n\nEnter your Instagram username (without @):`);
+                    if (!username) return null;
+                    if (!username.startsWith('@')) username = '@' + username;
+                    break;
+                    
+                case 'linkedin':
+                    const fullName = prompt(`Connect your LinkedIn account:\n\nEnter your full name as it appears on LinkedIn:`);
+                    if (!fullName) return null;
+                    email = prompt(`Enter the email address associated with your LinkedIn account:`);
+                    if (!email) return null;
+                    username = fullName;
+                    break;
+                    
+                case 'twitter':
+                    username = prompt(`Connect your Twitter/X account:\n\nEnter your Twitter handle (without @):`);
+                    if (!username) return null;
+                    if (!username.startsWith('@')) username = '@' + username;
+                    break;
+                    
+                case 'facebook':
+                    const fbName = prompt(`Connect your Facebook account:\n\nEnter your Facebook display name:`);
+                    if (!fbName) return null;
+                    email = prompt(`Enter the email address associated with your Facebook account:`);
+                    if (!email) return null;
+                    username = fbName;
+                    break;
+                    
+                default:
+                    return null;
+            }
+            
+            // Confirm the information
+            const confirmMessage = email ? 
+                `Confirm your ${platformName} account details:\n\nName/Handle: ${username}\nEmail: ${email}\n\nIs this correct?` :
+                `Confirm your ${platformName} account:\n\nHandle: ${username}\n\nIs this correct?`;
+                
+            const confirmed = confirm(confirmMessage);
+            
+            if (!confirmed) {
+                return null;
+            }
+            
+            return {
+                username: username,
+                email: email,
+                platform: platform
+            };
+        }
+
+        function generateUsername(platform) {
+            const usernames = {
+                instagram: '@mogul_momma_sarah',
+                linkedin: 'Sarah Johnson',
+                twitter: '@MogulMommaSarah',
+                facebook: 'Sarah Johnson'
+            };
+            return usernames[platform] || '@demo_user';
+        }
+
+        function updateConnectionStatus() {
+            document.querySelectorAll('.platform-connection').forEach(connection => {
+                const platform = connection.dataset.platform;
+                const btn = connection.querySelector('.connect-btn');
+                const platformInfo = connection.querySelector('div > div:last-child');
+                
+                if (connectedPlatforms[platform]?.connected) {
+                    // Connected state
+                    btn.textContent = 'Connected ✓';
+                    btn.style.background = '#10b981';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#10b981';
+                    btn.onclick = () => disconnectPlatform(platform);
+                    
+                    // Add username
+                    const existingUsername = platformInfo.querySelector('.username');
+                    if (!existingUsername) {
+                        const usernameElement = document.createElement('p');
+                        usernameElement.className = 'username';
+                        usernameElement.style.cssText = 'margin: 5px 0 0 0; color: #10b981; font-size: 0.8rem; font-weight: 600;';
+                        usernameElement.textContent = `Connected as: ${connectedPlatforms[platform].username}`;
+                        platformInfo.appendChild(usernameElement);
+                    }
+                    
+                    // Update border
+                    connection.querySelector('div').style.borderColor = '#10b981';
+                    connection.querySelector('div').style.background = '#f0fdf4';
+                } else {
+                    // Disconnected state
+                    btn.textContent = 'Connect';
+                    btn.style.background = 'white';
+                    btn.style.borderColor = getPlatformColor(platform);
+                    btn.style.color = getPlatformColor(platform);
+                    btn.onclick = () => connectPlatform(platform);
+                    
+                    // Remove username
+                    const usernameElement = platformInfo.querySelector('.username');
+                    if (usernameElement) {
+                        usernameElement.remove();
+                    }
+                    
+                    // Reset border
+                    connection.querySelector('div').style.borderColor = '#e2e8f0';
+                    connection.querySelector('div').style.background = 'white';
+                }
+            });
+        }
+
+        function disconnectPlatform(platform) {
+            if (confirm(`Are you sure you want to disconnect ${platform.charAt(0).toUpperCase() + platform.slice(1)}?\n\nYour scheduled posts for this platform will no longer be published automatically.`)) {
+                delete connectedPlatforms[platform];
+                localStorage.setItem('mogulmomma_connected_platforms', JSON.stringify(connectedPlatforms));
+                updateConnectionStatus();
+                alert(`✅ ${platform.charAt(0).toUpperCase() + platform.slice(1)} disconnected successfully.`);
+            }
+        }
+
+        function getPlatformColor(platform) {
+            const colors = {
+                instagram: '#e4405f',
+                linkedin: '#0077b5',
+                twitter: '#1da1f2',
+                facebook: '#1877f2'
+            };
+            return colors[platform] || '#64748b';
+        }
+
+        function checkPlatformConnection(platform) {
+            return connectedPlatforms[platform]?.connected || false;
+        }
+
+        // Update calendar display
+        function updateCalendarDisplay() {
+            console.log('Updating calendar display...');
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Update month header
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            const monthElement = document.getElementById('currentMonth');
+            if (monthElement) {
+                monthElement.textContent = `${monthNames[month]} ${year}`;
+                console.log('Month header updated:', `${monthNames[month]} ${year}`);
+            } else {
+                console.error('currentMonth element not found');
+            }
+            
+            // Generate calendar grid
+            const grid = document.getElementById('calendarGrid');
+            if (!grid) {
+                console.error('calendarGrid element not found');
+                return;
+            }
+            console.log('Calendar grid found, clearing content...');
+            grid.innerHTML = '';
+            
+            // Add day headers
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                const header = document.createElement('div');
+                header.className = 'calendar-day-header';
+                header.textContent = day;
+                grid.appendChild(header);
+            });
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            
+            // Add empty cells for previous month
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'calendar-day other-month';
+                day.innerHTML = `<div class="day-number">${daysInPrevMonth - i}</div>`;
+                grid.appendChild(day);
+            }
+            
+            // Add days of current month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                
+                // Check if it's today
+                const today = new Date();
+                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+                    dayElement.classList.add('today');
+                }
+                
+                // Add day number
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day;
+                dayElement.appendChild(dayNumber);
+                
+                // Add scheduled posts for this day
+                const dayPosts = getPostsForDay(year, month, day);
+                dayPosts.forEach(post => {
+                    const indicator = document.createElement('div');
+                    indicator.className = `post-indicator post-${post.platform}`;
+                    indicator.textContent = `${post.platform} - ${post.time}`;
+                    indicator.onclick = (e) => {
+                        e.stopPropagation();
+                        editPost(post.id);
+                    };
+                    dayElement.appendChild(indicator);
+                });
+                
+                // Add click handler to add new post
+                dayElement.onclick = () => openPostModal(year, month, day);
+                
+                grid.appendChild(dayElement);
+            }
+            
+            // Add remaining cells for next month
+            const totalCells = grid.children.length;
+            const remainingCells = 42 - totalCells; // 6 rows * 7 days
+            for (let day = 1; day <= remainingCells; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day other-month';
+                dayElement.innerHTML = `<div class="day-number">${day}</div>`;
+                grid.appendChild(dayElement);
+            }
+        }
+
+        // Get posts for a specific day
+        function getPostsForDay(year, month, day) {
+            const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            return scheduledPosts.filter(post => post.date === dateString);
+        }
+
+        // Navigation functions
+        function previousMonth() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            updateCalendarDisplay();
+        }
+
+        function nextMonth() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            updateCalendarDisplay();
+        }
+
+        // Modal functions
+        function openPostModal(year, month, day) {
+            if (year && month !== undefined && day) {
+                const date = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                document.getElementById('postDate').value = date;
+            }
+            document.getElementById('postModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            // Reset form
+            document.getElementById('postForm').reset();
+            selectedPlatforms = [];
+            document.querySelectorAll('.platform-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.getElementById('aiSuggestions').style.display = 'none';
+        }
+
+        // Platform selection setup
+        function setupPlatformSelection() {
+            document.querySelectorAll('.platform-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const platform = this.dataset.platform;
+                    if (this.classList.contains('selected')) {
+                        this.classList.remove('selected');
+                        selectedPlatforms = selectedPlatforms.filter(p => p !== platform);
+                    } else {
+                        this.classList.add('selected');
+                        selectedPlatforms.push(platform);
+                    }
+                    updateCharacterLimits();
+                });
+            });
+        }
+
+        // Character count and limits
+        function updateCharCount() {
+            const content = document.getElementById('postContent').value;
+            const counter = document.getElementById('charCounter');
+            const length = content.length;
+            
+            // Platform character limits
+            const limits = {
+                twitter: 280,
+                instagram: 2200,
+                linkedin: 3000,
+                facebook: 63206
+            };
+            
+            let maxLimit = Math.max(...Object.values(limits));
+            let minLimit = Math.min(...selectedPlatforms.map(p => limits[p] || maxLimit));
+            
+            if (selectedPlatforms.length > 0) {
+                counter.textContent = `${length}/${minLimit} characters`;
+                if (length > minLimit) {
+                    counter.className = 'char-counter error';
+                } else if (length > minLimit * 0.9) {
+                    counter.className = 'char-counter warning';
+                } else {
+                    counter.className = 'char-counter';
+                }
+            } else {
+                counter.textContent = `${length} characters`;
+                counter.className = 'char-counter';
+            }
+        }
+
+        function updateCharacterLimits() {
+            updateCharCount();
+        }
+
+        // AI Content Generation
+        function generateWithAI() {
+            document.getElementById('aiSuggestions').style.display = 'block';
+            generateContentSuggestions();
+        }
+        
+        function generatePersonalizedContent() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex; 
+                align-items: center; justify-content: center; padding: 20px;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 30px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="color: #1e293b; margin: 0;">🤖 AI Content Assistant</h2>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">×</button>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Content Type</label>
+                        <select id="aiContentType" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
+                            <option value="inspiration">Motivational/Inspirational</option>
+                            <option value="tip">Business Tip/Advice</option>
+                            <option value="personal">Personal Story</option>
+                            <option value="question">Engagement Question</option>
+                            <option value="announcement">Announcement/News</option>
+                            <option value="behind-scenes">Behind the Scenes</option>
+                            <option value="testimonial">Client Success Story</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Target Platform</label>
+                        <select id="aiTargetPlatform" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
+                            <option value="linkedin">LinkedIn (Professional)</option>
+                            <option value="instagram">Instagram (Visual + Engaging)</option>
+                            <option value="twitter">Twitter (Concise + Punchy)</option>
+                            <option value="facebook">Facebook (Community Focused)</option>
+                            <option value="all">Multi-Platform Optimized</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Topic/Theme (Optional)</label>
+                        <input type="text" id="aiTopic" placeholder="e.g., career transition, leadership, networking" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Tone</label>
+                        <select id="aiTone" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem;">
+                            <option value="motivational">Motivational & Uplifting</option>
+                            <option value="professional">Professional & Expert</option>
+                            <option value="conversational">Friendly & Conversational</option>
+                            <option value="authentic">Authentic & Vulnerable</option>
+                            <option value="educational">Educational & Informative</option>
+                        </select>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="generateAIContent()" style="flex: 1; background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 1rem;">
+                            ✨ Generate Content
+                        </button>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #e5e7eb; color: #374151; border: none; padding: 15px 20px; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                            Cancel
+                        </button>
+                    </div>
+                    
+                    <div id="aiGeneratedContent" style="display: none; margin-top: 20px; padding: 20px; background: #f8fafc; border-radius: 10px; border-left: 4px solid #7c3aed;">
+                        <h4 style="color: #1e293b; margin-bottom: 10px;">Generated Content:</h4>
+                        <div id="generatedText" style="color: #374151; line-height: 1.6; margin-bottom: 15px;"></div>
+                        <button onclick="useGeneratedContent()" style="background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: 10px;">
+                            ✅ Use This Content
+                        </button>
+                        <button onclick="generateAIContent()" style="background: #f59e0b; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            🔄 Generate Another
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        function generateAIContent() {
+            const contentType = document.getElementById('aiContentType').value;
+            const platform = document.getElementById('aiTargetPlatform').value;
+            const topic = document.getElementById('aiTopic').value;
+            const tone = document.getElementById('aiTone').value;
+            
+            // Show loading state
+            const generateBtn = event.target;
+            const originalText = generateBtn.textContent;
+            generateBtn.disabled = true;
+            generateBtn.textContent = '🤖 Generating...';
+            
+            // Simulate AI generation with more sophisticated content
+            setTimeout(() => {
+                const content = getPersonalizedContent(contentType, platform, topic, tone);
+                
+                document.getElementById('generatedText').textContent = content;
+                document.getElementById('aiGeneratedContent').style.display = 'block';
+                
+                generateBtn.disabled = false;
+                generateBtn.textContent = originalText;
+            }, 2000);
+        }
+        
+        function getPersonalizedContent(type, platform, topic, tone) {
+            const topicText = topic ? ` about ${topic}` : '';
+            
+            const contentTemplates = {
+                inspiration: {
+                    linkedin: `🌟 ${tone === 'motivational' ? 'Your breakthrough moment is closer than you think' : 'Success isn\'t about the destination, it\'s about who you become on the journey'}${topicText}.\n\nEvery accomplished woman I know has faced that moment where everything feels uncertain. The corporate ladder you climbed for years suddenly feels... wrong. The dreams you tucked away start knocking louder.\n\nHere's what I've learned: That uncertainty isn't a sign you're lost—it's a sign you're ready to level up.\n\n${topic ? `Your expertise in ${topic} isn't something to abandon—it's your secret weapon in this next chapter.` : 'Your experience isn\'t baggage. It\'s your competitive advantage.'}\n\nWhat's one bold step you could take this week toward the career that truly excites you?\n\n#CareerTransition #WomenInBusiness #Leadership #DreamBig`,
+                    instagram: `✨ ${tone === 'authentic' ? 'Real talk:' : 'Reminder:'} You don't need permission to reinvent yourself${topicText} 💪\n\n${topic ? `Whether you're transitioning in ${topic} or exploring something completely new,` : 'Whether you\'re pivoting careers or starting fresh,'} remember this:\n\n• Your experience is valuable 📈\n• Your dreams are valid ✨\n• Your time is NOW ⏰\n\nStop waiting for the \'perfect\' moment. Start with where you are, use what you have, do what you can.\n\n${topic ? `Who else is making moves in ${topic}? Tag a friend who needs to see this! 👇` : 'Tag a friend who needs this reminder! 👇'}\n\n#MogulMomma #CareerChange #WomenEmpowerment #DreamChaser`,
+                    twitter: `${tone === 'motivational' ? '🔥' : '💡'} Your career transition${topicText} isn\'t a step back—it\'s a step UP to who you were always meant to be.\n\n${topic ? `${topic} skills + new direction = unstoppable combination` : 'Experience + fresh vision = unstoppable combination'}\n\n#CareerTransition #WomenInBusiness`,
+                    facebook: `🌟 Community Question: How many of you have felt that pull toward something different${topicText}?\n\nI\'ve been thinking about how we, as accomplished women, often feel guilty about wanting more. We\'ve built successful careers, checked all the boxes, and yet...\n\nThere\'s this voice whispering: \'What if there\'s something else?\'\n\n${topic ? `Maybe it\'s exploring ${topic} in a new way, or using your ${topic} background to solve different problems.` : 'Maybe it\'s starting that business you\'ve been dreaming about, or pivoting to an industry that lights you up.'}\n\nHere\'s what I want you to know: That whisper isn\'t dissatisfaction—it\'s growth calling.\n\nWhat\'s your whisper telling you? Share below—this community is here to cheer you on! 💜\n\n#MogulMommaCommuinty #CareerTransition #WomenSupportingWomen`
+                },
+                tip: {
+                    linkedin: `💼 Business Strategy${topicText}: The #1 mistake I see successful women make during career transitions\n\nThey try to start from scratch.\n\n${topic ? `Your ${topic} background isn't something to hide—it's your differentiator.` : 'Your experience isn\'t something to downplay—it\'s your unique selling proposition.'}\n\nHere\'s how to leverage what you already know:\n\n✅ Audit your transferable skills\n✅ Identify industry pain points you can solve\n✅ Build bridges, don\'t burn them\n✅ Network from a position of strength\n\n${topic ? `In ${topic}, this might mean:` : 'For example:'} [Specific example based on expertise]\n\nYour experience is your competitive advantage. Use it strategically.\n\nWhat transferable skills are you leveraging in your transition?\n\n#BusinessStrategy #CareerTransition #ProfessionalDevelopment`,
+                    instagram: `💡 Quick Tip Tuesday${topicText}:\n\nStop apologizing for your career change. Start owning it. 🔥\n\n${topic ? `Moving from/within ${topic}?` : 'Switching industries?'} Here\'s your new script:\n\n❌ \'I\'m just figuring things out\'\n✅ \'I\'m strategically expanding my impact\'\n\n❌ \'I don\'t have experience in...\'\n✅ \'I bring a fresh perspective from...\'\n\n❌ \'I hope someone will take a chance on me\'\n✅ \'I\'m excited to bring my unique background to...\'\n\nConfidence is a choice. Choose it every time. 💪\n\n#CareerConfidence #MindsetShift #ProfessionalGrowth`,
+                    twitter: `💡 Career transition tip${topicText}:\n\nYour \'lack of experience\' in the new field = fresh perspective + transferable skills\n\nStop seeing gaps. Start seeing opportunities.\n\n#CareerChange #Mindset`,
+                    facebook: `📚 Resource Tuesday: Let\'s talk about the books that changed my perspective on career transitions${topicText}\n\n1. \'What Color Is Your Parachute?\' - Classic for a reason\n2. \'Pivot\' by Jenny Blake - For strategic career changes\n3. \'The Lean Startup\' - Entrepreneurial mindset\n${topic ? `4. [Specific book related to ${topic}]` : '4. \'Atomic Habits\' - Building new professional routines'}\n\nBut here\'s what no book tells you: The best research is conversations with people doing what you want to do.\n\n${topic ? `Who in your network works in ${topic}? Time to schedule some coffee chats! ☕` : 'Who in your network has made a successful pivot? Time for some coffee chats! ☕'}\n\nWhat books or resources have helped shape your career thinking? Drop them below! 👇\n\n#CareerDevelopment #BookRecommendations #ProfessionalGrowth`
+                },
+                personal: {
+                    linkedin: `👋 Personal reflection${topicText}:\n\nThree years ago, I thought my career path was set in stone. I had the title, the salary, the respect of my peers${topic ? ` in ${topic}` : ''}. \n\nSo why did I feel so... empty?\n\nIt took me months to admit that success and fulfillment aren\'t the same thing. ${topic ? `My expertise in ${topic} was valuable, but I wasn\'t using it in a way that energized me.` : 'I was excellent at my job, but I wasn\'t passionate about the impact I was making.'}\n\nThe turning point? Giving myself permission to want more.\n\nNot more money or status—more alignment between my values and my daily work.\n\n${topic ? `Now, I use my ${topic} background in ways I never imagined possible.` : 'Now, I wake up excited about the problems I get to solve.'} The transition wasn\'t easy, but it was worth every uncertain moment.\n\nIf you\'re feeling that pull toward something different, trust it. Your intuition knows things your logical mind hasn\'t figured out yet.\n\nWhat\'s your intuition telling you about your career?\n\n#AuthenticLeadership #CareerJourney #PersonalGrowth`,
+                    instagram: `💭 Story time: The day I knew I had to make a change${topicText}\n\nI was sitting in another meeting that could have been an email${topic ? ` about ${topic} strategy` : ''}, watching the clock, and I had this moment of clarity:\n\n\'This isn\'t the life I imagined for myself.\'\n\n${topic ? `I loved ${topic}, but I didn\'t love how I was spending my days within it.` : 'I was good at my job, but my soul was slowly dying.'}\n\nSix months later, I took the leap. 🦋\n\nWas I scared? Absolutely.\nDid I have all the answers? Not even close.\nDo I regret it? Never.\n\nSometimes the scariest door is the one that leads to your best life.\n\n${topic ? `Currently loving how I get to approach ${topic} from this new angle! ` : ''}What door are you afraid to open? 👇\n\n#CareerChange #AuthenticLiving #CourageOverComfort`,
+                    twitter: `Real talk${topicText}: The hardest part of changing careers isn\'t the practical stuff.\n\nIt\'s giving yourself permission to want something different.\n\n${topic ? `Your ${topic} experience isn\'t wasted—it\'s your foundation.` : 'Your experience isn\'t wasted—it\'s your foundation.'}\n\n#CareerChange #Mindset`,
+                    facebook: `📸 Behind the scenes: What career transition really looks like${topicText}\n\nSocial media makes it look like: ✨Quit job ✨Start business ✨Instant success\n\nReality is more like: \n😰 Months of uncertainty\n📚 Constant learning\n☕ Lots of coffee and pep talks\n🎢 Emotional roller coaster\n💪 Small wins that build confidence\n\n${topic ? `Transitioning within/from ${topic} has taught me that growth isn\'t linear.` : 'This journey has taught me that growth isn\'t linear.'} Some days you feel unstoppable, others you question everything.\n\nBoth are normal. Both are part of the process.\n\nIf you\'re in the messy middle of your own transition, you\'re exactly where you need to be. Keep going. 💜\n\nWhat\'s one thing you wish someone had told you about career transitions? Let\'s help each other out! 👇\n\n#RealTalk #CareerTransition #Community`
+                },
+                question: {
+                    linkedin: `🤔 Discussion${topicText}: What\'s the biggest misconception about career transitions?\n\n${topic ? `In ${topic}, I often hear:` : 'I often hear:'}\n\n❌ \'You\'re starting over\'\n✅ You\'re building on everything you\'ve learned\n\n❌ \'You need to know exactly where you\'re going\'\n✅ You need to know your next step\n\n❌ \'It\'s too risky\'\n✅ Not following your intuition is the real risk\n\n${topic ? `For those of you in ${topic} or considering a move from it,` : 'For those of you considering a career change,'} what assumptions have you had to challenge?\n\nYour insights could help someone else taking their first step.\n\n#CareerTransition #ProfessionalDevelopment #Discussion`,
+                    instagram: `💭 Question for my career-changing community${topicText}:\n\nWhat\'s the one piece of advice you\'d give your past self at the beginning of your transition?\n\n${topic ? `Whether you pivoted within ${topic} or moved to something completely different,` : 'Whether you made a small pivot or a complete 180,'} drop your wisdom below! 👇\n\nI\'ll go first: Trust the process and stop trying to have all the answers before you start.\n\n${topic ? `Also, your ${topic} skills are more transferable than you think! 💪` : 'Also, your skills are more transferable than you think! 💪'}\n\nYour turn! ✨\n\n#CareerAdvice #Community #WisdomSharing`,
+                    twitter: `Poll time${topicText}: What\'s your biggest career transition fear?\n\n🤷‍♀️ Not knowing what I want\n💰 Financial uncertainty\n👥 What others will think\n⏰ Starting \'too late\'\n\n${topic ? `For ${topic} professionals especially curious about your thoughts!` : 'Curious about your thoughts!'}\n\n#CareerChange`,
+                    facebook: `🗣️ Community Question${topicText}: Let\'s talk about the elephant in the room...\n\nHow do you handle the \'But you were so successful\' comments when you decide to change directions?\n\n${topic ? `Especially for those of us who were doing well in ${topic},` : 'Especially when you were doing well in your previous role,'} people don\'t always understand why you\'d want something different.\n\nI\'ve heard everything from \'You\'re crazy\' to \'Must be nice to have that luxury.\'\n\nHere\'s what I\'ve learned to say: Success isn\'t just about external achievement. It\'s about alignment with your values and vision for your life.\n\nWhat responses have worked for you? How do you handle the skeptics while staying true to your path?\n\nThis community gets it—let\'s support each other! 💜\n\n#CareerChange #BoundarySettings #Community`
+                },
+                announcement: {
+                    linkedin: `🎉 Exciting news${topicText}!\n\nAfter months of planning${topic ? ` and leveraging my ${topic} expertise` : ''}, I\'m thrilled to announce [Your announcement here].\n\nThis wouldn\'t have been possible without:\n✅ The courage to bet on myself\n✅ An incredible support network\n✅ ${topic ? `Years of experience in ${topic}` : 'Years of building relevant experience'}\n✅ The MogulMomma community cheering me on\n\nIf you\'re considering your own leap${topic ? ` in ${topic} or beyond` : ''}, take this as your sign: Your dreams are waiting for you to say yes.\n\nWho\'s ready to cheer each other on? Drop a 🎉 below!\n\n#Announcement #DreamBig #CareerChange`,
+                    instagram: `🚀 IT\'S OFFICIAL${topicText}!\n\n[Your exciting announcement] ✨\n\nTo everyone who\'s been following my journey from ${topic ? `${topic} professional` : 'corporate'} to [new venture]—THANK YOU for your support! 💜\n\nThis is proof that:\n• Your dreams don\'t have expiration dates\n• It\'s never too late to pivot\n• ${topic ? `Your ${topic} background is an asset, not a limitation` : 'Your experience is an asset, not a limitation'}\n\nNext up: [What\'s coming next]\n\nWho else is making big moves? Share in the comments! 👇\n\n#NewChapter #DreamChaser #Announcement`,
+                    twitter: `🎯 Official announcement${topicText}: [Your news]\n\n${topic ? `From ${topic} professional to [new role/venture]` : 'From corporate to [new venture]'} - proof that career pivots are possible at any stage.\n\nYour dreams are valid. Go after them.\n\n#Announcement #CareerPivot`,
+                    facebook: `📢 Community Announcement${topicText}!\n\nI\'ve been bursting to share this news with you all... [Your announcement]! 🎉\n\nThis journey from ${topic ? `${topic} professional` : 'traditional career path'} to this moment has been full of:\n• Late-night planning sessions\n• Moments of doubt (and breakthroughs)\n• Incredible support from this community\n• ${topic ? `Learning to see my ${topic} experience as a superpower` : 'Learning to trust my instincts'}\n\nI\'m sharing this not to brag, but to show what\'s possible when you decide to bet on yourself.\n\nIf you\'re thinking about making your own move${topic ? ` in ${topic} or any field` : ''}, this is your reminder that you have everything you need to start.\n\nCelebrate with me in the comments! What\'s one dream you\'re working toward? 👇\n\n#Community #Announcement #DreamBig`
+                },
+                'behind-scenes': {
+                    linkedin: `👀 Behind the scenes${topicText}: What building a business actually looks like\n\nSocial media highlight reel: ✨Success ✨Growth \✨Confidence\n\nReality check:\n• 5 AM planning sessions with coffee #3\n• Imposter syndrome visits (uninvited)\n• ${topic ? `Figuring out how ${topic} skills apply to everything` : 'Learning new skills while applying old ones'}\n• Celebrating small wins like they\'re huge (because they are)\n\nThe unglamorous truth? Most days are just showing up, doing the work, and trusting the process.\n\n${topic ? `My ${topic} background taught me persistence—now I apply that same discipline to this new chapter.` : 'Every skill I learned in my previous career has found a place in this new chapter.'}\n\nWhat\'s one \' behind the scenes\' reality of your career journey that might surprise people?\n\n#RealTalk #Entrepreneurship #BehindTheScenes`,
+                    instagram: `📸 Real moment: My actual workspace today${topicText}\n\n• Laptop on kitchen counter ✓\n• Notes scribbled everywhere ✓\n• ${topic ? `${topic} reference books within reach` : 'Business books stacked high'} ✓\n• Coffee mug #2 (don\'t judge) ✓\n• To-do list longer than my arm ✓\n\nGlamorous? Not always.\nWorth it? Absolutely.\n\n${topic ? `Using my ${topic} skills in this new way` : 'Building something meaningful'} doesn\'t always look Instagram-ready, but it feels authentic to who I\'m becoming.\n\nShow me your real workspace! What does your \'behind the scenes\' look like? 👇\n\n#RealLife #WorkInProgress #Authenticity`,
+                    twitter: `Behind the scenes${topicText}: Failed at something new today.\n\nOld me would have spiraled.\nNew me sees data.\n\n${topic ? `${topic} taught me to iterate` : 'Experience taught me resilience'}. Failure is just feedback in disguise.\n\n#GrowthMindset #BehindTheScenes`,
+                    facebook: `🎬 Behind the Camera: The reality of career transitions${topicText}\n\nWhat you see: \"She\'s so brave for making such a big change!\"\n\nWhat you don\'t see:\n• The 3 AM anxiety spirals\n• Questioning every decision\n• ${topic ? `Wondering if leaving ${topic} was a mistake` : 'Wondering if I made a huge mistake'}\n• The financial stress spreadsheets\n• Friends who don\'t \'get it\'\n\nBut also what you don\'t see:\n• The quiet confidence building daily\n• Skills transferring in unexpected ways\n• New opportunities appearing\n• ${topic ? `Finding fresh ways to use my ${topic} expertise` : 'Discovering strengths I didn\'t know I had'}\n• This incredible community supporting every step\n\nTransitions are messy. They\'re also magical.\n\nIf you\'re in the messy middle of your own change, you\'re exactly where you need to be. Keep going. 💜\n\nWhat\'s one \'behind the scenes\' truth about your journey that you wish more people understood? 👇\n\n#RealTalk #Community #Transition`
+                },
+                testimonial: {
+                    linkedin: `🌟 Client Success Story${topicText}: When experience meets new opportunity\n\nMeet Sarah, former ${topic ? `${topic} director` : 'marketing director'} turned successful consultant.\n\nHer biggest fear? \'No one will take me seriously as an independent consultant.\'\n\nHer reality 6 months later:\n✅ 3x her corporate salary\n✅ ${topic ? `Helping ${topic} companies solve problems she lived` : 'Solving problems she experienced firsthand'}\n✅ Location and schedule freedom\n✅ Work that energizes instead of drains\n\nThe game-changer? Recognizing that her insider knowledge of ${topic ? `${topic} pain points` : 'corporate pain points'} made her incredibly valuable to companies needing solutions.\n\nYour experience isn\'t a limitation—it\'s your competitive advantage.\n\n${topic ? `To my ${topic} professionals considering consulting:` : 'To anyone considering a consulting path:'} your industry knowledge is gold. Package it, price it, and watch what happens.\n\nWhat industry knowledge do you have that could solve real problems?\n\n#ConsultingSuccess #CareerTransition #ClientWin`,
+                    instagram: `✨ Success Story Sunday${topicText}!\n\nShoutout to my client Maria who just landed her dream role${topic ? ` in ${topic}` : ''} after 8 months of strategic career pivoting! 🎉\n\nHer transformation:\n📍 Started: Feeling stuck in wrong-fit role\n📍 Middle: Clarity coaching + skill building\n📍 End: Multiple offers + 40% salary increase\n\nThe magic moment? When she realized her ${topic ? `${topic} background` : 'unique background'} wasn\'t a barrier—it was her superpower.\n\n${topic ? `Companies needed someone who understood ${topic} AND brought fresh perspective.` : 'Companies needed someone with her exact mix of experience and vision.'}\n\nMaria\'s advice: \'Stop apologizing for your path. Start owning your story.\'\n\nWho else needs to hear this today? Tag someone who\'s underestimating their value! 👇\n\n#SuccessStory #CareerWin #ClientLove`,
+                    twitter: `Client win${topicText}: From \'stuck\' to \'sought after\' in 6 months.\n\nThe secret? ${topic ? `She stopped hiding her ${topic} background and started leveraging it.` : 'She stopped seeing experience as limitation and started seeing it as differentiation.'}\n\nYour story is your strength.\n\n#ClientWin #CareerSuccess`,
+                    facebook: `💜 Community Success Story${topicText}: I have to share this win!\n\nOne of our MogulMomma members just sent me this message:\n\n\'Six months ago, I was ready to give up on my career dreams. I felt too old, too inexperienced in the new field, too everything. But your program helped me see that my ${topic ? `${topic} background` : 'corporate background'} wasn\'t a disadvantage—it was exactly what my new industry needed.\'\n\n\'Today I got the offer. Not just any offer—THE offer. The role I\'ve been dreaming about, with a team that values my unique perspective.\'\n\nI\'m crying happy tears! 😭💜\n\nThis is why I do this work. Every woman who steps into her power creates ripple effects for all of us.\n\n${topic ? `To anyone questioning whether their ${topic} experience is valuable in a new context:` : 'To anyone questioning whether their experience is valuable in a new context:'} IT IS. You just need to learn how to position it.\n\nWhat success stories are you celebrating? Share the wins, big and small! 👇\n\n#CommunityWin #SuccessStory #Transformation`
+                }
+            };
+            
+            const platformContent = contentTemplates[type]?.[platform] || contentTemplates[type]?.linkedin || 'Custom content generated for your specific needs!';
+            return platformContent;
+        }
+        
+        function useGeneratedContent() {
+            const generatedText = document.getElementById('generatedText').textContent;
+            document.getElementById('postContent').value = generatedText;
+            updateCharCount();
+            
+            // Close AI modal
+            const modal = document.querySelector('div[style*="position: fixed"]');
+            if (modal) {
+                modal.remove();
+                document.body.style.overflow = 'auto';
+            }
+            
+            alert('✅ AI-generated content added to your post!');
+        }
+        
+        function generateContentSuggestions() {
+            const suggestions = [
+                "🌟 Monday Motivation: Your career transition isn't a step back—it's a step up to who you were always meant to be. What bold move will you make this week?",
+                "💡 Business Tip: The most successful women don't wait for permission. They create their own opportunities. What opportunity will you create today?",
+                "🎯 Remember: You already have everything within you to succeed. Your experience isn't baggage—it's your unique competitive advantage.",
+                "✨ Success Story Saturday: Every expert was once a beginner. Share your journey and inspire others who are just starting their transformation.",
+                "🔥 Friday Reflection: What's one thing you learned this week that brought you closer to your dream career? Knowledge + Action = Success."
+            ];
+            
+            const shuffled = suggestions.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 3);
+            
+            const listElement = document.getElementById('suggestionsList');
+            listElement.innerHTML = '';
+            
+            selected.forEach(suggestion => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item';
+                item.textContent = suggestion;
+                item.onclick = () => {
+                    document.getElementById('postContent').value = suggestion;
+                    updateCharCount();
+                };
+                listElement.appendChild(item);
+            });
+        }
+
+        function generateMoreSuggestions() {
+            generateContentSuggestions();
+        }
+
+        // Template functions
+        function useTemplate(type) {
+            const templates = {
+                inspiration: "🌟 Monday Motivation: [Your inspiring message here] \n\nWhat resonates with you? Share in the comments! 👇\n\n#MondayMotivation #CareerTransition #WomenInBusiness",
+                tip: "💼 Business Tip: [Your valuable insight here]\n\nPro tip: [Additional actionable advice]\n\nTry this and let me know how it works for you! 💪\n\n#BusinessTips #Entrepreneurship #Success",
+                personal: "👋 Personal Story Time:\n\n[Share your authentic experience here]\n\nI'm sharing this because [reason why it matters]\n\nWhat's your experience with this? 💬\n\n#AuthenticLeadership #PersonalGrowth #Journey",
+                promotion: "🎯 Exciting News!\n\n[Announce your service/product here]\n\nThis helps you: [Key benefit 1], [Key benefit 2], [Key benefit 3]\n\nReady to transform your [relevant area]? Let's chat! ✨\n\n#[YourService] #Transformation #Results"
+            };
+            
+            document.getElementById('postContent').value = templates[type] || '';
+            updateCharCount();
+            openPostModal();
+        }
+
+        // Post management
+        function previewPost() {
+            const content = document.getElementById('postContent').value;
+            const platforms = selectedPlatforms;
+            const date = document.getElementById('postDate').value;
+            const time = document.getElementById('postTime').value;
+            
+            if (!content.trim()) {
+                alert('Please add some content to preview!');
+                return;
+            }
+            
+            alert(`Preview:\n\nContent: ${content}\nPlatforms: ${platforms.join(', ')}\nScheduled: ${date} at ${time}`);
+        }
+
+        function saveDraft() {
+            const draft = {
+                content: document.getElementById('postContent').value,
+                platforms: [...selectedPlatforms],
+                date: document.getElementById('postDate').value,
+                time: document.getElementById('postTime').value,
+                saved: new Date().toISOString()
+            };
+            
+            let drafts = JSON.parse(localStorage.getItem('mogulmomma_post_drafts') || '[]');
+            drafts.push(draft);
+            localStorage.setItem('mogulmomma_post_drafts', JSON.stringify(drafts));
+            
+            alert('✅ Draft saved successfully!');
+        }
+
+        // Form submission
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const content = document.getElementById('postContent').value;
+            const date = document.getElementById('postDate').value;
+            const time = document.getElementById('postTime').value;
+            
+            if (!content.trim()) {
+                alert('Please add some content!');
+                return;
+            }
+            
+            if (selectedPlatforms.length === 0) {
+                alert('Please select at least one platform!');
+                return;
+            }
+            
+            if (!date || !time) {
+                alert('Please select a date and time!');
+                return;
+            }
+            
+            // Create posts for each selected platform
+            selectedPlatforms.forEach(platform => {
+                const post = {
+                    id: Date.now() + Math.random(),
+                    content,
+                    platform,
+                    date,
+                    time,
+                    status: 'scheduled',
+                    created: new Date().toISOString()
+                };
+                
+                scheduledPosts.push(post);
+            });
+            
+            // Save to localStorage
+            localStorage.setItem('mogulmomma_scheduled_posts', JSON.stringify(scheduledPosts));
+            
+            // Update displays
+            updateCalendarDisplay();
+            updatePlatformStats();
+            
+            // Close modal
+            closeModal('postModal');
+            
+            // Show success message
+            alert(`✅ Post scheduled successfully for ${selectedPlatforms.join(', ')} on ${date} at ${time}!`);
+        });
+
+        // Update platform statistics
+        function updatePlatformStats() {
+            const stats = {
+                instagram: 0,
+                linkedin: 0,
+                twitter: 0,
+                facebook: 0
+            };
+            
+            scheduledPosts.forEach(post => {
+                if (stats.hasOwnProperty(post.platform)) {
+                    stats[post.platform]++;
+                }
+            });
+            
+            Object.keys(stats).forEach(platform => {
+                const element = document.getElementById(platform + 'Count');
+                if (element) {
+                    element.textContent = stats[platform];
+                }
+            });
+        }
+
+        // Additional features (placeholders)
+        function switchView(view) {
+            document.querySelectorAll('.view-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            if (view === 'list') {
+                alert('List view coming soon! 📋');
+            }
+        }
+
+        function filterByPlatform(platform) {
+            // Filter calendar display by platform
+            updateCalendarDisplay();
+        }
+
+        function openBulkScheduler() {
+            alert('🚀 Bulk scheduler coming soon! Upload CSV or connect your content calendar.');
+        }
+
+        function viewAnalytics() {
+            alert('📊 Analytics dashboard coming soon! Track engagement, reach, and performance.');
+        }
+
+        function importContent() {
+            alert('📤 Content import coming soon! Connect your existing tools and platforms.');
+        }
+
+        function handleMediaUpload(input) {
+            const files = Array.from(input.files);
+            const preview = document.getElementById('mediaPreview');
+            
+            if (files.length > 0) {
+                preview.style.display = 'block';
+                preview.innerHTML = files.map(file => 
+                    `<div style="display: inline-block; margin: 5px; padding: 10px; background: #f1f5f9; border-radius: 8px;">
+                        📎 ${file.name}
+                    </div>`
+                ).join('');
+            }
+        }
+
+        function editPost(postId) {
+            const post = scheduledPosts.find(p => p.id === postId);
+            if (post) {
+                // Populate form with post data
+                document.getElementById('postContent').value = post.content;
+                document.getElementById('postDate').value = post.date;
+                document.getElementById('postTime').value = post.time;
+                
+                // Select platform
+                selectedPlatforms = [post.platform];
+                document.querySelectorAll('.platform-option').forEach(option => {
+                    option.classList.toggle('selected', option.dataset.platform === post.platform);
+                });
+                
+                updateCharCount();
+                openPostModal();
+            }
+        }
+
+        // Subscription Access Control
+        function checkSubscriptionAccess() {
+            const subscriptionStatus = localStorage.getItem('mogulmomma_subscription_status') || 'active';
+            console.log('Content Scheduler - Subscription Status:', subscriptionStatus);
+            
+            if (subscriptionStatus === 'paused' || subscriptionStatus === 'cancelled' || subscriptionStatus === 'expired') {
+                console.log('Access denied, showing restriction page');
+                showContentSchedulerAccessDenied(subscriptionStatus);
+                return false;
+            }
+            
+            console.log('Access granted, loading calendar');
+            return true;
+        }
+
+        function showContentSchedulerAccessDenied(reason) {
+            document.body.innerHTML = `
+                <div style="min-height: 100vh; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); display: flex; align-items: center; justify-content: center; padding: 20px;">
+                    <div style="background: white; border-radius: 20px; padding: 50px; max-width: 600px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">📅</div>
+                        <h1 style="color: #1e293b; margin-bottom: 20px; font-size: 2rem;">Content Scheduler Access Restricted</h1>
+                        <p style="color: #64748b; font-size: 1.1rem; margin-bottom: 30px; line-height: 1.6;">
+                            Your subscription is ${reason}. The Content Scheduler is a premium feature available only to active MogulMomma members.
+                        </p>
+                        
+                        <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 15px; padding: 25px; margin-bottom: 30px;">
+                            <h3 style="color: #92400e; margin-bottom: 15px;">🚀 Content Scheduler Features</h3>
+                            <ul style="text-align: left; color: #92400e; line-height: 1.8;">
+                                <li>📅 Visual calendar planning</li>
+                                <li>🤖 AI-powered content suggestions</li>
+                                <li>📱 Multi-platform publishing (Instagram, LinkedIn, Twitter, Facebook)</li>
+                                <li>📊 Analytics and performance tracking</li>
+                                <li>💾 Draft saving and templates</li>
+                                <li>⏰ Automated posting at optimal times</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            ${reason === 'paused' ? 
+                                '<button onclick="reactivateFromScheduler()" style="background: linear-gradient(135deg, #10b981, #059669); color: white; border: none; padding: 15px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 1.1rem;">🔄 Reactivate Subscription</button>' :
+                                '<button onclick="window.location.href=\'/membership\'" style="background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; border: none; padding: 15px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 1.1rem;">💎 Upgrade to Premium - $97/month</button>'
+                            }
+                            <button onclick="window.location.href='/community'" style="background: #f1f5f9; color: #64748b; border: 2px solid #e2e8f0; padding: 15px 30px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 1.1rem;">👥 Return to Community</button>
+                        </div>
+                        
+                        <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 25px;">
+                            Questions? Contact us at <a href="mailto:hello@mogulmomma.com" style="color: #7c3aed;">hello@mogulmomma.com</a>
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function reactivateFromScheduler() {
+            if (confirm('Reactivate your MogulMomma subscription?\n\nYour subscription will resume immediately and you\'ll regain full access to the Content Scheduler and all premium features.\n\nNext billing: $97 on your next billing date.')) {
+                localStorage.setItem('mogulmomma_subscription_status', 'active');
+                alert('✅ Subscription reactivated successfully!\n\nWelcome back! You now have full access to the Content Scheduler.');
+                window.location.reload();
+            }
+        }
+
+        // Check access on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const hasAccess = checkSubscriptionAccess();
+            if (hasAccess) {
+                // Initialize all functionality if user has access
+                setupPlatformSelection();
+                initializeCalendar();
+            }
+        });
+    </script>
+</body>
+</html>

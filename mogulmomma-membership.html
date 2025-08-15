@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MogulMomma Community - Transform Your Dreams Into Reality</title>
-    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&vault=true&intent=subscription"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AcB_e2yQsKVAGCPj9JlTnVxtioU9VOYeTo3-PDeH4Moc25Hd_D-SSkOcj1WTOJ4KQ2zX8s2R8ajlxIDg&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         * {
@@ -837,7 +837,7 @@
                     <li>Financial planning assistance</li>
                 </ul>
                 
-                <div id="paypal-button-container" style="margin: 30px auto; max-width: 300px;"></div>
+                <div id="paypal-button-container-P-89F293775X619774CNCN3UAY" style="margin: 30px auto; max-width: 300px;"></div>
                 
                 <!-- Fallback for PayPal loading issues -->
                 <noscript>
@@ -1104,81 +1104,92 @@
     
     <!-- PayPal Integration Script -->
     <script>
+        // Affiliate tracking
+        function getAffiliateCode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('ref') || urlParams.get('affiliate') || null;
+        }
+
         // PayPal subscription setup
         paypal.Buttons({
             style: {
                 shape: 'rect',
-                color: 'blue',
+                color: 'gold',
                 layout: 'vertical',
-                label: 'subscribe',
-                height: 50
+                label: 'subscribe'
             },
             createSubscription: function(data, actions) {
                 return actions.subscription.create({
-                    'plan_id': 'P-YOUR_PLAN_ID_HERE', // You'll need to create this in PayPal
-                    'subscriber': {
-                        'name': {
-                            'given_name': 'First',  // Will be updated with actual user data
-                            'surname': 'Last'
-                        },
-                        'email_address': 'sabral@me.com' // Your PayPal account
-                    },
-                    'application_context': {
-                        'brand_name': 'MogulMomma',
-                        'locale': 'en-US',
-                        'shipping_preference': 'NO_SHIPPING',
-                        'user_action': 'SUBSCRIBE_NOW',
-                        'payment_method': {
-                            'payer_selected': 'PAYPAL',
-                            'payee_preferred': 'IMMEDIATE_PAYMENT_REQUIRED'
-                        },
-                        'return_url': window.location.origin + '/community-page.html',
-                        'cancel_url': window.location.href
-                    }
+                    /* Creates the subscription */
+                    plan_id: 'P-89F293775X619774CNCN3UAY'
                 });
             },
             onApprove: function(data, actions) {
-                // Payment approved - create user account and grant access
-                console.log('Subscription approved:', data.subscriptionID);
+                alert(data.subscriptionID); // You can add optional success message for the subscriber here
                 
-                // Show success message
-                document.getElementById('paypal-button-container').innerHTML = `
-                    <div style="background: #10b981; color: white; padding: 20px; border-radius: 12px; text-align: center;">
-                        <h3>🎉 Welcome to MogulMomma!</h3>
-                        <p style="margin: 10px 0;">Your subscription is active. Creating your account...</p>
-                    </div>
-                `;
+                // Track affiliate if present
+                const affiliateCode = getAffiliateCode();
+                if (affiliateCode) {
+                    trackAffiliateCommission(data.subscriptionID, affiliateCode);
+                }
                 
                 // Create user account in Supabase and save to Google Sheets
                 createUserAccount(data.subscriptionID);
                 savePaidMemberToGoogleSheets(data.subscriptionID);
-            },
-            onError: function(err) {
-                console.error('PayPal error:', err);
-                document.getElementById('paypal-button-container').innerHTML = `
-                    <div style="background: #ef4444; color: white; padding: 20px; border-radius: 12px; text-align: center;">
-                        <h3>Payment Error</h3>
-                        <p style="margin: 10px 0;">There was an issue processing your payment. Please try again.</p>
-                        <button onclick="location.reload()" style="background: white; color: #ef4444; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px;">
-                            Try Again
-                        </button>
-                    </div>
-                `;
-            },
-            onCancel: function(data) {
-                console.log('Payment cancelled:', data);
-                // User cancelled - show message
-                document.getElementById('paypal-button-container').innerHTML = `
-                    <div style="background: #f59e0b; color: white; padding: 20px; border-radius: 12px; text-align: center;">
-                        <h3>Payment Cancelled</h3>
-                        <p style="margin: 10px 0;">No charges have been made. You can try again when ready.</p>
-                        <button onclick="location.reload()" style="background: white; color: #f59e0b; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px;">
-                            Try Again
-                        </button>
-                    </div>
-                `;
             }
-        }).render('#paypal-button-container');
+        }).render('#paypal-button-container-P-89F293775X619774CNCN3UAY');
+
+        // Track affiliate commission (50% of $97 = $48.50 per month)
+        async function trackAffiliateCommission(subscriptionId, affiliateCode) {
+            try {
+                const commissionData = {
+                    subscription_id: subscriptionId,
+                    affiliate_code: affiliateCode,
+                    commission_amount: 48.50, // 50% of $97
+                    status: 'pending',
+                    created_at: new Date().toISOString()
+                };
+
+                // Save to Supabase affiliates table
+                const { data, error } = await supabaseClient
+                    .from('affiliate_commissions')
+                    .insert([commissionData]);
+
+                if (error) {
+                    console.error('Error tracking affiliate commission:', error);
+                } else {
+                    console.log('Affiliate commission tracked:', data);
+                    
+                    // Also save to Google Sheets for tracking
+                    saveAffiliateToGoogleSheets(affiliateCode, subscriptionId, 48.50);
+                }
+            } catch (error) {
+                console.error('Error in affiliate tracking:', error);
+            }
+        }
+
+        // Save affiliate commission to Google Sheets
+        async function saveAffiliateToGoogleSheets(affiliateCode, subscriptionId, commission) {
+            const GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_FOR_AFFILIATES';
+            
+            const data = {
+                timestamp: new Date().toISOString(),
+                type: 'affiliate_commission',
+                affiliate_code: affiliateCode,
+                subscription_id: subscriptionId,
+                commission_amount: commission,
+                status: 'pending'
+            };
+            
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            }).catch(error => console.error('Affiliate tracking error:', error));
+        }
 
         // Create user account after successful payment
         async function createUserAccount(subscriptionId) {

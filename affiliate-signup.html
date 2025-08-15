@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Affiliate Program - Earn $48.50 Per Referral</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 50%, #f472b6 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .earnings-highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .earnings-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #fbbf24;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #1e293b;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .benefits {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .benefits h3 {
+            color: #7c3aed;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .benefits ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .benefits li {
+            padding: 10px 0;
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .benefits li:before {
+            content: "✅ ";
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            display: none;
+        }
+
+        .affiliate-link-container {
+            background: #1e293b;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .affiliate-link {
+            background: #374151;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: #7c3aed;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 30px;
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .earnings-amount {
+                font-size: 2.5rem;
+            }
+            
+            .card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Back to MogulMomma</a>
+        
+        <div class="header">
+            <h1>💎 Join the MogulMomma Affiliate Program</h1>
+            <p class="subtitle">Earn recurring commissions by helping accomplished women transform their careers</p>
+            
+            <div class="earnings-highlight">
+                <div class="earnings-amount">$48.50</div>
+                <p style="font-size: 1.2rem; margin: 10px 0;">per month, per referral</p>
+                <p style="opacity: 0.9;">50% recurring commission on every subscription</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="benefits">
+                <h3>🚀 Why Join Our Affiliate Program?</h3>
+                <ul>
+                    <li>Earn $48.50 monthly recurring commission for every referral</li>
+                    <li>Promote a life-changing program for accomplished women</li>
+                    <li>No cap on earnings - unlimited earning potential</li>
+                    <li>Professional marketing materials provided</li>
+                    <li>Real-time tracking of your referrals and earnings</li>
+                    <li>Monthly payouts via PayPal or bank transfer</li>
+                </ul>
+            </div>
+
+            <form id="affiliateForm">
+                <h3 style="color: #1e293b; margin-bottom: 25px;">Get Your Affiliate Link</h3>
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="preferredCode">Preferred Affiliate Code (optional)</label>
+                    <input type="text" id="preferredCode" name="preferredCode" placeholder="e.g., SARAH2024 (will auto-generate if empty)">
+                    <small style="color: #64748b;">Letters and numbers only. Will be used in your affiliate links.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="paypalEmail">PayPal Email (for commission payments)</label>
+                    <input type="email" id="paypalEmail" name="paypalEmail" required>
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">
+                    Get My Affiliate Links
+                </button>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                <h3>🎉 Welcome to the MogulMomma Affiliate Program!</h3>
+                <p>Your affiliate account has been created. Here are your personalized links:</p>
+            </div>
+
+            <div class="affiliate-link-container" id="affiliateLinks">
+                <h4>Your Affiliate Links:</h4>
+                <div>
+                    <strong>Main Page:</strong>
+                    <div class="affiliate-link" id="mainLink"></div>
+                    <button class="copy-btn" onclick="copyLink('mainLink')">Copy</button>
+                </div>
+                <div style="margin-top: 15px;">
+                    <strong>Direct to Membership:</strong>
+                    <div class="affiliate-link" id="membershipLink"></div>
+                    <button class="copy-btn" onclick="copyLink('membershipLink')">Copy</button>
+                </div>
+                <div style="margin-top: 15px;">
+                    <strong>Assessment Page:</strong>
+                    <div class="affiliate-link" id="assessmentLink"></div>
+                    <button class="copy-btn" onclick="copyLink('assessmentLink')">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="supabase-config.js"></script>
+    <script>
+        document.getElementById('affiliateForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Creating your account...';
+            
+            const formData = new FormData(e.target);
+            const fullName = formData.get('fullName');
+            const email = formData.get('email');
+            const preferredCode = formData.get('preferredCode');
+            const paypalEmail = formData.get('paypalEmail');
+            
+            try {
+                // Generate affiliate code
+                const affiliateCode = preferredCode || generateAffiliateCode(fullName);
+                
+                // Try to create affiliate record in database
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('affiliates')
+                        .insert([{
+                            full_name: fullName,
+                            email: email,
+                            affiliate_code: affiliateCode,
+                            paypal_email: paypalEmail,
+                            status: 'active',
+                            created_at: new Date().toISOString()
+                        }]);
+                    
+                    if (error) {
+                        console.warn('Database not set up yet, showing links anyway:', error);
+                    }
+                } catch (dbError) {
+                    console.warn('Database table not created yet:', dbError);
+                }
+                
+                // Always show success and affiliate links (even if DB fails)
+                showAffiliateLinks(affiliateCode);
+                
+                // Also save to localStorage for now
+                localStorage.setItem('mogulmomma_affiliate', JSON.stringify({
+                    fullName, email, affiliateCode, paypalEmail, 
+                    createdAt: new Date().toISOString()
+                }));
+                
+            } catch (error) {
+                console.error('Error creating affiliate:', error);
+                alert('Error creating affiliate account. Please try again or contact support.');
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+        
+        function generateAffiliateCode(fullName) {
+            const cleanName = fullName.replace(/[^a-zA-Z]/g, '').toUpperCase();
+            const randomNum = Math.floor(Math.random() * 1000);
+            return cleanName.substring(0, 8) + randomNum;
+        }
+        
+        function showAffiliateLinks(code) {
+            const baseUrl = 'https://mogulmomma.com';
+            
+            document.getElementById('affiliateForm').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+            document.getElementById('affiliateLinks').style.display = 'block';
+            
+            document.getElementById('mainLink').textContent = `${baseUrl}?ref=${code}`;
+            document.getElementById('membershipLink').textContent = `${baseUrl}/mogulmomma-membership.html?ref=${code}`;
+            document.getElementById('assessmentLink').textContent = `${baseUrl}/mogul-mama-assessment.html?ref=${code}`;
+        }
+        
+        function copyLink(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = '#10b981';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#7c3aed';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

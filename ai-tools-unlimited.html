@@ -275,9 +275,10 @@
         <div class="header-content">
             <div class="logo">👑 MogulMomma AI Tools</div>
             <nav class="nav-links">
+                <a href="/dashboard" style="background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; padding: 8px 16px; border-radius: 8px; font-weight: 600;">🏠 Dashboard</a>
+                <a href="/community" style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 8px 16px; border-radius: 8px; font-weight: 600;">👥 Community</a>
+                <a href="/calendar">📅 Calendar</a>
                 <a href="/">Home</a>
-                <a href="mogul-mama-assessment.html">Free Assessment</a>
-                <a href="login.html">Member Login</a>
             </nav>
         </div>
     </header>
@@ -291,21 +292,14 @@
             </p>
         </div>
 
-        <!-- Usage Counter -->
-        <div class="usage-counter" id="usageCounter">
-            <strong>Free Trial: <span id="usageCount">5</span> content tools + <span id="imageCount">1</span> image generation remaining</strong>
-            <p style="margin: 5px 0 0 0; font-size: 0.9rem;">Try our AI tools before upgrading to unlimited access</p>
+        <!-- Members Area Banner -->
+        <div class="usage-counter" id="usageCounter" style="background: linear-gradient(135deg, #7c3aed, #c084fc); border-color: #7c3aed;">
+            <strong style="color: white;">👑 MEMBERS AREA - Unlimited Access</strong>
+            <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: white;">Welcome to your exclusive AI tools - No limits, no restrictions!</p>
         </div>
 
-        <!-- Upgrade Prompt (hidden initially) -->
-        <div class="upgrade-prompt" id="upgradePrompt">
-            <h3 style="margin-bottom: 15px;">🎉 You've Used All Your Free Tries!</h3>
-            <p style="margin-bottom: 20px; font-size: 1.1rem;">
-                Ready for unlimited AI tool access? Join the MogulMomma community and get unlimited generations plus live coaching, community support, and exclusive resources.
-            </p>
-            <a href="mogulmomma-membership.html" class="upgrade-btn">
-                💎 Upgrade to Unlimited Access - $97/month
-            </a>
+        <!-- Upgrade Prompt (hidden for members) -->
+        <div class="upgrade-prompt" id="upgradePrompt" style="display: none;">
         </div>
 
         <!-- AI Tools Stack -->
@@ -455,38 +449,14 @@
 
     <script src="supabase-config.js"></script>
     <script>
-        let usageCount = parseInt(localStorage.getItem('mogulmomma_ai_usage') || '5');
-        let imageUsageCount = parseInt(localStorage.getItem('mogulmomma_image_usage') || '1');
-        let isPaidMember = false;
+        // Unlimited access for community members
+        let isPaidMember = true;
         
-        // Check if user is a paid member
-        async function checkMembershipStatus() {
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            
-            if (user) {
-                // Check if user has active subscription
-                const { data: subscription } = await supabaseClient
-                    .from('subscriptions')
-                    .select('status')
-                    .eq('user_id', user.id)
-                    .eq('status', 'active')
-                    .single();
-                
-                if (subscription) {
-                    isPaidMember = true;
-                    // Hide usage counter for paid members
-                    document.getElementById('usageCounter').innerHTML = `
-                        <strong style="color: #10b981;">✅ Unlimited Access - Active Member</strong>
-                        <p style="margin: 5px 0 0 0; font-size: 0.9rem;">Enjoy unlimited AI tool usage as part of your membership</p>
-                    `;
-                    document.getElementById('usageCounter').style.background = 'linear-gradient(135deg, #d1fae5, #10b981)';
-                    document.getElementById('usageCounter').style.borderColor = '#10b981';
-                    return;
-                }
-            }
-            
-            // Not a paid member - use trial system
-            updateUsageCounter();
+        // Always show unlimited access for this version
+        function checkMembershipStatus() {
+            // Remove upgrade prompts
+            const upgradePrompt = document.getElementById('upgradePrompt');
+            if (upgradePrompt) upgradePrompt.style.display = 'none';
         }
         
         // Update usage counter display

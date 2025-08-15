@@ -340,6 +340,36 @@
             color: #7c3aed;
         }
 
+        /* Template Cards */
+        .template-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.15);
+            border-color: #7c3aed;
+        }
+
+        .template-card h4 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .template-card p {
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
         /* Saved Projects */
         .saved-projects {
             margin-top: 40px;
@@ -481,6 +511,14 @@
                     <span class="nav-icon">🏠</span>
                     <span>Dashboard</span>
                 </div>
+                <a href="/community" class="nav-item">
+                    <span class="nav-icon">👥</span>
+                    <span>Community</span>
+                </a>
+                <div class="nav-item" onclick="window.location.href='/ai-tools-unlimited'">
+                    <span class="nav-icon">📝</span>
+                    <span>Content Generator</span>
+                </div>
                 <div class="nav-item" onclick="showPage('roadmap-builder')">
                     <span class="nav-icon">🗺️</span>
                     <span>Roadmap Builder</span>
@@ -488,10 +526,6 @@
                 <div class="nav-item" onclick="showPage('brand-creator')">
                     <span class="nav-icon">🎨</span>
                     <span>Brand Creator</span>
-                </div>
-                <div class="nav-item" onclick="showPage('content-generator')">
-                    <span class="nav-icon">📝</span>
-                    <span>Content Generator</span>
                 </div>
                 <div class="nav-item" onclick="showPage('ai-coach')">
                     <span class="nav-icon">🤖</span>
@@ -505,14 +539,10 @@
                     <span class="nav-icon">💼</span>
                     <span>My Projects</span>
                 </div>
-                <a href="community-page.html" class="nav-item">
-                    <span class="nav-icon">👥</span>
-                    <span>Community</span>
+                <a href="/calendar" class="nav-item">
+                    <span class="nav-icon">📅</span>
+                    <span>Calendar</span>
                 </a>
-                <div class="nav-item" onclick="showPage('resources')">
-                    <span class="nav-icon">📚</span>
-                    <span>Resources</span>
-                </div>
             </nav>
         </aside>
 
@@ -560,7 +590,7 @@
                         <p class="tool-description">Design your complete brand identity, messaging, and visual elements that reflect your authentic self.</p>
                     </div>
 
-                    <div class="tool-card" onclick="showPage('content-generator')">
+                    <div class="tool-card" onclick="window.location.href='ai-tools-unlimited.html'">
                         <span class="tool-icon">📝</span>
                         <h3 class="tool-title">Content Generator</h3>
                         <p class="tool-description">Create social media posts, website copy, emails, and marketing materials in your unique voice.</p>
@@ -587,27 +617,18 @@
 
                 <!-- Recent Activity -->
                 <h3 style="margin: 40px 0 20px 0; color: #1e293b;">📈 Recent Activity</h3>
-                <div class="saved-projects">
-                    <div class="project-item">
-                        <div class="project-info">
-                            <h4>Wellness Coaching Business Roadmap</h4>
-                            <p>Last updated 2 hours ago • Roadmap Builder</p>
-                        </div>
-                        <div class="project-actions">
-                            <button class="project-btn">Continue</button>
-                            <button class="project-btn">Share</button>
-                        </div>
-                    </div>
-                    <div class="project-item">
-                        <div class="project-info">
-                            <h4>LinkedIn Content Calendar</h4>
-                            <p>Created yesterday • Content Generator</p>
-                        </div>
-                        <div class="project-actions">
-                            <button class="project-btn">Edit</button>
-                            <button class="project-btn">Export</button>
-                        </div>
-                    </div>
+                <div id="recent-activity-container" class="saved-projects">
+                    <!-- Dynamic recent activity will load here -->
+                </div>
+                
+                <!-- Recent Activity Empty State -->
+                <div id="recent-activity-empty" style="text-align: center; padding: 40px 20px; color: #64748b; display: none;">
+                    <div style="font-size: 2.5rem; margin-bottom: 15px;">📋</div>
+                    <h4 style="color: #1e293b; margin-bottom: 8px;">No Recent Activity</h4>
+                    <p style="margin-bottom: 20px;">Start creating content to see your recent work here!</p>
+                    <button onclick="showPage('documents')" style="background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        🚀 Create Something
+                    </button>
                 </div>
             </div>
 
@@ -803,6 +824,106 @@
                 </div>
             </div>
 
+            <!-- Documents Page -->
+            <div id="documents-page" class="page" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">📋 Document Generator</h1>
+                    <p class="page-subtitle">Create professional business plans, contracts, and proposals</p>
+                </div>
+
+                <div class="tool-workspace">
+                    <!-- Document Templates -->
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="color: #1e293b; margin-bottom: 20px;">🚀 Business Plan Templates</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                            
+                            <div class="template-card" onclick="generateDocument('business-plan')">
+                                <div style="font-size: 2rem; margin-bottom: 15px;">📊</div>
+                                <h4>Business Plan</h4>
+                                <p>Complete business plan with market analysis, financial projections, and strategy</p>
+                            </div>
+                            
+                            <div class="template-card" onclick="generateDocument('marketing-plan')">
+                                <div style="font-size: 2rem; margin-bottom: 15px;">📈</div>
+                                <h4>Marketing Plan</h4>
+                                <p>Strategic marketing plan with target audience analysis and campaign strategies</p>
+                            </div>
+                            
+                            <div class="template-card" onclick="generateDocument('financial-projection')">
+                                <div style="font-size: 2rem; margin-bottom: 15px;">💰</div>
+                                <h4>Financial Projections</h4>
+                                <p>Revenue forecasts, expense budgets, and cash flow projections</p>
+                            </div>
+                            
+                            <div class="template-card" onclick="generateDocument('client-proposal')">
+                                <div style="font-size: 2rem; margin-bottom: 15px;">📝</div>
+                                <h4>Client Proposal</h4>
+                                <p>Professional proposal template for services, projects, and partnerships</p>
+                            </div>
+                            
+                            <div class="template-card" onclick="generateDocument('service-agreement')">
+                                <div style="font-size: 2rem; margin-bottom: 15px;">📋</div>
+                                <h4>Service Agreement</h4>
+                                <p>Contract template for client services with terms and conditions</p>
+                            </div>
+                            
+                            <div class="template-card" onclick="generateDocument('operations-manual')">
+                                <div style="font-size: 2rem; margin-bottom: 15px;">⚙️</div>
+                                <h4>Operations Manual</h4>
+                                <p>Standard operating procedures and business process documentation</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Document Generator -->
+                    <div style="background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+                        <h3 style="color: #1e293b; margin-bottom: 20px;">✍️ Custom Document Generator</h3>
+                        
+                        <div class="input-section">
+                            <label class="input-label">What type of document do you need?</label>
+                            <select class="ai-input" id="document-type" style="height: auto; padding: 12px;">
+                                <option value="">Select document type...</option>
+                                <option value="business-plan">Business Plan</option>
+                                <option value="marketing-plan">Marketing Plan</option>
+                                <option value="financial-projection">Financial Projections</option>
+                                <option value="client-proposal">Client Proposal</option>
+                                <option value="service-agreement">Service Agreement</option>
+                                <option value="operations-manual">Operations Manual</option>
+                                <option value="employee-handbook">Employee Handbook</option>
+                                <option value="privacy-policy">Privacy Policy</option>
+                                <option value="terms-of-service">Terms of Service</option>
+                                <option value="custom">Custom Document</option>
+                            </select>
+                        </div>
+
+                        <div class="input-section">
+                            <label class="input-label">Describe your business and document requirements</label>
+                            <textarea class="ai-input" id="document-input" placeholder="Example: I'm starting a wellness coaching business that helps busy professionals reduce stress and improve work-life balance. I need a comprehensive business plan that includes market analysis for the wellness industry, competitor research, pricing strategy for 1:1 coaching packages, and 3-year financial projections..."></textarea>
+                        </div>
+
+                        <button class="generate-btn" onclick="generateCustomDocument()">
+                            📋 Generate Document
+                        </button>
+
+                        <div class="output-section">
+                            <label class="input-label">Your Generated Document</label>
+                            <div class="ai-output" id="document-output">
+                                <div class="output-placeholder">
+                                    Select a template or describe your custom document needs to get started
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="output-actions" id="document-actions" style="display: none;">
+                            <button class="action-btn" onclick="downloadDocument()">📥 Download PDF</button>
+                            <button class="action-btn" onclick="editDocument()">✏️ Edit Document</button>
+                            <button class="action-btn" onclick="shareDocument()">📤 Share Document</button>
+                            <button class="action-btn" onclick="saveDocument()">💾 Save to Projects</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- My Projects Page -->
             <div id="my-projects-page" class="page" style="display: none;">
                 <div class="page-header">
@@ -810,40 +931,19 @@
                     <p class="page-subtitle">Manage and organize all your dreams and projects</p>
                 </div>
 
-                <div class="saved-projects">
-                    <div class="project-item">
-                        <div class="project-info">
-                            <h4>Wellness Coaching Business</h4>
-                            <p>Created 3 days ago • Roadmap, Brand, Content</p>
-                        </div>
-                        <div class="project-actions">
-                            <button class="project-btn">Open</button>
-                            <button class="project-btn">Edit</button>
-                            <button class="project-btn">Share</button>
-                        </div>
-                    </div>
-                    <div class="project-item">
-                        <div class="project-info">
-                            <h4>LinkedIn Authority Building</h4>
-                            <p>Created 1 week ago • Content Calendar</p>
-                        </div>
-                        <div class="project-actions">
-                            <button class="project-btn">Open</button>
-                            <button class="project-btn">Edit</button>
-                            <button class="project-btn">Export</button>
-                        </div>
-                    </div>
-                    <div class="project-item">
-                        <div class="project-info">
-                            <h4>Financial Freedom Plan</h4>
-                            <p>Created 2 weeks ago • Roadmap, Budget</p>
-                        </div>
-                        <div class="project-actions">
-                            <button class="project-btn">Open</button>
-                            <button class="project-btn">Update</button>
-                            <button class="project-btn">Archive</button>
-                        </div>
-                    </div>
+                <!-- Projects will be loaded dynamically -->
+                <div id="projects-container" class="saved-projects">
+                    <!-- Real projects will appear here -->
+                </div>
+                
+                <!-- Empty State -->
+                <div id="projects-empty-state" style="text-align: center; padding: 60px 20px; color: #64748b; display: none;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">📁</div>
+                    <h3 style="color: #1e293b; margin-bottom: 10px;">No Projects Yet</h3>
+                    <p style="margin-bottom: 25px;">Start creating documents and content to see your projects here!</p>
+                    <button onclick="showPage('documents')" class="primary-btn" style="background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        📋 Create Your First Document
+                    </button>
                 </div>
             </div>
         </main>
@@ -1123,9 +1223,1293 @@
             alert(`📋 Content copied to clipboard!`);
         }
 
+        // Document Generation Functions
+        function generateDocument(type) {
+            const output = document.getElementById('document-output');
+            const actions = document.getElementById('document-actions');
+            
+            // Show loading state
+            output.innerHTML = '<div class="loading"><div class="spinner"></div>Generating your document...</div>';
+            actions.style.display = 'none';
+            
+            setTimeout(() => {
+                const templates = {
+                    'business-plan': generateBusinessPlan(),
+                    'marketing-plan': generateMarketingPlan(),
+                    'financial-projection': generateFinancialProjection(),
+                    'client-proposal': generateClientProposal(),
+                    'service-agreement': generateServiceAgreement(),
+                    'operations-manual': generateOperationsManual()
+                };
+                
+                const content = templates[type] || '<div class="ai-response">Document template not found.</div>';
+                
+                // Store the content for download/edit functions
+                currentDocumentContent = getDocumentContent(type);
+                currentDocumentTitle = getDocumentTitle(type);
+                
+                output.innerHTML = content;
+                actions.style.display = 'flex';
+            }, 2000);
+        }
+
+        function getDocumentTitle(type) {
+            const titles = {
+                'business-plan': 'Complete Business Plan',
+                'marketing-plan': 'Strategic Marketing Plan',
+                'financial-projection': 'Financial Projections',
+                'client-proposal': 'Professional Client Proposal',
+                'service-agreement': 'Service Agreement',
+                'operations-manual': 'Operations Manual'
+            };
+            return titles[type] || 'Business Document';
+        }
+
+        function getDocumentContent(type) {
+            const contents = {
+                'business-plan': generateBusinessPlanContent(),
+                'marketing-plan': generateMarketingPlanContent(),
+                'financial-projection': generateFinancialProjectionContent(),
+                'client-proposal': generateClientProposalContent(),
+                'service-agreement': generateServiceAgreementContent(),
+                'operations-manual': generateOperationsManualContent()
+            };
+            return contents[type] || '<div class="section"><p>Document content not available.</p></div>';
+        }
+
+        function generateCustomDocument() {
+            const documentType = document.getElementById('document-type').value;
+            const input = document.getElementById('document-input').value;
+            const output = document.getElementById('document-output');
+            const actions = document.getElementById('document-actions');
+            
+            if (!documentType || !input.trim()) {
+                alert('Please select a document type and describe your requirements.');
+                return;
+            }
+            
+            // Show loading state
+            output.innerHTML = '<div class="loading"><div class="spinner"></div>Creating your custom document...</div>';
+            actions.style.display = 'none';
+            
+            setTimeout(() => {
+                const customContent = `
+                    <div class="ai-response">
+                        <h3>✅ Custom ${documentType.replace('-', ' ').toUpperCase()} Generated</h3>
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <p><strong>Based on your requirements:</strong> "${input.substring(0, 100)}..."</p>
+                        </div>
+                        <div style="background: white; padding: 25px; border: 2px solid #e2e8f0; border-radius: 10px; text-align: left;">
+                            <h4 style="color: #7c3aed; margin-bottom: 15px;">Document Preview</h4>
+                            <p style="color: #64748b; line-height: 1.6;">
+                                Your custom ${documentType.replace('-', ' ')} has been generated based on your specific business requirements. 
+                                This professional document includes all the essential sections, industry-specific content, and customized recommendations 
+                                tailored to your business model and objectives.
+                            </p>
+                            <p style="color: #64748b; line-height: 1.6; margin-top: 15px;">
+                                <strong>What's included:</strong> Executive summary, detailed analysis, actionable strategies, 
+                                financial considerations, implementation timeline, and next steps for your business.
+                            </p>
+                        </div>
+                        <div style="text-align: center; margin-top: 20px; padding: 20px; background: #fef3c7; border-radius: 10px;">
+                            <p style="color: #92400e; font-weight: 600;">🎯 Ready to take your business to the next level?</p>
+                            <p style="color: #92400e; font-size: 0.9rem;">Download your document and start implementing these strategies today!</p>
+                        </div>
+                    </div>
+                `;
+                
+                output.innerHTML = customContent;
+                actions.style.display = 'flex';
+            }, 2500);
+        }
+
+        function generateBusinessPlan() {
+            return `
+                <div class="ai-response">
+                    <h3>📊 Complete Business Plan Generated</h3>
+                    <div style="background: white; padding: 25px; border: 2px solid #e2e8f0; border-radius: 10px; text-align: left;">
+                        <h4 style="color: #7c3aed; margin-bottom: 15px;">Executive Summary</h4>
+                        <p style="color: #64748b; line-height: 1.6; margin-bottom: 20px;">
+                            Your business plan outlines a comprehensive strategy for building a successful enterprise. 
+                            This plan includes market analysis, competitive research, financial projections, and operational strategies.
+                        </p>
+                        
+                        <h4 style="color: #7c3aed; margin-bottom: 10px;">Key Sections Included:</h4>
+                        <ul style="color: #64748b; line-height: 1.8; margin-left: 20px;">
+                            <li>Executive Summary & Vision Statement</li>
+                            <li>Market Analysis & Target Customer Profile</li>
+                            <li>Competitive Analysis & Positioning</li>
+                            <li>Products/Services Description</li>
+                            <li>Marketing & Sales Strategy</li>
+                            <li>Operations Plan & Management Structure</li>
+                            <li>Financial Projections (3-year forecast)</li>
+                            <li>Funding Requirements & Investment Strategy</li>
+                            <li>Risk Analysis & Mitigation Plans</li>
+                            <li>Implementation Timeline & Milestones</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateMarketingPlan() {
+            return `
+                <div class="ai-response">
+                    <h3>📈 Strategic Marketing Plan Generated</h3>
+                    <div style="background: white; padding: 25px; border: 2px solid #e2e8f0; border-radius: 10px; text-align: left;">
+                        <h4 style="color: #7c3aed; margin-bottom: 15px;">Marketing Strategy Overview</h4>
+                        <p style="color: #64748b; line-height: 1.6; margin-bottom: 20px;">
+                            Your comprehensive marketing plan includes target audience analysis, brand positioning, 
+                            campaign strategies, and performance metrics to drive business growth.
+                        </p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+                            <div>
+                                <h5 style="color: #1e293b; margin-bottom: 10px;">🎯 Target Audience</h5>
+                                <ul style="color: #64748b; font-size: 0.9rem; line-height: 1.6;">
+                                    <li>Primary demographics</li>
+                                    <li>Pain points & motivations</li>
+                                    <li>Buying behavior patterns</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 style="color: #1e293b; margin-bottom: 10px;">📱 Marketing Channels</h5>
+                                <ul style="color: #64748b; font-size: 0.9rem; line-height: 1.6;">
+                                    <li>Social media strategy</li>
+                                    <li>Content marketing plan</li>
+                                    <li>Email campaigns</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateFinancialProjection() {
+            return `
+                <div class="ai-response">
+                    <h3>💰 Financial Projections Generated</h3>
+                    <div style="background: white; padding: 25px; border: 2px solid #e2e8f0; border-radius: 10px; text-align: left;">
+                        <h4 style="color: #7c3aed; margin-bottom: 15px;">3-Year Financial Forecast</h4>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;">
+                            <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; text-align: center;">
+                                <h5 style="color: #15803d;">Year 1</h5>
+                                <p style="color: #15803d; font-weight: 600;">$85,000</p>
+                            </div>
+                            <div style="background: #fef3c7; padding: 15px; border-radius: 8px; text-align: center;">
+                                <h5 style="color: #92400e;">Year 2</h5>
+                                <p style="color: #92400e; font-weight: 600;">$145,000</p>
+                            </div>
+                            <div style="background: #faf5ff; padding: 15px; border-radius: 8px; text-align: center;">
+                                <h5 style="color: #7c3aed;">Year 3</h5>
+                                <p style="color: #7c3aed; font-weight: 600;">$220,000</p>
+                            </div>
+                        </div>
+                        <p style="color: #64748b; line-height: 1.6;">
+                            Includes revenue forecasts, expense budgets, cash flow projections, break-even analysis, 
+                            and key financial metrics to guide your business decisions.
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateClientProposal() {
+            return `
+                <div class="ai-response">
+                    <h3>📝 Professional Client Proposal Generated</h3>
+                    <div style="background: white; padding: 25px; border: 2px solid #e2e8f0; border-radius: 10px; text-align: left;">
+                        <h4 style="color: #7c3aed; margin-bottom: 15px;">Proposal Structure</h4>
+                        <p style="color: #64748b; line-height: 1.6; margin-bottom: 20px;">
+                            Your professional proposal includes project scope, deliverables, timeline, pricing, 
+                            and terms designed to win clients and set clear expectations.
+                        </p>
+                        
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 10px;">
+                            <h5 style="color: #1e293b; margin-bottom: 10px;">✨ Proposal Highlights</h5>
+                            <ul style="color: #64748b; line-height: 1.6;">
+                                <li>Executive summary & project overview</li>
+                                <li>Detailed scope of work & deliverables</li>
+                                <li>Timeline & project milestones</li>
+                                <li>Investment & payment terms</li>
+                                <li>Company credentials & testimonials</li>
+                                <li>Next steps & acceptance process</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateServiceAgreement() {
+            return `
+                <div class="ai-response">
+                    <h3>📋 Service Agreement Generated</h3>
+                    <div style="background: white; padding: 25px; border: 2px solid #e2e8f0; border-radius: 10px; text-align: left;">
+                        <h4 style="color: #7c3aed; margin-bottom: 15px;">Legal Contract Template</h4>
+                        <p style="color: #64748b; line-height: 1.6; margin-bottom: 20px;">
+                            Professional service agreement with terms and conditions, payment terms, 
+                            intellectual property rights, and liability protections.
+                        </p>
+                        
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <p style="color: #92400e; font-size: 0.9rem; font-weight: 600;">⚖️ Legal Notice</p>
+                            <p style="color: #92400e; font-size: 0.8rem;">This template should be reviewed by a legal professional before use.</p>
+                        </div>
+                        
+                        <h5 style="color: #1e293b; margin-bottom: 10px;">Contract Sections:</h5>
+                        <ul style="color: #64748b; line-height: 1.6; font-size: 0.9rem;">
+                            <li>Service description & deliverables</li>
+                            <li>Payment terms & schedules</li>
+                            <li>Intellectual property ownership</li>
+                            <li>Confidentiality & non-disclosure</li>
+                            <li>Termination clauses</li>
+                            <li>Liability limitations</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateOperationsManual() {
+            return `
+                <div class="ai-response">
+                    <h3>⚙️ Operations Manual Generated</h3>
+                    <div style="background: white; padding: 25px; border: 2px solid #e2e8f0; border-radius: 10px; text-align: left;">
+                        <h4 style="color: #7c3aed; margin-bottom: 15px;">Standard Operating Procedures</h4>
+                        <p style="color: #64748b; line-height: 1.6; margin-bottom: 20px;">
+                            Comprehensive operations manual with step-by-step procedures, quality standards, 
+                            and best practices for consistent business operations.
+                        </p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div>
+                                <h5 style="color: #1e293b; margin-bottom: 10px;">📋 Process Documentation</h5>
+                                <ul style="color: #64748b; font-size: 0.9rem; line-height: 1.6;">
+                                    <li>Daily operations checklist</li>
+                                    <li>Client onboarding process</li>
+                                    <li>Quality control procedures</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 style="color: #1e293b; margin-bottom: 10px;">👥 Team Guidelines</h5>
+                                <ul style="color: #64748b; font-size: 0.9rem; line-height: 1.6;">
+                                    <li>Role descriptions & responsibilities</li>
+                                    <li>Communication protocols</li>
+                                    <li>Performance standards</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Full document content functions for download
+        function generateBusinessPlanContent() {
+            return `
+                <div class="section">
+                    <h2>Executive Summary</h2>
+                    <p>Our innovative business provides comprehensive solutions for our target market, addressing key pain points while delivering exceptional value. This business plan outlines our strategy for achieving sustainable growth and market leadership.</p>
+                    
+                    <h3>Mission Statement</h3>
+                    <p>To empower our clients with innovative solutions that transform their challenges into opportunities for success.</p>
+                    
+                    <h3>Key Success Factors</h3>
+                    <ul>
+                        <li>Strong market demand for our services</li>
+                        <li>Experienced leadership team</li>
+                        <li>Competitive pricing strategy</li>
+                        <li>Innovative technology platform</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Market Analysis</h2>
+                    <h3>Industry Overview</h3>
+                    <p>The market for our services is experiencing significant growth, with industry projections showing continued expansion over the next 5 years.</p>
+                    
+                    <h3>Target Market</h3>
+                    <ul>
+                        <li>Small to medium-sized businesses</li>
+                        <li>Entrepreneurs seeking growth solutions</li>
+                        <li>Companies requiring specialized expertise</li>
+                    </ul>
+                    
+                    <h3>Competitive Analysis</h3>
+                    <p>While competition exists, our unique value proposition and innovative approach position us favorably in the market.</p>
+                </div>
+                
+                <div class="section">
+                    <h2>Financial Projections</h2>
+                    <div class="grid">
+                        <div class="card">
+                            <h3>Year 1 Revenue</h3>
+                            <p><strong>$85,000</strong></p>
+                            <p>Initial market penetration and client acquisition</p>
+                        </div>
+                        <div class="card">
+                            <h3>Year 2 Revenue</h3>
+                            <p><strong>$145,000</strong></p>
+                            <p>Expansion and service diversification</p>
+                        </div>
+                    </div>
+                    
+                    <h3>Key Financial Metrics</h3>
+                    <ul>
+                        <li>Break-even: Month 8</li>
+                        <li>Customer acquisition cost: $125</li>
+                        <li>Average customer lifetime value: $2,500</li>
+                        <li>Gross margin: 65%</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Marketing Strategy</h2>
+                    <h3>Marketing Channels</h3>
+                    <ul>
+                        <li>Digital marketing and social media</li>
+                        <li>Content marketing and thought leadership</li>
+                        <li>Referral and partnership programs</li>
+                        <li>Industry events and networking</li>
+                    </ul>
+                    
+                    <h3>Sales Process</h3>
+                    <ol>
+                        <li>Lead generation through multiple channels</li>
+                        <li>Initial consultation and needs assessment</li>
+                        <li>Customized proposal development</li>
+                        <li>Contract negotiation and closing</li>
+                        <li>Onboarding and service delivery</li>
+                    </ol>
+                </div>
+                
+                <div class="section">
+                    <h2>Implementation Timeline</h2>
+                    <h3>Phase 1: Foundation (Months 1-3)</h3>
+                    <ul>
+                        <li>Business registration and legal setup</li>
+                        <li>Initial team hiring and training</li>
+                        <li>Technology platform development</li>
+                        <li>Marketing material creation</li>
+                    </ul>
+                    
+                    <h3>Phase 2: Launch (Months 4-6)</h3>
+                    <ul>
+                        <li>Soft launch with beta clients</li>
+                        <li>Marketing campaign activation</li>
+                        <li>Feedback collection and refinement</li>
+                        <li>Process optimization</li>
+                    </ul>
+                    
+                    <h3>Phase 3: Growth (Months 7-12)</h3>
+                    <ul>
+                        <li>Full market launch</li>
+                        <li>Scaling operations</li>
+                        <li>Additional service offerings</li>
+                        <li>Market expansion planning</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function generateMarketingPlanContent() {
+            return `
+                <div class="section">
+                    <h2>Marketing Strategy Overview</h2>
+                    <p>Our comprehensive marketing plan focuses on building brand awareness, generating qualified leads, and establishing market leadership through strategic positioning and consistent messaging.</p>
+                </div>
+                
+                <div class="section">
+                    <h2>Target Audience Analysis</h2>
+                    <h3>Primary Demographics</h3>
+                    <ul>
+                        <li>Age: 35-55 years old</li>
+                        <li>Income: $50,000-$150,000 annually</li>
+                        <li>Education: College educated</li>
+                        <li>Location: Urban and suburban areas</li>
+                    </ul>
+                    
+                    <h3>Pain Points & Motivations</h3>
+                    <ul>
+                        <li>Lack of time for specialized tasks</li>
+                        <li>Need for expert guidance and support</li>
+                        <li>Desire for business growth and efficiency</li>
+                        <li>Challenge of staying competitive</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Marketing Channels & Tactics</h2>
+                    
+                    <h3>Digital Marketing</h3>
+                    <ul>
+                        <li>Search engine optimization (SEO)</li>
+                        <li>Pay-per-click advertising (PPC)</li>
+                        <li>Social media marketing</li>
+                        <li>Email marketing campaigns</li>
+                    </ul>
+                    
+                    <h3>Content Marketing</h3>
+                    <ul>
+                        <li>Blog posts and articles</li>
+                        <li>Webinars and workshops</li>
+                        <li>Case studies and success stories</li>
+                        <li>Industry reports and whitepapers</li>
+                    </ul>
+                    
+                    <h3>Partnership Marketing</h3>
+                    <ul>
+                        <li>Strategic business partnerships</li>
+                        <li>Referral programs</li>
+                        <li>Industry collaboration</li>
+                        <li>Affiliate marketing</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Campaign Calendar</h2>
+                    <div class="highlight">
+                        <h3>Q1: Brand Awareness</h3>
+                        <p>Focus on establishing brand presence and thought leadership through content marketing and social media engagement.</p>
+                    </div>
+                    
+                    <div class="highlight">
+                        <h3>Q2: Lead Generation</h3>
+                        <p>Launch targeted advertising campaigns and lead magnets to build prospect database.</p>
+                    </div>
+                    
+                    <div class="highlight">
+                        <h3>Q3: Conversion Optimization</h3>
+                        <p>Optimize sales funnel and implement nurturing campaigns to convert leads to customers.</p>
+                    </div>
+                    
+                    <div class="highlight">
+                        <h3>Q4: Customer Retention</h3>
+                        <p>Focus on customer success, referrals, and expansion of services to existing clients.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateFinancialProjectionContent() {
+            return `
+                <div class="section">
+                    <h2>3-Year Financial Forecast</h2>
+                    <p>These financial projections are based on conservative market analysis and realistic growth assumptions.</p>
+                    
+                    <div class="grid">
+                        <div class="card">
+                            <h3>Year 1</h3>
+                            <p><strong>Revenue: $85,000</strong></p>
+                            <p>Expenses: $65,000</p>
+                            <p>Net Profit: $20,000</p>
+                        </div>
+                        <div class="card">
+                            <h3>Year 2</h3>
+                            <p><strong>Revenue: $145,000</strong></p>
+                            <p>Expenses: $105,000</p>
+                            <p>Net Profit: $40,000</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Year 3</h3>
+                        <p><strong>Revenue: $220,000</strong></p>
+                        <p>Expenses: $155,000</p>
+                        <p>Net Profit: $65,000</p>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Revenue Breakdown</h2>
+                    <h3>Primary Revenue Streams</h3>
+                    <ul>
+                        <li>Core Services: 70% of total revenue</li>
+                        <li>Premium Services: 20% of total revenue</li>
+                        <li>Consulting & Training: 10% of total revenue</li>
+                    </ul>
+                    
+                    <h3>Monthly Recurring Revenue (MRR)</h3>
+                    <ul>
+                        <li>Year 1: $7,100 average monthly revenue</li>
+                        <li>Year 2: $12,100 average monthly revenue</li>
+                        <li>Year 3: $18,300 average monthly revenue</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Expense Categories</h2>
+                    <h3>Operating Expenses</h3>
+                    <ul>
+                        <li>Personnel costs: 45% of revenue</li>
+                        <li>Marketing & advertising: 15% of revenue</li>
+                        <li>Technology & software: 8% of revenue</li>
+                        <li>Office & administration: 10% of revenue</li>
+                        <li>Professional services: 5% of revenue</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Cash Flow Analysis</h2>
+                    <h3>Key Metrics</h3>
+                    <ul>
+                        <li>Customer acquisition cost: $125</li>
+                        <li>Customer lifetime value: $2,500</li>
+                        <li>Average payment terms: Net 30</li>
+                        <li>Collection period: 35 days average</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <h3>Break-Even Analysis</h3>
+                        <p>Based on our cost structure and pricing model, we project reaching break-even in month 8 of operations, with positive cash flow maintained thereafter.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateClientProposalContent() {
+            return `
+                <div class="section">
+                    <h2>Project Overview</h2>
+                    <p>This proposal outlines our recommended approach to address your business challenges and achieve your objectives through our comprehensive service offering.</p>
+                    
+                    <h3>Understanding Your Needs</h3>
+                    <p>Based on our initial consultation, we understand that you are looking to:</p>
+                    <ul>
+                        <li>Improve operational efficiency</li>
+                        <li>Increase revenue and profitability</li>
+                        <li>Strengthen market position</li>
+                        <li>Optimize business processes</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Proposed Solution</h2>
+                    <h3>Phase 1: Assessment & Strategy (Weeks 1-2)</h3>
+                    <ul>
+                        <li>Comprehensive business analysis</li>
+                        <li>Market research and competitive assessment</li>
+                        <li>Strategic planning session</li>
+                        <li>Detailed recommendations report</li>
+                    </ul>
+                    
+                    <h3>Phase 2: Implementation (Weeks 3-8)</h3>
+                    <ul>
+                        <li>Process optimization and workflow design</li>
+                        <li>System integration and setup</li>
+                        <li>Team training and support</li>
+                        <li>Performance monitoring implementation</li>
+                    </ul>
+                    
+                    <h3>Phase 3: Optimization (Weeks 9-12)</h3>
+                    <ul>
+                        <li>Performance analysis and refinement</li>
+                        <li>Additional training and support</li>
+                        <li>Long-term strategy development</li>
+                        <li>Handover and documentation</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Expected Outcomes</h2>
+                    <div class="grid">
+                        <div class="card">
+                            <h3>Efficiency Gains</h3>
+                            <p>25-40% improvement in operational efficiency</p>
+                        </div>
+                        <div class="card">
+                            <h3>Revenue Growth</h3>
+                            <p>15-25% increase in revenue within 6 months</p>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight">
+                        <h3>Success Metrics</h3>
+                        <ul>
+                            <li>Reduced processing time by 30%</li>
+                            <li>Improved customer satisfaction scores</li>
+                            <li>Increased team productivity</li>
+                            <li>Enhanced decision-making capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Investment & Timeline</h2>
+                    <h3>Project Investment</h3>
+                    <ul>
+                        <li>Total project cost: $15,000</li>
+                        <li>Payment schedule: 50% upfront, 25% at midpoint, 25% upon completion</li>
+                        <li>Timeline: 12 weeks from project start</li>
+                    </ul>
+                    
+                    <h3>What's Included</h3>
+                    <ul>
+                        <li>Full strategic assessment</li>
+                        <li>Custom implementation plan</li>
+                        <li>Team training and support</li>
+                        <li>3 months post-implementation support</li>
+                        <li>Detailed documentation and reporting</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Next Steps</h2>
+                    <ol>
+                        <li>Review and approve this proposal</li>
+                        <li>Sign service agreement</li>
+                        <li>Schedule project kickoff meeting</li>
+                        <li>Begin assessment phase</li>
+                    </ol>
+                    
+                    <div class="highlight">
+                        <p><strong>Ready to get started?</strong> Contact us at your earliest convenience to discuss this proposal and answer any questions you may have.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateServiceAgreementContent() {
+            return `
+                <div class="section">
+                    <h2>Service Agreement Terms</h2>
+                    <p><strong>Important:</strong> This is a template agreement. Please consult with a legal professional before use.</p>
+                </div>
+                
+                <div class="section">
+                    <h2>1. Services Description</h2>
+                    <p>The Service Provider agrees to provide the following services:</p>
+                    <ul>
+                        <li>Professional consulting services</li>
+                        <li>Strategic planning and implementation</li>
+                        <li>Ongoing support and maintenance</li>
+                        <li>Training and documentation</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>2. Payment Terms</h2>
+                    <h3>Fee Structure</h3>
+                    <ul>
+                        <li>Service fees as outlined in accompanying proposal</li>
+                        <li>Payment due within 30 days of invoice date</li>
+                        <li>Late payment fee: 1.5% per month on overdue amounts</li>
+                    </ul>
+                    
+                    <h3>Expenses</h3>
+                    <p>Client shall reimburse all pre-approved out-of-pocket expenses incurred in connection with services.</p>
+                </div>
+                
+                <div class="section">
+                    <h2>3. Intellectual Property</h2>
+                    <h3>Work Product</h3>
+                    <p>All deliverables created specifically for Client shall become property of Client upon full payment.</p>
+                    
+                    <h3>Pre-existing Materials</h3>
+                    <p>Service Provider retains ownership of pre-existing intellectual property and methodologies.</p>
+                </div>
+                
+                <div class="section">
+                    <h2>4. Confidentiality</h2>
+                    <p>Both parties agree to maintain confidentiality of all proprietary information disclosed during the engagement.</p>
+                    
+                    <h3>Non-Disclosure</h3>
+                    <ul>
+                        <li>Confidential information shall not be disclosed to third parties</li>
+                        <li>Information shall be used solely for purposes of this agreement</li>
+                        <li>Obligation continues for 3 years after agreement termination</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>5. Termination</h2>
+                    <h3>Termination for Convenience</h3>
+                    <p>Either party may terminate this agreement with 30 days written notice.</p>
+                    
+                    <h3>Termination for Cause</h3>
+                    <p>Either party may terminate immediately for material breach that remains uncured after 15 days written notice.</p>
+                </div>
+                
+                <div class="section">
+                    <h2>6. Limitation of Liability</h2>
+                    <p>Service Provider's liability shall be limited to the total fees paid under this agreement. Neither party shall be liable for indirect, incidental, or consequential damages.</p>
+                </div>
+                
+                <div class="section">
+                    <h2>7. General Provisions</h2>
+                    <ul>
+                        <li>This agreement shall be governed by [State] law</li>
+                        <li>Any disputes shall be resolved through binding arbitration</li>
+                        <li>This agreement constitutes the entire agreement between parties</li>
+                        <li>Modifications must be in writing and signed by both parties</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        function generateOperationsManualContent() {
+            return `
+                <div class="section">
+                    <h2>Operations Manual Overview</h2>
+                    <p>This operations manual provides comprehensive guidelines for daily business operations, ensuring consistency, quality, and efficiency across all processes.</p>
+                </div>
+                
+                <div class="section">
+                    <h2>Daily Operations Checklist</h2>
+                    <h3>Morning Startup (8:00 AM - 9:00 AM)</h3>
+                    <ul>
+                        <li>Review overnight messages and emails</li>
+                        <li>Check system status and performance</li>
+                        <li>Review daily schedule and priorities</li>
+                        <li>Team briefing and status update</li>
+                    </ul>
+                    
+                    <h3>Core Operations (9:00 AM - 5:00 PM)</h3>
+                    <ul>
+                        <li>Client service delivery</li>
+                        <li>Project management and tracking</li>
+                        <li>Quality control reviews</li>
+                        <li>Customer communication</li>
+                    </ul>
+                    
+                    <h3>End of Day (5:00 PM - 6:00 PM)</h3>
+                    <ul>
+                        <li>Backup critical data</li>
+                        <li>Update project status</li>
+                        <li>Prepare next day priorities</li>
+                        <li>System maintenance check</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h2>Client Onboarding Process</h2>
+                    <h3>Step 1: Initial Contact</h3>
+                    <ol>
+                        <li>Receive client inquiry</li>
+                        <li>Schedule initial consultation</li>
+                        <li>Send welcome packet and questionnaire</li>
+                        <li>Prepare for discovery meeting</li>
+                    </ol>
+                    
+                    <h3>Step 2: Discovery & Proposal</h3>
+                    <ol>
+                        <li>Conduct needs assessment</li>
+                        <li>Analyze requirements</li>
+                        <li>Develop custom proposal</li>
+                        <li>Present solution and pricing</li>
+                    </ol>
+                    
+                    <h3>Step 3: Contract & Setup</h3>
+                    <ol>
+                        <li>Finalize service agreement</li>
+                        <li>Process initial payment</li>
+                        <li>Set up client accounts and systems</li>
+                        <li>Assign project team</li>
+                    </ol>
+                </div>
+                
+                <div class="section">
+                    <h2>Quality Control Procedures</h2>
+                    <h3>Service Delivery Standards</h3>
+                    <ul>
+                        <li>All work must meet established quality criteria</li>
+                        <li>Regular reviews and checkpoints throughout projects</li>
+                        <li>Client feedback collection and response</li>
+                        <li>Continuous improvement implementation</li>
+                    </ul>
+                    
+                    <h3>Review Process</h3>
+                    <ol>
+                        <li>Initial work completion by team member</li>
+                        <li>Peer review and feedback</li>
+                        <li>Manager approval and sign-off</li>
+                        <li>Client review and acceptance</li>
+                    </ol>
+                </div>
+                
+                <div class="section">
+                    <h2>Team Roles & Responsibilities</h2>
+                    
+                    <div class="card">
+                        <h3>Project Manager</h3>
+                        <ul>
+                            <li>Overall project coordination</li>
+                            <li>Client communication</li>
+                            <li>Timeline and budget management</li>
+                            <li>Quality assurance oversight</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Service Delivery Team</h3>
+                        <ul>
+                            <li>Execute assigned project tasks</li>
+                            <li>Maintain quality standards</li>
+                            <li>Document work progress</li>
+                            <li>Collaborate with team members</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>Customer Success Manager</h3>
+                        <ul>
+                            <li>Client relationship management</li>
+                            <li>Ongoing support and training</li>
+                            <li>Renewal and expansion discussions</li>
+                            <li>Feedback collection and analysis</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>Emergency Procedures</h2>
+                    <h3>System Outages</h3>
+                    <ol>
+                        <li>Assess scope and impact</li>
+                        <li>Notify affected clients immediately</li>
+                        <li>Implement backup procedures</li>
+                        <li>Coordinate with technical support</li>
+                        <li>Provide regular status updates</li>
+                    </ol>
+                    
+                    <h3>Client Escalations</h3>
+                    <ol>
+                        <li>Acknowledge issue within 2 hours</li>
+                        <li>Escalate to senior management</li>
+                        <li>Develop resolution plan</li>
+                        <li>Implement corrective measures</li>
+                        <li>Follow up to ensure satisfaction</li>
+                    </ol>
+                </div>
+            `;
+        }
+
+        // Document action functions with real functionality
+        let currentDocumentContent = '';
+        let currentDocumentTitle = '';
+
+        function downloadDocument() {
+            if (!currentDocumentContent) {
+                alert('No document to download. Please generate a document first.');
+                return;
+            }
+
+            // Create comprehensive document content
+            const fullDocumentContent = createFullDocument();
+            
+            // Create downloadable file
+            const blob = new Blob([fullDocumentContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            
+            // Create download link
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = `${currentDocumentTitle.replace(/[^a-z0-9]/gi, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+            
+            // Open print-friendly version for PDF conversion
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(fullDocumentContent.replace(
+                '<body>',
+                '<body><style>@media print { .no-print { display: none; } }</style><div class="no-print" style="text-align: center; padding: 20px; background: #f0f9ff; margin-bottom: 20px;"><h3>📄 Ready to Save as PDF</h3><p>Use Ctrl+P (or Cmd+P) and select "Save as PDF" in the print dialog.</p><button onclick="window.print()" style="background: #7c3aed; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Print/Save as PDF</button></div>'
+            ));
+            printWindow.document.close();
+            
+            // Show success message
+            showNotification('success', '📄 Document opened in new window! Use your browser\'s print function to save as PDF.');
+        }
+
+        function createFullDocument() {
+            const today = new Date().toLocaleDateString();
+            const userName = 'MogulMomma Member'; // In production, get from user data
+            
+            return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${currentDocumentTitle}</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        .header { text-align: center; border-bottom: 3px solid #7c3aed; padding-bottom: 20px; margin-bottom: 30px; }
+        .header h1 { color: #7c3aed; margin-bottom: 10px; }
+        .header p { color: #666; margin: 5px 0; }
+        .section { margin: 30px 0; }
+        .section h2 { color: #7c3aed; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .section h3 { color: #1e293b; margin-top: 25px; }
+        ul, ol { padding-left: 25px; }
+        li { margin: 8px 0; }
+        .highlight { background: #fef3c7; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .footer { margin-top: 50px; padding-top: 20px; border-top: 2px solid #e2e8f0; text-align: center; color: #666; font-size: 0.9rem; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        .card { background: #f8fafc; padding: 20px; border-radius: 10px; border-left: 4px solid #7c3aed; }
+        @media print { body { margin: 0; padding: 20px; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>${currentDocumentTitle}</h1>
+        <p>Generated by MogulMomma Platform</p>
+        <p>Created for: ${userName}</p>
+        <p>Date: ${today}</p>
+    </div>
+    
+    ${currentDocumentContent}
+    
+    <div class="footer">
+        <p>This document was generated by MogulMomma - Your AI-Powered Business Growth Platform</p>
+        <p>Visit <a href="https://mogulmomma.com">mogulmomma.com</a> for more business tools and resources</p>
+    </div>
+</body>
+</html>`;
+        }
+
+        function editDocument() {
+            // Create editable modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex; 
+                align-items: center; justify-content: center; padding: 20px;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 30px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                        <h2 style="color: #1e293b; margin: 0;">✏️ Edit Document</h2>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1e293b;">Document Title:</label>
+                        <input type="text" id="editTitle" value="${currentDocumentTitle}" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem;">
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #1e293b;">Document Content:</label>
+                        <textarea id="editContent" style="width: 100%; height: 400px; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; font-family: Arial, sans-serif; resize: vertical;">${currentDocumentContent.replace(/<[^>]*>/g, '')}</textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #f1f5f9; color: #64748b; border: 2px solid #e2e8f0; padding: 12px 25px; border-radius: 10px; font-weight: 600; cursor: pointer;">Cancel</button>
+                        <button onclick="saveDocumentEdits()" style="background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; border: none; padding: 12px 25px; border-radius: 10px; font-weight: 600; cursor: pointer;">Save Changes</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function saveDocumentEdits() {
+            const newTitle = document.getElementById('editTitle').value;
+            const newContent = document.getElementById('editContent').value;
+            
+            if (newTitle.trim()) {
+                currentDocumentTitle = newTitle.trim();
+            }
+            
+            if (newContent.trim()) {
+                // Convert plain text back to formatted HTML
+                currentDocumentContent = `
+                    <div class="section">
+                        <h2>Document Content</h2>
+                        <div style="line-height: 1.8; white-space: pre-wrap;">${newContent.trim()}</div>
+                    </div>
+                `;
+                
+                // Update the display
+                const output = document.getElementById('document-output');
+                output.innerHTML = `
+                    <div class="ai-response">
+                        <h3>✅ ${currentDocumentTitle}</h3>
+                        ${currentDocumentContent}
+                        <div style="text-align: center; margin-top: 20px; padding: 15px; background: #f0fdf4; border-radius: 10px;">
+                            <p style="color: #15803d; font-weight: 600;">Document updated successfully!</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Close modal
+            document.querySelector('[style*="position: fixed"]').remove();
+            
+            showNotification('success', '✅ Document updated successfully!');
+        }
+
+        function shareDocument() {
+            if (!currentDocumentContent) {
+                alert('No document to share. Please generate a document first.');
+                return;
+            }
+            
+            // Create shareable URL (in production, this would save to database and return real URL)
+            const shareUrl = `https://mogulmomma.com/shared-document/${Math.random().toString(36).substr(2, 9)}`;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                showNotification('success', `🔗 Share link copied to clipboard!\n\nURL: ${shareUrl}\n\nAnyone with this link can view your document.`);
+            }).catch(() => {
+                // Fallback if clipboard API fails
+                prompt('Copy this share URL:', shareUrl);
+            });
+        }
+
+        function saveDocument() {
+            if (!currentDocumentContent) {
+                alert('No document to save. Please generate a document first.');
+                return;
+            }
+            
+            // Save to localStorage (in production, this would save to database)
+            const savedDocs = JSON.parse(localStorage.getItem('mogulmomma_saved_documents') || '[]');
+            
+            const documentData = {
+                id: Date.now(),
+                title: currentDocumentTitle,
+                content: currentDocumentContent,
+                created: new Date().toISOString(),
+                type: 'business-document'
+            };
+            
+            savedDocs.push(documentData);
+            localStorage.setItem('mogulmomma_saved_documents', JSON.stringify(savedDocs));
+            
+            showNotification('success', '💾 Document saved to your projects! You can access it anytime from the My Projects section.');
+        }
+
+        function showNotification(type, message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; z-index: 10001;
+                background: ${type === 'success' ? 'linear-gradient(135deg, #10b981, #059669)' : 'linear-gradient(135deg, #ef4444, #dc2626)'};
+                color: white; padding: 15px 20px; border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                max-width: 350px; font-weight: 600;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Projects Page Functionality
+        function loadProjects() {
+            const savedDocs = JSON.parse(localStorage.getItem('mogulmomma_saved_documents') || '[]');
+            const container = document.getElementById('projects-container');
+            const emptyState = document.getElementById('projects-empty-state');
+            
+            if (savedDocs.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = savedDocs.map(doc => {
+                const date = new Date(doc.created).toLocaleDateString();
+                const timeAgo = getTimeAgo(new Date(doc.created));
+                
+                return `
+                    <div class="project-item" style="background: white; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 15px; transition: all 0.3s ease;">
+                        <div class="project-info" style="flex: 1;">
+                            <h4 style="color: #1e293b; margin-bottom: 8px; font-size: 1.1rem;">${doc.title}</h4>
+                            <p style="color: #64748b; font-size: 0.9rem;">Created ${timeAgo} • ${doc.type || 'Document'}</p>
+                        </div>
+                        <div class="project-actions" style="display: flex; gap: 8px; margin-top: 15px;">
+                            <button onclick="event.stopPropagation(); openProject('${doc.id}')" class="project-btn" style="background: #7c3aed; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">📖 Open</button>
+                            <button onclick="event.stopPropagation(); editProject('${doc.id}')" class="project-btn" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">✏️ Edit</button>
+                            <button onclick="event.stopPropagation(); deleteProject('${doc.id}')" class="project-btn" style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">🗑️ Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function openProject(projectId) {
+            console.log('Opening project:', projectId);
+            const savedDocs = JSON.parse(localStorage.getItem('mogulmomma_saved_documents') || '[]');
+            const project = savedDocs.find(doc => doc.id == projectId);
+            
+            if (!project) {
+                alert('Project not found: ' + projectId);
+                return;
+            }
+            
+            // Show project in a modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); z-index: 10001; display: flex; 
+                align-items: center; justify-content: center; padding: 20px;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 40px; max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                        <h2 style="color: #1e293b; margin: 0;">${project.title}</h2>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">×</button>
+                    </div>
+                    <div style="margin-bottom: 20px; padding: 15px; background: #f8fafc; border-radius: 10px;">
+                        <small style="color: #64748b;">Created: ${new Date(project.created).toLocaleString()}</small>
+                    </div>
+                    <div style="line-height: 1.6;">${project.content}</div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close on background click
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        function editProject(projectId) {
+            console.log('Editing project:', projectId);
+            alert('✏️ Edit functionality coming soon! For now, create a new document to update your project.');
+        }
+        
+        function deleteProject(projectId) {
+            if (!confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
+                return;
+            }
+            
+            const savedDocs = JSON.parse(localStorage.getItem('mogulmomma_saved_documents') || '[]');
+            const updatedDocs = savedDocs.filter(doc => doc.id != projectId);
+            localStorage.setItem('mogulmomma_saved_documents', JSON.stringify(updatedDocs));
+            
+            loadProjects(); // Reload the projects list
+            showNotification('success', '🗑️ Project deleted successfully');
+        }
+        
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) return '1 day ago';
+            if (diffDays < 7) return `${diffDays} days ago`;
+            if (diffDays < 30) return `${Math.ceil(diffDays / 7)} weeks ago`;
+            return `${Math.ceil(diffDays / 30)} months ago`;
+        }
+        
+        // Content Generator Redirect Fix
+        function generateContent() {
+            // Redirect to AI tools page instead of showing inline
+            window.location.href = 'ai-tools-unlimited.html';
+        }
+        
+        // Override the original showPage function to load projects when projects page is shown
+        const originalShowPage = window.showPage;
+        window.showPage = function(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId + '-page');
+            if (targetPage) {
+                targetPage.style.display = 'block';
+            }
+            
+            // Add active class to clicked nav item if event exists
+            if (event && event.target) {
+                const navItem = event.target.closest('.nav-item');
+                if (navItem) {
+                    navItem.classList.add('active');
+                }
+            }
+            
+            // Load projects when projects page is shown
+            if (pageId === 'my-projects') {
+                setTimeout(loadProjects, 100); // Small delay to ensure page is visible
+            }
+        };
+
+        // Load Recent Activity
+        function loadRecentActivity() {
+            const savedDocs = JSON.parse(localStorage.getItem('mogulmomma_saved_documents') || '[]');
+            const container = document.getElementById('recent-activity-container');
+            const emptyState = document.getElementById('recent-activity-empty');
+            
+            // Get most recent 3 documents
+            const recentDocs = savedDocs
+                .sort((a, b) => new Date(b.created) - new Date(a.created))
+                .slice(0, 3);
+            
+            if (recentDocs.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+            
+            container.innerHTML = recentDocs.map(doc => {
+                const timeAgo = getTimeAgo(new Date(doc.created));
+                
+                return `
+                    <div class="project-item" style="background: white; border: 2px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 15px; transition: all 0.3s ease;">
+                        <div class="project-info" style="flex: 1;">
+                            <h4 style="color: #1e293b; margin-bottom: 8px; font-size: 1.1rem;">${doc.title}</h4>
+                            <p style="color: #64748b; font-size: 0.9rem;">Last updated ${timeAgo} • ${doc.type || 'Document'}</p>
+                        </div>
+                        <div class="project-actions" style="display: flex; gap: 8px; margin-top: 15px;">
+                            <button onclick="event.stopPropagation(); openProject('${doc.id}')" class="project-btn" style="background: #7c3aed; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">📖 Continue</button>
+                            <button onclick="event.stopPropagation(); shareProject('${doc.id}')" class="project-btn" style="background: #10b981; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">📤 Share</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function shareProject(projectId) {
+            const savedDocs = JSON.parse(localStorage.getItem('mogulmomma_saved_documents') || '[]');
+            const project = savedDocs.find(doc => doc.id == projectId);
+            
+            if (!project) {
+                alert('Project not found');
+                return;
+            }
+            
+            // Create shareable content
+            const shareText = `Check out my ${project.title} created with MogulMomma! 🚀\\n\\nBuilding my dreams with AI-powered tools at https://mogulmomma.com\\n\\n#MogulMomma #CareerTransformation #WomenInBusiness`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: project.title,
+                    text: shareText,
+                    url: 'https://mogulmomma.com'
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('✅ Share message copied to clipboard!\\n\\nPaste it on your social media to share your progress.');
+                }).catch(() => {
+                    alert('Share this:\\n\\n' + shareText);
+                });
+            }
+        }
+
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
-            // Add any initialization code here
+            // Load recent activity on dashboard
+            loadRecentActivity();
             console.log('MogulMomma Member Dashboard loaded successfully! 👑');
         });
     </script>

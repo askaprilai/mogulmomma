@@ -1,0 +1,2632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Community - Connect, Share, Thrive</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Daily Inspiration */
+        .daily-inspiration {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 50%, #f472b6 100%);
+            color: white;
+            margin: 0;
+            padding: 25px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .daily-inspiration::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .inspiration-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .inspiration-header {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .inspiration-quote {
+            font-size: 1.4rem;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .inspiration-author {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 18px;
+        }
+
+        .inspiration-action {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+        }
+
+        .inspiration-action:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main Layout */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 300px 1fr 280px;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            margin: 5px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: #f8fafc;
+            color: #7c3aed;
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+        }
+
+        .nav-badge {
+            background: #ef4444;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .trending-topics {
+            list-style: none;
+        }
+
+        .trending-topic {
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .trending-topic:hover {
+            color: #7c3aed;
+        }
+
+        .trending-topic:last-child {
+            border-bottom: none;
+        }
+
+        .topic-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        .topic-count {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        /* Main Feed */
+        .main-feed {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .feed-header {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+        }
+
+        .feed-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .feed-subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .post-composer {
+            padding: 25px 30px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .composer-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .composer-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .composer-info h4 {
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        .composer-info p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .post-input {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            line-height: 1.5;
+            resize: vertical;
+            font-family: inherit;
+            margin-bottom: 15px;
+        }
+
+        .post-input:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .composer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .composer-tools {
+            display: flex;
+            gap: 15px;
+        }
+
+        .tool-btn {
+            background: #f8fafc;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .tool-btn:hover {
+            background: #f0f9ff;
+            color: #7c3aed;
+        }
+
+        .post-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .post-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .post-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Feed Filters */
+        .feed-filters {
+            padding: 20px 30px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover {
+            border-color: #7c3aed;
+            color: #7c3aed;
+        }
+
+        .filter-btn.active {
+            background: #7c3aed;
+            border-color: #7c3aed;
+            color: white;
+        }
+
+        /* Feed Posts */
+        .feed-posts {
+            padding: 0 30px 30px;
+        }
+
+        .post {
+            border-bottom: 1px solid #f1f5f9;
+            padding: 25px 0;
+            transition: all 0.3s ease;
+        }
+
+        .post:last-child {
+            border-bottom: none;
+        }
+
+        .post:hover {
+            background: #fafbfc;
+            margin: 0 -30px;
+            padding: 25px 30px;
+            border-radius: 12px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .post-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .post-info {
+            flex: 1;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 3px;
+        }
+
+        .post-meta {
+            color: #64748b;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .post-badge {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .post-content {
+            margin-bottom: 15px;
+            color: #374151;
+            line-height: 1.7;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .post-tag {
+            background: #f0f9ff;
+            color: #3b82f6;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .post-image {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #f8fafc;
+            color: #7c3aed;
+        }
+
+        .action-btn.liked {
+            color: #ef4444;
+        }
+
+        .action-btn.saved {
+            color: #10b981;
+        }
+
+        /* Right Sidebar */
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .widget {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .member-item:hover {
+            background: #f8fafc;
+            margin: 0 -25px;
+            padding: 12px 25px;
+            border-radius: 8px;
+        }
+
+        .member-item:last-child {
+            border-bottom: none;
+        }
+
+        .member-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .member-info {
+            flex: 1;
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        .member-title {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+
+        .connect-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .connect-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .event-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .event-item:hover {
+            background: #f8fafc;
+            margin: 0 -25px;
+            padding: 15px 25px;
+            border-radius: 8px;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-date {
+            background: #7c3aed;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .event-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .event-meta {
+            color: #64748b;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            margin-top: 5px;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .register-btn:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .sidebar, .right-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 15px;
+            }
+            
+            .search-box {
+                width: 200px;
+            }
+            
+            .post-composer {
+                padding: 20px 15px;
+            }
+            
+            .feed-posts {
+                padding: 0 15px 20px;
+            }
+            
+            .composer-tools {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+        }
+
+        /* Loading States */
+        .loading-post {
+            padding: 25px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .skeleton-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+
+        .skeleton-text {
+            height: 16px;
+            margin: 8px 0;
+        }
+
+        .skeleton-line {
+            height: 12px;
+            margin: 6px 0;
+        }
+
+        /* Success States */
+        .success-message {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">👑 MogulMomma</div>
+            <div class="header-actions">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Search posts, members, topics...">
+                </div>
+                <div class="user-avatar">SM</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Daily Inspiration Section -->
+    <div class="daily-inspiration">
+        <div class="inspiration-content">
+            <div class="inspiration-header">✨ Daily MogulMomma Inspiration</div>
+            <div class="inspiration-quote" id="dailyQuote">
+                "Your dreams are valid. Today is the day to take one bold step toward making them reality."
+            </div>
+            <div class="inspiration-author" id="quoteAuthor">— MogulMomma Community</div>
+            <button class="inspiration-action" onclick="shareInspiration()" id="shareInspirationBtn">
+                💜 Share Today's Inspiration
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">📊 Weekly Life Score</h3>
+                <div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 20px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #7c3aed;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <div style="font-weight: 700; color: #1e293b;">Current Score</div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #7c3aed;" id="currentLifeScore">7.2</div>
+                    </div>
+                    <div style="background: #e2e8f0; height: 8px; border-radius: 4px; margin: 8px 0;">
+                        <div style="background: linear-gradient(135deg, #7c3aed, #c084fc); height: 100%; width: 72%; border-radius: 4px;"></div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: #64748b; margin-bottom: 15px;">+0.5 from last week</div>
+                    <button onclick="openWeeklyJournal()" style="background: #7c3aed; color: white; border: none; padding: 10px 15px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.3s ease;">
+                        📝 Weekly Journal
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">💰 Affiliate Sharing</h3>
+                <div style="background: linear-gradient(135deg, #fef3c7, #fbbf24); padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+                    <div style="font-weight: 600; color: #92400e; margin-bottom: 8px;">Earn with Every Share!</div>
+                    <div style="font-size: 0.9rem; color: #92400e; margin-bottom: 15px;">Your inspiration shares automatically include your affiliate link</div>
+                    <div style="display: flex; gap: 8px;">
+                        <button onclick="updateAffiliateCode()" style="flex: 1; background: #f59e0b; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">
+                            Set Code
+                        </button>
+                        <button onclick="viewEarnings()" style="flex: 1; background: rgba(245, 158, 11, 0.2); color: #92400e; border: 1px solid #f59e0b; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">
+                            Earnings
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">🤖 AI Tools</h3>
+                <div style="background: linear-gradient(135deg, #e0f2fe, #b3e5fc); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #0284c7;">
+                    <div style="font-weight: 600; color: #0369a1; margin-bottom: 10px;">Member Exclusive Access</div>
+                    <div style="font-size: 0.9rem; color: #0369a1; margin-bottom: 15px;">Unlimited AI tools to accelerate your career transition</div>
+                    
+                    <div style="display: grid; gap: 8px;">
+                        <button onclick="openAITool('content')" style="background: white; border: 1px solid #0284c7; color: #0369a1; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.3s ease;">
+                            ✍️ Content Generator
+                        </button>
+                        <button onclick="openAITool('roadmap')" style="background: white; border: 1px solid #0284c7; color: #0369a1; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.3s ease;">
+                            🗺️ Roadmap Builder  
+                        </button>
+                        <button onclick="openAITool('brand')" style="background: white; border: 1px solid #0284c7; color: #0369a1; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.3s ease;">
+                            🎨 Brand Identity
+                        </button>
+                        <button onclick="openAITool('coach')" style="background: white; border: 1px solid #0284c7; color: #0369a1; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.3s ease;">
+                            💬 AI Career Coach
+                        </button>
+                        <button onclick="openAITool('image')" style="background: white; border: 1px solid #0284c7; color: #0369a1; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.3s ease;">
+                            🎨 Image Generator
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 12px; text-align: center;">
+                        <a href="ai-tools.html" style="color: #0369a1; text-decoration: none; font-size: 0.8rem; font-weight: 600;">View All Tools →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">💰 Affiliate Center</h3>
+                <div style="background: linear-gradient(135deg, #fef3c7, #fbbf24); padding: 15px; border-radius: 12px; margin-bottom: 15px; border-left: 4px solid #f59e0b;">
+                    <div style="font-weight: 600; color: #92400e; margin-bottom: 10px;">Earn $48.50/Month Per Referral</div>
+                    <div style="font-size: 0.9rem; color: #92400e; margin-bottom: 15px;">Share MogulMomma and earn recurring commissions</div>
+                    
+                    <div style="display: grid; gap: 8px;">
+                        <button onclick="openAffiliateTracker()" style="background: white; border: 1px solid #f59e0b; color: #92400e; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.3s ease;">
+                            📊 My Dashboard
+                        </button>
+                        <button onclick="openAffiliateLinks()" style="background: white; border: 1px solid #f59e0b; color: #92400e; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.3s ease;">
+                            🔗 My Links
+                        </button>
+                        <button onclick="openAffiliateSharing()" style="background: white; border: 1px solid #f59e0b; color: #92400e; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: left; transition: all 0.3s ease;">
+                            📤 Quick Share
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 12px; text-align: center;">
+                        <a href="affiliate-dashboard.html" style="color: #92400e; text-decoration: none; font-size: 0.8rem; font-weight: 600;">Full Dashboard →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Trending Topics</h3>
+                <ul class="trending-topics">
+                    <li class="trending-topic">
+                        <div class="topic-name">#CareerTransition</div>
+                        <div class="topic-count">127 posts this week</div>
+                    </li>
+                    <li class="trending-topic">
+                        <div class="topic-name">#AITools</div>
+                        <div class="topic-count">89 posts this week</div>
+                    </li>
+                    <li class="trending-topic">
+                        <div class="topic-name">#WomenInBusiness</div>
+                        <div class="topic-count">156 posts this week</div>
+                    </li>
+                    <li class="trending-topic">
+                        <div class="topic-name">#DreamMapping</div>
+                        <div class="topic-count">73 posts this week</div>
+                    </li>
+                    <li class="trending-topic">
+                        <div class="topic-name">#Mindset</div>
+                        <div class="topic-count">94 posts this week</div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Feed -->
+        <main class="main-feed">
+            <div class="feed-header">
+                <h1 class="feed-title">MogulMomma Community</h1>
+                <p class="feed-subtitle">Connect with ambitious women transforming their dreams into reality</p>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="success-message">
+                ✅ Your post has been shared with the community!
+            </div>
+
+            <!-- Post Composer -->
+            <div class="post-composer">
+                <div class="composer-header">
+                    <div class="composer-avatar">SM</div>
+                    <div class="composer-info">
+                        <h4>Sarah Mitchell</h4>
+                        <p>Strategic Builder • Former CFO</p>
+                    </div>
+                </div>
+                
+                <textarea 
+                    class="post-input" 
+                    id="post-input"
+                    placeholder="Share your journey, ask a question, or celebrate a win with the community..."
+                ></textarea>
+                
+                <div class="composer-actions">
+                    <div class="composer-tools">
+                        <button class="tool-btn" onclick="addImage()">📷 Photo</button>
+                        <button class="tool-btn" onclick="addPoll()">📊 Poll</button>
+                        <button class="tool-btn" onclick="addMilestone()">🎯 Milestone</button>
+                        <button class="tool-btn" onclick="addResource()">📎 Resource</button>
+                    </div>
+                    <button class="post-btn" onclick="sharePost()" id="share-btn" disabled>Share Post</button>
+                </div>
+            </div>
+
+            <!-- Feed Filters -->
+            <div class="feed-filters">
+                <button class="filter-btn active" onclick="filterPosts('all', this)">All Posts</button>
+                <button class="filter-btn" onclick="filterPosts('questions', this)">Questions</button>
+                <button class="filter-btn" onclick="filterPosts('wins', this)">Wins & Celebrations</button>
+                <button class="filter-btn" onclick="filterPosts('resources', this)">Resources</button>
+                <button class="filter-btn" onclick="filterPosts('accountability', this)">Accountability</button>
+            </div>
+
+            <!-- Feed Posts -->
+            <div class="feed-posts" id="feed-posts">
+                <!-- Post 1 -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">LR</div>
+                        <div class="post-info">
+                            <div class="post-author">Linda Rodriguez</div>
+                            <div class="post-meta">
+                                <span>Transformational Guide</span>
+                                <span>•</span>
+                                <span>2 hours ago</span>
+                                <span class="post-badge">💎 Premium</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        🎉 HUGE WIN! After 6 months of working with the MogulMomma community, I just signed my first $10K coaching client! 
+                        <br><br>
+                        The dream mapping process was game-changing - it helped me get crystal clear on my ideal client and value proposition. To anyone still on the fence about making the leap: your dreams are valid and achievable! 
+                        <br><br>
+                        Special thanks to @SarahM and @JenC for the accountability check-ins and @CoachMia for the pricing strategy session. This community is pure gold! ✨
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#Win</span>
+                        <span class="post-tag">#Coaching</span>
+                        <span class="post-tag">#DreamMapping</span>
+                        <span class="post-tag">#Grateful</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>247 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>38 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Post 2 -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">JC</div>
+                        <div class="post-info">
+                            <div class="post-author">Jennifer Chang</div>
+                            <div class="post-meta">
+                                <span>Expert Authority</span>
+                                <span>•</span>
+                                <span>4 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        💭 QUESTION: How do you handle the financial anxiety of transitioning from a steady corporate salary to entrepreneurship? 
+                        <br><br>
+                        I have 8 months of expenses saved, a solid business plan, and validation from potential clients, but I still wake up at 3am worrying about money. Anyone else been through this? What mindset shifts helped you? 
+                        <br><br>
+                        Looking for practical AND emotional advice! 🙏
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#Question</span>
+                        <span class="post-tag">#FinancialAnxiety</span>
+                        <span class="post-tag">#Mindset</span>
+                        <span class="post-tag">#Transition</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>89 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>67 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Post 3 -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">MJ</div>
+                        <div class="post-info">
+                            <div class="post-author">Maria Johnson</div>
+                            <div class="post-meta">
+                                <span>Innovative Creator</span>
+                                <span>•</span>
+                                <span>6 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        🔥 HOT TIP: I just discovered an AI tool that's revolutionizing my content creation process! 
+                        <br><br>
+                        The MogulMomma Content Generator helped me create a month's worth of LinkedIn posts in 2 hours. Each post is personalized to my voice and includes engagement optimization tips. 
+                        <br><br>
+                        My engagement has increased 300% since I started using it! Who else is leveraging AI in their business? Drop your favorite tools below! 👇
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Content creation workspace" class="post-image">
+                    <div class="post-tags">
+                        <span class="post-tag">#AITools</span>
+                        <span class="post-tag">#ContentCreation</span>
+                        <span class="post-tag">#Productivity</span>
+                        <span class="post-tag">#LinkedInTips</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>156 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>42 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Post 4 -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">KW</div>
+                        <div class="post-info">
+                            <div class="post-author">Karen Williams</div>
+                            <div class="post-meta">
+                                <span>Strategic Builder</span>
+                                <span>•</span>
+                                <span>8 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        📚 RESOURCE SHARE: Just finished "The $100M Offers" by Alex Hormozi and it's a game-changer for anyone pricing their services! 
+                        <br><br>
+                        Key takeaways that transformed my consulting packages:
+                        <br>• Value stacking beats price competition every time
+                        <br>• Urgency + scarcity = irresistible offers
+                        <br>• Risk reversal makes buyers feel safe
+                        <br><br>
+                        Anyone else read this? What was your biggest aha moment? 🤔
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#BookRecommendation</span>
+                        <span class="post-tag">#Pricing</span>
+                        <span class="post-tag">#Business</span>
+                        <span class="post-tag">#Value</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>98 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>29 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Post 4 - Resource -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">KL</div>
+                        <div class="post-info">
+                            <div class="post-author">Karen Lee</div>
+                            <div class="post-meta">
+                                <span>Strategic Builder</span>
+                                <span>•</span>
+                                <span>8 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        📚 RESOURCE SHARE: Just finished reading "The Career Change Guide for Ambitious Women" and it's a GAME CHANGER! 
+                        <br><br>
+                        This book breaks down exactly how to leverage your existing skills in a new industry. Chapter 7 on networking strategies alone is worth the price. 
+                        <br><br>
+                        Also includes templates for career transition timelines and salary negotiation scripts. Link in comments! 📖✨
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#Resource</span>
+                        <span class="post-tag">#BookRecommendation</span>
+                        <span class="post-tag">#CareerChange</span>
+                        <span class="post-tag">#Learning</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>94 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>28 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Post 5 - Accountability -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">DP</div>
+                        <div class="post-info">
+                            <div class="post-author">Diana Park</div>
+                            <div class="post-meta">
+                                <span>Expert Authority</span>
+                                <span>•</span>
+                                <span>12 hours ago</span>
+                                <span class="post-badge">💎 Premium</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        🎯 ACCOUNTABILITY CHECK-IN: Week 3 of my business launch goals!
+                        <br><br>
+                        ✅ Completed website mockups<br>
+                        ✅ Finished 5 client discovery calls<br>
+                        ✅ Set up social media strategy<br>
+                        ❌ Still working on pricing packages (need help here!)<br>
+                        <br>
+                        Who else is working on their 90-day goals? Drop your progress below and let's keep each other motivated! 💪
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#Accountability</span>
+                        <span class="post-tag">#Goals</span>
+                        <span class="post-tag">#Progress</span>
+                        <span class="post-tag">#BusinessLaunch</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>73 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>19 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Post 6 - Question -->
+                <article class="post">
+                    <div class="post-header">
+                        <div class="post-avatar">TR</div>
+                        <div class="post-info">
+                            <div class="post-author">Taylor Rodriguez</div>
+                            <div class="post-meta">
+                                <span>Rising Leader</span>
+                                <span>•</span>
+                                <span>1 day ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        💭 QUESTION: How do you handle impostor syndrome when stepping into a leadership role for the first time? 
+                        <br><br>
+                        I just got promoted to Director level but I keep second-guessing myself in meetings. I have the skills and experience, but mentally I feel like I don't belong. 
+                        <br><br>
+                        Any advice on building confidence in a new leadership position? How did you overcome these feelings? 🤔
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#Question</span>
+                        <span class="post-tag">#ImpostorSyndrome</span>
+                        <span class="post-tag">#Leadership</span>
+                        <span class="post-tag">#Confidence</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="toggleLike(this)">
+                            <span>❤️</span>
+                            <span>127 loves</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleComments(this)">
+                            <span>💬</span>
+                            <span>85 comments</span>
+                        </button>
+                        <button class="action-btn" onclick="toggleSave(this)">
+                            <span>🔖</span>
+                            <span>Save</span>
+                        </button>
+                        <button class="action-btn" onclick="sharePost(this)">
+                            <span>📤</span>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Load More Button -->
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="post-btn" onclick="loadMorePosts()" style="padding: 15px 30px;">
+                        Load More Posts
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar">
+            <!-- Active Members -->
+            <div class="widget">
+                <h3 class="widget-title">
+                    <span>👥</span>
+                    <span>Active Members</span>
+                </h3>
+                <div class="member-item">
+                    <div class="member-avatar">SM</div>
+                    <div class="member-info">
+                        <div class="member-name">Sarah Mitchell</div>
+                        <div class="member-title">Community Leader</div>
+                    </div>
+                    <button class="connect-btn">Message</button>
+                </div>
+                <div class="member-item">
+                    <div class="member-avatar">LR</div>
+                    <div class="member-info">
+                        <div class="member-name">Lisa Roberts</div>
+                        <div class="member-title">Career Coach</div>
+                    </div>
+                    <button class="connect-btn">Connect</button>
+                </div>
+                <div class="member-item">
+                    <div class="member-avatar">JD</div>
+                    <div class="member-info">
+                        <div class="member-name">Jessica Davis</div>
+                        <div class="member-title">Entrepreneur</div>
+                    </div>
+                    <button class="connect-btn">Connect</button>
+                </div>
+                <div class="member-item">
+                    <div class="member-avatar">MT</div>
+                    <div class="member-info">
+                        <div class="member-name">Michelle Torres</div>
+                        <div class="member-title">Consultant</div>
+                    </div>
+                    <button class="connect-btn">Connect</button>
+                </div>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="widget">
+                <h3 class="widget-title">
+                    <span>📅</span>
+                    <span>Upcoming Events</span>
+                </h3>
+                <div class="event-item" onclick="registerForEvent('Dec 20', 'Dream Mapping Workshop', 'zoom_link_1')">
+                    <div class="event-date">Dec 20</div>
+                    <div class="event-title">Dream Mapping Workshop</div>
+                    <div class="event-meta">7:00 PM EST • 47 attending</div>
+                    <button class="register-btn">Register</button>
+                </div>
+                <div class="event-item" onclick="registerForEvent('Dec 22', 'AI Tools for Business Growth', 'zoom_link_2')">
+                    <div class="event-date">Dec 22</div>
+                    <div class="event-title">AI Tools for Business Growth</div>
+                    <div class="event-meta">2:00 PM EST • 89 attending</div>
+                    <button class="register-btn">Register</button>
+                </div>
+                <div class="event-item" onclick="registerForEvent('Dec 28', 'New Year Goal Setting Session', 'zoom_link_3')">
+                    <div class="event-date">Dec 28</div>
+                    <div class="event-title">New Year Goal Setting Session</div>
+                    <div class="event-meta">6:00 PM EST • 156 attending</div>
+                    <button class="register-btn">Register</button>
+                </div>
+                <div class="event-item" onclick="registerForEvent('Jan 5', 'Monthly Accountability Circle', 'zoom_link_4')">
+                    <div class="event-date">Jan 5</div>
+                    <div class="event-title">Monthly Accountability Circle</div>
+                    <div class="event-meta">7:30 PM EST • 203 attending</div>
+                    <button class="register-btn">Register</button>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="widget">
+                <h3 class="widget-title">
+                    <span>📊</span>
+                    <span>Community Stats</span>
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
+                    <div style="background: #f0f9ff; padding: 15px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #3b82f6;">1,247</div>
+                        <div style="font-size: 0.8rem; color: #64748b;">Active Members</div>
+                    </div>
+                    <div style="background: #f0fdf4; padding: 15px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #10b981;">89</div>
+                        <div style="font-size: 0.8rem; color: #64748b;">Posts Today</div>
+                    </div>
+                    <div style="background: #fdf4ff; padding: 15px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #c084fc;">23</div>
+                        <div style="font-size: 0.8rem; color: #64748b;">New Members</div>
+                    </div>
+                    <div style="background: #fef7f0; padding: 15px; border-radius: 12px;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #f97316;">456</div>
+                        <div style="font-size: 0.8rem; color: #64748b;">Comments</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Weekly Journal Modal -->
+    <div id="journalModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 10000; backdrop-filter: blur(5px);">
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; border-radius: 20px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);">
+            <div style="background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; padding: 25px; border-radius: 20px 20px 0 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="margin: 0; font-size: 1.5rem;">📝 Weekly Life Journal</h2>
+                    <button onclick="closeWeeklyJournal()" style="background: rgba(255, 255, 255, 0.2); border: none; color: white; font-size: 1.5rem; width: 35px; height: 35px; border-radius: 50%; cursor: pointer;">&times;</button>
+                </div>
+                <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 0.95rem;">Reflect on your week and track your progress</p>
+            </div>
+            
+            <div style="padding: 30px;">
+                <!-- Life Score Section -->
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1e293b; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        📊 Rate Your Week (1-10)
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                        <div>
+                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Career Progress</label>
+                            <input type="range" min="1" max="10" value="7" id="careerScore" style="width: 100%; margin-bottom: 5px;">
+                            <div style="font-size: 0.9rem; color: #64748b; text-align: center;" id="careerScoreValue">7/10</div>
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Personal Growth</label>
+                            <input type="range" min="1" max="10" value="8" id="growthScore" style="width: 100%; margin-bottom: 5px;">
+                            <div style="font-size: 0.9rem; color: #64748b; text-align: center;" id="growthScoreValue">8/10</div>
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Work-Life Balance</label>
+                            <input type="range" min="1" max="10" value="6" id="balanceScore" style="width: 100%; margin-bottom: 5px;">
+                            <div style="font-size: 0.9rem; color: #64748b; text-align: center;" id="balanceScoreValue">6/10</div>
+                        </div>
+                        
+                        <div>
+                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 8px;">Confidence Level</label>
+                            <input type="range" min="1" max="10" value="7" id="confidenceScore" style="width: 100%; margin-bottom: 5px;">
+                            <div style="font-size: 0.9rem; color: #64748b; text-align: center;" id="confidenceScoreValue">7/10</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px; background: #f8fafc; padding: 15px; border-radius: 12px; text-align: center;">
+                        <div style="font-weight: 600; color: #374151;">Overall Life Score</div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #7c3aed;" id="overallScore">7.0</div>
+                    </div>
+                </div>
+                
+                <!-- Journal Sections -->
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #1e293b; margin-bottom: 15px;">🎉 Week's Wins</h3>
+                    <textarea id="weekWins" placeholder="What victories, big or small, did you achieve this week?" style="width: 100%; min-height: 80px; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; resize: vertical; font-family: inherit;"></textarea>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #1e293b; margin-bottom: 15px;">🧩 Challenges & Lessons</h3>
+                    <textarea id="weekChallenges" placeholder="What obstacles did you face? What did you learn from them?" style="width: 100%; min-height: 80px; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; resize: vertical; font-family: inherit;"></textarea>
+                </div>
+                
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #1e293b; margin-bottom: 15px;">🎯 Next Week's Focus</h3>
+                    <textarea id="nextWeekGoals" placeholder="What are your top 3 priorities for next week?" style="width: 100%; min-height: 80px; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; resize: vertical; font-family: inherit;"></textarea>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #1e293b; margin-bottom: 15px;">💭 Reflection</h3>
+                    <textarea id="weekReflection" placeholder="Any other thoughts, insights, or gratitude you want to capture?" style="width: 100%; min-height: 100px; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; resize: vertical; font-family: inherit;"></textarea>
+                </div>
+                
+                <div style="display: flex; gap: 15px;">
+                    <button onclick="saveJournalEntry()" style="flex: 1; background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 1rem;">
+                        💾 Save Journal Entry
+                    </button>
+                    <button onclick="closeWeeklyJournal()" style="background: #e5e7eb; color: #374151; border: none; padding: 15px 25px; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Post input handling
+        const postInput = document.getElementById('post-input');
+        const shareBtn = document.getElementById('share-btn');
+
+        postInput.addEventListener('input', function() {
+            const hasContent = this.value.trim().length > 0;
+            shareBtn.disabled = !hasContent;
+            shareBtn.style.opacity = hasContent ? '1' : '0.6';
+        });
+
+        // Post sharing
+        function sharePost() {
+            const content = postInput.value.trim();
+            if (!content) return;
+
+            // Show loading state
+            shareBtn.textContent = 'Sharing...';
+            shareBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                // Reset form
+                postInput.value = '';
+                shareBtn.textContent = 'Share Post';
+                shareBtn.disabled = true;
+                shareBtn.style.opacity = '0.6';
+
+                // Show success message
+                const successMsg = document.getElementById('success-message');
+                successMsg.classList.add('show');
+                setTimeout(() => {
+                    successMsg.classList.remove('show');
+                }, 3000);
+
+                // Add new post to feed (simulate)
+                addNewPostToFeed(content);
+            }, 1000);
+        }
+
+        // Add new post to feed
+        function addNewPostToFeed(content) {
+            const feedPosts = document.getElementById('feed-posts');
+            const newPost = document.createElement('article');
+            newPost.className = 'post';
+            newPost.innerHTML = `
+                <div class="post-header">
+                    <div class="post-avatar">SM</div>
+                    <div class="post-info">
+                        <div class="post-author">Sarah Mitchell</div>
+                        <div class="post-meta">
+                            <span>Strategic Builder</span>
+                            <span>•</span>
+                            <span>Just now</span>
+                            <span class="post-badge">💎 Premium</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">${content}</div>
+                <div class="post-actions">
+                    <button class="action-btn" onclick="toggleLike(this)">
+                        <span>❤️</span>
+                        <span>0 loves</span>
+                    </button>
+                    <button class="action-btn" onclick="toggleComments(this)">
+                        <span>💬</span>
+                        <span>0 comments</span>
+                    </button>
+                    <button class="action-btn" onclick="toggleSave(this)">
+                        <span>🔖</span>
+                        <span>Save</span>
+                    </button>
+                    <button class="action-btn" onclick="sharePost(this)">
+                        <span>📤</span>
+                        <span>Share</span>
+                    </button>
+                </div>
+            `;
+            
+            feedPosts.insertBefore(newPost, feedPosts.firstChild);
+        }
+
+        // Post interactions
+        function toggleLike(btn) {
+            btn.classList.toggle('liked');
+            const span = btn.querySelector('span:last-child');
+            const currentCount = parseInt(span.textContent.split(' ')[0]);
+            const newCount = btn.classList.contains('liked') ? currentCount + 1 : currentCount - 1;
+            span.textContent = `${newCount} loves`;
+        }
+
+        function toggleSave(btn) {
+            btn.classList.toggle('saved');
+            const span = btn.querySelector('span:last-child');
+            span.textContent = btn.classList.contains('saved') ? 'Saved' : 'Save';
+        }
+
+        function toggleComments(btn) {
+            // Would open comments panel
+            console.log('Opening comments...');
+        }
+
+        // Filter posts
+        function filterPosts(filter, clickedButton) {
+            // Prevent default behavior and page jumping
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // If clickedButton is passed, use it; otherwise use event.target
+            const targetButton = clickedButton || event.target;
+            targetButton.classList.add('active');
+
+            // Get all posts
+            const posts = document.querySelectorAll('.post');
+            
+            posts.forEach(post => {
+                const postContent = post.textContent.toLowerCase();
+                const postTags = post.querySelectorAll('.post-tag');
+                let shouldShow = false;
+                
+                if (filter === 'all') {
+                    shouldShow = true;
+                } else if (filter === 'questions') {
+                    shouldShow = postContent.includes('question') || 
+                               postContent.includes('how do') || 
+                               postContent.includes('advice') || 
+                               postContent.includes('help') ||
+                               Array.from(postTags).some(tag => tag.textContent.toLowerCase().includes('question'));
+                } else if (filter === 'wins') {
+                    shouldShow = postContent.includes('win!') || 
+                               postContent.includes('success') || 
+                               postContent.includes('celebration') || 
+                               postContent.includes('achieved') ||
+                               postContent.includes('signed') ||
+                               Array.from(postTags).some(tag => tag.textContent.toLowerCase().includes('win'));
+                } else if (filter === 'resources') {
+                    shouldShow = postContent.includes('resource') || 
+                               postContent.includes('tool') || 
+                               postContent.includes('book') || 
+                               postContent.includes('article') ||
+                               postContent.includes('link') ||
+                               Array.from(postTags).some(tag => tag.textContent.toLowerCase().includes('resource'));
+                } else if (filter === 'accountability') {
+                    shouldShow = postContent.includes('accountability') || 
+                               postContent.includes('partner') || 
+                               postContent.includes('check-in') || 
+                               postContent.includes('goal') ||
+                               postContent.includes('progress') ||
+                               Array.from(postTags).some(tag => tag.textContent.toLowerCase().includes('accountability'));
+                }
+                
+                // Show/hide post with animation
+                if (shouldShow) {
+                    post.style.display = 'block';
+                    post.style.opacity = '0';
+                    setTimeout(() => {
+                        post.style.opacity = '1';
+                    }, 100);
+                } else {
+                    post.style.opacity = '0';
+                    setTimeout(() => {
+                        post.style.display = 'none';
+                    }, 300);
+                }
+            });
+            
+            // Update filter message
+            updateFilterMessage(filter, posts);
+        }
+        
+        function updateFilterMessage(filter, posts) {
+            const feedHeader = document.querySelector('.feed-header');
+            let existingMessage = feedHeader.querySelector('.filter-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+            
+            const visiblePosts = Array.from(posts).filter(post => 
+                post.style.display !== 'none' && post.style.opacity !== '0'
+            );
+            
+            if (filter !== 'all') {
+                const filterNames = {
+                    'questions': 'Questions & Advice',
+                    'wins': 'Wins & Celebrations', 
+                    'resources': 'Resources & Tools',
+                    'accountability': 'Accountability & Goals'
+                };
+                
+                const message = document.createElement('div');
+                message.className = 'filter-message';
+                message.style.cssText = `
+                    background: #f1f5f9; 
+                    padding: 10px 15px; 
+                    border-radius: 8px; 
+                    margin-top: 10px; 
+                    font-size: 0.9rem; 
+                    color: #64748b;
+                    border-left: 3px solid #7c3aed;
+                `;
+                message.innerHTML = `📋 Showing ${filterNames[filter]} (${visiblePosts.length} posts) - <button onclick="filterPosts('all', document.querySelector('.filter-btn'))" style="background: none; border: none; color: #7c3aed; cursor: pointer; text-decoration: underline;">Show All</button>`;
+                
+                feedHeader.appendChild(message);
+            }
+        }
+
+        // Load more posts
+        function loadMorePosts() {
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Loading...';
+            btn.disabled = true;
+
+            // Simulate loading more posts
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+                // In real app, would append new posts to feed
+                console.log('Loaded more posts');
+            }, 1000);
+        }
+
+        // Composer tools
+        function addImage() {
+            console.log('Adding image...');
+            // Would open image selector/upload
+        }
+
+        function addPoll() {
+            console.log('Adding poll...');
+            // Would add poll creation interface
+        }
+
+        function addMilestone() {
+            console.log('Adding milestone...');
+            // Would add milestone tracking
+        }
+
+        function addResource() {
+            console.log('Adding resource...');
+            // Would add resource link interface
+        }
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query.length > 2) {
+                // Simulate search (in real app, would call search API)
+                console.log(`Searching for: ${query}`);
+            }
+        });
+
+        // Simulate real-time updates
+        setInterval(() => {
+            // Update member count, new posts indicator, etc.
+            updateCommunityStats();
+        }, 30000); // Every 30 seconds
+
+        function updateCommunityStats() {
+            // Would fetch real-time stats from API
+            console.log('Updating community stats...');
+        }
+
+        // Auto-expand textarea
+        postInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+        });
+
+        // Event registration function
+        function registerForEvent(date, title, zoomId) {
+            event.stopPropagation();
+            
+            // Zoom meeting URLs (these would be stored in your database)
+            const zoomLinks = {
+                'zoom_link_1': 'https://us06web.zoom.us/j/81234567890?pwd=VGhpc2lzYXRlc3Rjb2Rl',
+                'zoom_link_2': 'https://us06web.zoom.us/j/81234567891?pwd=VGhpc2lzYXRlc3Rjb2Rl',
+                'zoom_link_3': 'https://us06web.zoom.us/j/81234567892?pwd=VGhpc2lzYXRlc3Rjb2Rl',
+                'zoom_link_4': 'https://us06web.zoom.us/j/81234567893?pwd=VGhpc2lzYXRlc3Rjb2Rl'
+            };
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            
+            // Show loading state
+            btn.textContent = 'Registering...';
+            btn.disabled = true;
+            
+            // Simulate API call to register user
+            setTimeout(() => {
+                // In real implementation, this would:
+                // 1. Call your backend API to register user for event
+                // 2. Send calendar invite with Zoom link
+                // 3. Update event attendance count
+                // 4. Add event to user's dashboard
+                
+                alert(`✅ Successfully registered for "${title}" on ${date}!\n\n📧 Calendar invite sent to your email\n🔗 Zoom link: ${zoomLinks[zoomId]}\n\n💡 Tip: Add this event to your calendar and set a reminder!`);
+                
+                btn.textContent = 'Registered ✓';
+                btn.style.background = '#10b981';
+                btn.disabled = true;
+                
+                // Update attendance count
+                const eventItem = btn.closest('.event-item');
+                const metaText = eventItem.querySelector('.event-meta');
+                const currentCount = parseInt(metaText.textContent.match(/(\d+) attending/)[1]);
+                metaText.textContent = metaText.textContent.replace(/\d+ attending/, `${currentCount + 1} attending`);
+                
+            }, 1500);
+        }
+
+        // Daily Inspiration Quotes
+        const dailyQuotes = [
+            {
+                quote: "Your dreams are valid. Today is the day to take one bold step toward making them reality.",
+                author: "MogulMomma Community"
+            },
+            {
+                quote: "You already have everything within you to succeed. Trust yourself and take action.",
+                author: "Unknown"
+            },
+            {
+                quote: "The woman who follows the crowd will usually go no further than the crowd. The woman who walks alone is likely to find herself in places no one has ever been before.",
+                author: "Albert Einstein"
+            },
+            {
+                quote: "Success isn't about being perfect. It's about being consistent and never giving up on your dreams.",
+                author: "MogulMomma Wisdom"
+            },
+            {
+                quote: "Your current situation is not your final destination. Keep moving forward.",
+                author: "Unknown"
+            },
+            {
+                quote: "The most powerful woman is one who has learned to trust her own voice and act on her vision.",
+                author: "MogulMomma Community"
+            },
+            {
+                quote: "Don't wait for opportunity. Create it. Your dreams are waiting for you to show up.",
+                author: "Unknown"
+            },
+            {
+                quote: "Every expert was once a beginner. Every pro was once an amateur. Every icon was once an unknown.",
+                author: "Robin Sharma"
+            },
+            {
+                quote: "Your transition isn't a detour—it's your path to your true calling.",
+                author: "MogulMomma Wisdom"
+            },
+            {
+                quote: "The woman who is determined to do something will find a way; the woman who isn't will find an excuse.",
+                author: "Unknown"
+            },
+            {
+                quote: "You are never too old to set another goal or to dream a new dream.",
+                author: "C.S. Lewis"
+            },
+            {
+                quote: "Your career change isn't starting over—it's stepping up to who you were always meant to be.",
+                author: "MogulMomma Community"
+            },
+            {
+                quote: "The only impossible journey is the one you never begin.",
+                author: "Tony Robbins"
+            },
+            {
+                quote: "Your experience isn't baggage—it's your unique competitive advantage.",
+                author: "MogulMomma Wisdom"
+            },
+            {
+                quote: "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle.",
+                author: "Christian D. Larson"
+            }
+        ];
+
+        function loadDailyInspiration() {
+            // Get current date and use it to select quote (changes daily)
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+            const quoteIndex = dayOfYear % dailyQuotes.length;
+            
+            const todaysQuote = dailyQuotes[quoteIndex];
+            
+            document.getElementById('dailyQuote').textContent = `"${todaysQuote.quote}"`;
+            document.getElementById('quoteAuthor').textContent = `— ${todaysQuote.author}`;
+        }
+
+        function shareInspiration() {
+            const quote = document.getElementById('dailyQuote').textContent;
+            const author = document.getElementById('quoteAuthor').textContent;
+            
+            // Get user's affiliate code from localStorage or prompt for it
+            let affiliateCode = localStorage.getItem('mogulmomma_affiliate_code');
+            
+            if (!affiliateCode) {
+                affiliateCode = prompt('Enter your MogulMomma affiliate code (optional):');
+                if (affiliateCode) {
+                    localStorage.setItem('mogulmomma_affiliate_code', affiliateCode.toUpperCase());
+                }
+            }
+            
+            // Create share URL with affiliate code
+            const baseUrl = 'https://mogulmomma.com';
+            const shareUrl = affiliateCode ? `${baseUrl}?ref=${affiliateCode}` : baseUrl;
+            
+            // Create enhanced share text with affiliate info
+            const shareText = affiliateCode ? 
+            `${quote} ${author} 
+
+Ready to transform your career transition into your greatest success story? 
+
+Join the MogulMomma community: ${shareUrl}
+
+🎯 Shared by ${affiliateCode} - Join our community of accomplished women building their dream careers!
+
+#MogulMomma #CareerTransition #WomenInBusiness #DreamMapping` :
+            `${quote} ${author} 
+
+Ready to transform your career transition into your greatest success story? 
+
+Join the MogulMomma community: ${shareUrl}
+
+#MogulMomma #CareerTransition #WomenInBusiness #DreamMapping`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Daily MogulMomma Inspiration',
+                    text: shareText,
+                    url: shareUrl
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(shareText).then(() => {
+                    if (affiliateCode) {
+                        alert(`✅ AFFILIATE SHARE READY!
+
+📋 Inspiration copied with your affiliate link!
+🔗 Your link: ${shareUrl}
+💰 Affiliate Code: ${affiliateCode}
+
+📧 IMPORTANT: Save this info for tracking:
+- Your referral link: ${shareUrl}
+- Your affiliate code: ${affiliateCode}
+- Share date: ${new Date().toLocaleDateString()}
+
+When someone signs up through your link, email us at hello@mogulmomma.com with:
+"New referral from ${affiliateCode} on ${new Date().toLocaleDateString()}"
+
+💰 You'll earn 30% commission ($29.10) for each $97/month subscription!`);
+                    } else {
+                        alert('✅ Inspiration copied to clipboard! Share it with someone who needs motivation today.');
+                    }
+                }).catch(() => {
+                    // Double fallback: show share dialog
+                    const message = `Share today's inspiration:\n\n${shareText}`;
+                    alert(message);
+                });
+            }
+        }
+        
+        // Function to update affiliate code
+        function updateAffiliateCode() {
+            const newCode = prompt('Enter your MogulMomma affiliate code:', localStorage.getItem('mogulmomma_affiliate_code') || '');
+            if (newCode !== null) {
+                if (newCode.trim() === '') {
+                    localStorage.removeItem('mogulmomma_affiliate_code');
+                    alert('Affiliate code removed. Your shares will use the standard link.');
+                } else {
+                    localStorage.setItem('mogulmomma_affiliate_code', newCode.toUpperCase());
+                    alert(`Affiliate code updated to: ${newCode.toUpperCase()}`);
+                }
+                updateShareButtonText();
+            }
+        }
+        
+        // Function to view earnings
+        function viewEarnings() {
+            const affiliateCode = localStorage.getItem('mogulmomma_affiliate_code');
+            if (!affiliateCode) {
+                alert('Please set your affiliate code first to track earnings.');
+                return;
+            }
+            
+            // For demo - in production this would fetch from your affiliate tracking system
+            const demoEarnings = {
+                totalEarnings: 145.50,
+                thisMonth: 47.30,
+                referrals: 5,
+                conversionRate: '12%'
+            };
+            
+            alert(`💰 Affiliate Earnings (${affiliateCode})
+            
+📊 Total Earnings: $${demoEarnings.totalEarnings}
+📅 This Month: $${demoEarnings.thisMonth}
+👥 Referrals: ${demoEarnings.referrals}
+📈 Conversion Rate: ${demoEarnings.conversionRate}
+
+🔗 Your Referral Link: https://mogulmomma.com?ref=${affiliateCode}
+
+📧 To claim earnings, email hello@mogulmomma.com with:
+- Your affiliate code: ${affiliateCode}
+- List of referral dates and names (if known)
+
+💰 Commission: $29.10 per $97/month subscription!
+
+Visit affiliate-dashboard.html for detailed tracking!`);
+        }
+        
+        // Update share button text based on affiliate status
+        function updateShareButtonText() {
+            const affiliateCode = localStorage.getItem('mogulmomma_affiliate_code');
+            const button = document.getElementById('shareInspirationBtn');
+            if (button) {
+                if (affiliateCode) {
+                    button.innerHTML = `💰 Share & Earn (${affiliateCode})`;
+                } else {
+                    button.innerHTML = '💜 Share Today\'s Inspiration';
+                }
+            }
+        }
+
+        // Weekly Journal Functions
+        function openWeeklyJournal() {
+            document.getElementById('journalModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            loadJournalData();
+            setupScoreUpdaters();
+        }
+
+        function closeWeeklyJournal() {
+            document.getElementById('journalModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function setupScoreUpdaters() {
+            const scoreInputs = ['careerScore', 'growthScore', 'balanceScore', 'confidenceScore'];
+            
+            scoreInputs.forEach(scoreId => {
+                const input = document.getElementById(scoreId);
+                const valueDisplay = document.getElementById(scoreId + 'Value');
+                
+                input.addEventListener('input', function() {
+                    valueDisplay.textContent = `${this.value}/10`;
+                    updateOverallScore();
+                });
+            });
+        }
+
+        function updateOverallScore() {
+            const career = parseInt(document.getElementById('careerScore').value);
+            const growth = parseInt(document.getElementById('growthScore').value);
+            const balance = parseInt(document.getElementById('balanceScore').value);
+            const confidence = parseInt(document.getElementById('confidenceScore').value);
+            
+            const overall = ((career + growth + balance + confidence) / 4).toFixed(1);
+            document.getElementById('overallScore').textContent = overall;
+            
+            // Update sidebar score
+            document.getElementById('currentLifeScore').textContent = overall;
+        }
+
+        async function saveJournalEntry() {
+            const journalData = {
+                week_start: getWeekStart(),
+                career_score: parseInt(document.getElementById('careerScore').value),
+                growth_score: parseInt(document.getElementById('growthScore').value),
+                balance_score: parseInt(document.getElementById('balanceScore').value),
+                confidence_score: parseInt(document.getElementById('confidenceScore').value),
+                overall_score: parseFloat(document.getElementById('overallScore').textContent),
+                week_wins: document.getElementById('weekWins').value,
+                week_challenges: document.getElementById('weekChallenges').value,
+                next_week_goals: document.getElementById('nextWeekGoals').value,
+                reflection: document.getElementById('weekReflection').value,
+                created_at: new Date().toISOString()
+            };
+
+            try {
+                // Save to localStorage for now (can be enhanced with Supabase later)
+                const existingEntries = JSON.parse(localStorage.getItem('mogulmomma_journal_entries') || '[]');
+                
+                // Check if entry for this week already exists
+                const thisWeekIndex = existingEntries.findIndex(entry => entry.week_start === journalData.week_start);
+                
+                if (thisWeekIndex >= 0) {
+                    existingEntries[thisWeekIndex] = journalData;
+                } else {
+                    existingEntries.push(journalData);
+                }
+                
+                // Keep only last 12 weeks
+                existingEntries.sort((a, b) => new Date(b.week_start) - new Date(a.week_start));
+                if (existingEntries.length > 12) {
+                    existingEntries.splice(12);
+                }
+                
+                localStorage.setItem('mogulmomma_journal_entries', JSON.stringify(existingEntries));
+                
+                // Show success message
+                alert('✅ Journal entry saved! Your reflection helps track your progress toward your dreams.');
+                closeWeeklyJournal();
+                
+            } catch (error) {
+                console.error('Error saving journal entry:', error);
+                alert('❌ Error saving journal entry. Please try again.');
+            }
+        }
+
+        function loadJournalData() {
+            try {
+                const entries = JSON.parse(localStorage.getItem('mogulmomma_journal_entries') || '[]');
+                const thisWeek = getWeekStart();
+                const thisWeekEntry = entries.find(entry => entry.week_start === thisWeek);
+                
+                if (thisWeekEntry) {
+                    // Load existing data
+                    document.getElementById('careerScore').value = thisWeekEntry.career_score;
+                    document.getElementById('growthScore').value = thisWeekEntry.growth_score;
+                    document.getElementById('balanceScore').value = thisWeekEntry.balance_score;
+                    document.getElementById('confidenceScore').value = thisWeekEntry.confidence_score;
+                    document.getElementById('weekWins').value = thisWeekEntry.week_wins;
+                    document.getElementById('weekChallenges').value = thisWeekEntry.week_challenges;
+                    document.getElementById('nextWeekGoals').value = thisWeekEntry.next_week_goals;
+                    document.getElementById('weekReflection').value = thisWeekEntry.reflection;
+                    
+                    // Update displays
+                    setupScoreUpdaters();
+                    updateOverallScore();
+                }
+            } catch (error) {
+                console.error('Error loading journal data:', error);
+            }
+        }
+
+        function getWeekStart() {
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1); // Adjust when day is Sunday
+            const monday = new Date(today.setDate(diff));
+            return monday.toISOString().split('T')[0];
+        }
+
+        // AI Tools Functions
+        function openAITool(toolType) {
+            const toolData = {
+                content: {
+                    title: '✍️ Content Generator',
+                    description: 'Generate professional content for LinkedIn, blogs, social media and more',
+                    placeholder: 'What type of content do you want to create? (e.g., LinkedIn post about career transition, blog intro, etc.)'
+                },
+                roadmap: {
+                    title: '🗺️ Roadmap Builder',
+                    description: 'Create a step-by-step plan for your career transition',
+                    placeholder: 'Describe your current role and your career goal. What transition are you planning?'
+                },
+                brand: {
+                    title: '🎨 Brand Identity Creator',
+                    description: 'Develop your personal brand messaging and positioning',
+                    placeholder: 'Tell us about your expertise, target audience, and what makes you unique'
+                },
+                coach: {
+                    title: '💬 AI Career Coach',
+                    description: 'Get personalized career advice and guidance',
+                    placeholder: 'What career challenge are you facing? Ask for specific advice or guidance.'
+                },
+                image: {
+                    title: '🎨 Image Generator',
+                    description: 'Create professional images for your brand and content',
+                    placeholder: 'Describe the image you want to create (e.g., professional headshot, LinkedIn banner, etc.)'
+                }
+            };
+
+            const tool = toolData[toolType];
+            
+            // Create modal
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0, 0, 0, 0.7); z-index: 10000; backdrop-filter: blur(5px);
+                display: flex; align-items: center; justify-content: center;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; border-radius: 20px; box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);">
+                    <div style="background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; padding: 25px; border-radius: 20px 20px 0 0;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h2 style="margin: 0; font-size: 1.5rem;">${tool.title}</h2>
+                                <p style="margin: 10px 0 0 0; opacity: 0.9; font-size: 0.95rem;">${tool.description}</p>
+                            </div>
+                            <button onclick="closeAIModal()" style="background: rgba(255, 255, 255, 0.2); border: none; color: white; font-size: 1.5rem; width: 35px; height: 35px; border-radius: 50%; cursor: pointer;">&times;</button>
+                        </div>
+                    </div>
+                    
+                    <div style="padding: 30px;">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 10px;">What would you like to create?</label>
+                            <textarea id="aiToolInput" placeholder="${tool.placeholder}" style="width: 100%; min-height: 100px; padding: 15px; border: 2px solid #e5e7eb; border-radius: 10px; resize: vertical; font-family: inherit;"></textarea>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; font-weight: 600; color: #374151; margin-bottom: 10px;">Tone & Style</label>
+                            <select id="aiToolTone" style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-family: inherit;">
+                                <option value="professional">Professional</option>
+                                <option value="conversational">Conversational</option>
+                                <option value="inspiring">Inspiring</option>
+                                <option value="authoritative">Authoritative</option>
+                                <option value="friendly">Friendly</option>
+                            </select>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px;">
+                            <button onclick="generateAIContent('${toolType}')" style="flex: 1; background: linear-gradient(135deg, #0284c7, #0ea5e9); color: white; border: none; padding: 15px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 1rem;">
+                                ✨ Generate Content
+                            </button>
+                            <button onclick="closeAIModal()" style="background: #e5e7eb; color: #374151; border: none; padding: 15px 25px; border-radius: 10px; font-weight: 600; cursor: pointer;">
+                                Cancel
+                            </button>
+                        </div>
+                        
+                        <div id="aiToolOutput" style="margin-top: 25px; display: none;">
+                            <h3 style="color: #1e293b; margin-bottom: 15px;">Generated Content:</h3>
+                            <div id="aiToolResult" style="background: #f8fafc; padding: 20px; border-radius: 10px; border-left: 4px solid #0284c7; white-space: pre-wrap; line-height: 1.6;"></div>
+                            <div style="margin-top: 15px; display: flex; gap: 10px;">
+                                <button onclick="copyAIResult()" style="background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                                    📋 Copy Content
+                                </button>
+                                <button onclick="generateAIContent('${toolType}')" style="background: #6366f1; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">
+                                    🔄 Generate New
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            // Focus on input
+            setTimeout(() => {
+                document.getElementById('aiToolInput').focus();
+            }, 100);
+        }
+
+        function closeAIModal() {
+            const modals = document.querySelectorAll('div[style*="backdrop-filter: blur(5px)"]');
+            modals.forEach(modal => {
+                if (modal.style.zIndex === '10000') {
+                    document.body.removeChild(modal);
+                }
+            });
+            document.body.style.overflow = 'auto';
+        }
+
+        function generateAIContent(toolType) {
+            const input = document.getElementById('aiToolInput').value;
+            const tone = document.getElementById('aiToolTone').value;
+            const output = document.getElementById('aiToolOutput');
+            const result = document.getElementById('aiToolResult');
+            
+            if (!input.trim()) {
+                alert('Please enter your request first!');
+                return;
+            }
+            
+            // Show loading
+            result.textContent = 'Generating your content... This may take a moment.';
+            output.style.display = 'block';
+            
+            // Simulate AI generation (in production, this would call your AI API)
+            setTimeout(() => {
+                const generatedContent = simulateAIGeneration(toolType, input, tone);
+                result.textContent = generatedContent;
+            }, 2000);
+        }
+
+        function simulateAIGeneration(toolType, input, tone) {
+            const samples = {
+                content: `🚀 Ready to make your next career move? 
+
+After ${tone === 'professional' ? '15+ years in corporate leadership' : 'years of building expertise'}, I've learned that the biggest career transitions happen when you stop waiting for permission and start creating your own opportunities.
+
+${input.includes('LinkedIn') ? 'Here are 3 strategies that transformed my approach:' : 'Key insights from my journey:'}
+
+✨ Your experience isn't starting over—it's your competitive advantage
+💪 The skills that got you here can take you anywhere
+🎯 Clarity beats perfection every time
+
+What's one bold step you're taking toward your dream role this week?
+
+#CareerTransition #Leadership #MogulMomma`,
+
+                roadmap: `🗺️ Your Career Transition Roadmap
+
+Based on your goal: "${input}"
+
+PHASE 1: Foundation (Weeks 1-4)
+• Clarify your vision and target role
+• Audit your current skills vs. required skills
+• Update LinkedIn profile and resume
+• Research 10 companies in your target industry
+
+PHASE 2: Building (Weeks 5-8)  
+• Network with 5 people in your target field
+• Complete 1-2 relevant skill-building courses
+• Start creating content in your new area
+• Apply to 3-5 strategic positions
+
+PHASE 3: Acceleration (Weeks 9-12)
+• Increase networking to 10+ conversations
+• Secure informational interviews
+• Negotiate transition timeline if switching internally
+• Prepare for interviews with portfolio examples
+
+Success Metrics:
+✅ 20+ quality networking connections
+✅ 3+ informational interviews completed  
+✅ 1-2 concrete opportunities in pipeline
+✅ Clear 90-day action plan for new role`,
+
+                brand: `🎨 Your Personal Brand Blueprint
+
+Based on: "${input}"
+
+BRAND POSITIONING:
+"The ${tone} leader who transforms [your industry] through [your unique approach]"
+
+CORE MESSAGE:
+I help accomplished professionals navigate career transitions with confidence, leveraging proven strategies and deep industry expertise.
+
+KEY PILLARS:
+🎯 Expertise: 15+ years of leadership experience
+💡 Innovation: Fresh perspectives on traditional challenges  
+🤝 Connection: Building authentic professional relationships
+📈 Results: Measurable impact and transformation
+
+CONTENT THEMES:
+• Career transition strategies
+• Leadership insights
+• Industry trends and analysis
+• Personal growth and development
+• Success stories and case studies
+
+VOICE & TONE:
+${tone.charAt(0).toUpperCase() + tone.slice(1)}, knowledgeable, approachable, actionable
+
+CALL-TO-ACTION:
+"Ready to accelerate your career transition? Let's connect and explore how I can help you achieve your professional goals."`,
+
+                coach: `💬 Career Coach Guidance
+
+Your Question: "${input}"
+
+Here's my personalized advice:
+
+🎯 IMMEDIATE ACTION:
+The first step is to get crystal clear on what you want. Write down exactly what your ideal role looks like - not just the title, but the daily responsibilities, company culture, and impact you want to make.
+
+💪 STRATEGIC APPROACH:
+1. Leverage your existing network - 70% of jobs are never posted publicly
+2. Focus on building relationships before you need them
+3. Position yourself as a thought leader in your target area
+
+⚡ QUICK WINS:
+• Update your LinkedIn headline to reflect your target role
+• Join 2-3 industry groups and engage actively
+• Schedule coffee chats with 2 people this week
+• Start sharing insights relevant to your new direction
+
+🚨 COMMON PITFALL TO AVOID:
+Don't wait until you feel 100% ready. Start building your presence in your target field now, even while in your current role.
+
+NEXT STEP:
+Choose ONE action from the quick wins list and complete it within 48 hours. Momentum builds confidence, and confidence attracts opportunities.
+
+Remember: Your transition isn't about starting over—it's about stepping into who you were always meant to become.`,
+
+                image: `🎨 Image Generation Request Received
+
+Your Request: "${input}"
+
+For optimal results, we recommend:
+
+STYLE: Professional, modern, clean
+COLORS: Blues and whites for trust, or purple/pink gradient for MogulMomma brand
+COMPOSITION: Clean, uncluttered, high-impact
+
+SUGGESTION:
+For professional headshots: Natural lighting, solid background, confident pose
+For LinkedIn banners: Include your value proposition text overlay
+For social media: Consistent brand colors and fonts
+
+This would connect to our AI image generator for actual creation. 
+
+Would you like to proceed with generating this image?`
+            };
+            
+            return samples[toolType] || 'Content generated successfully! This is a demo - in production, this would connect to actual AI APIs.';
+        }
+
+        function copyAIResult() {
+            const result = document.getElementById('aiToolResult');
+            navigator.clipboard.writeText(result.textContent).then(() => {
+                alert('✅ Content copied to clipboard!');
+            }).catch(() => {
+                alert('Please manually copy the content above.');
+            });
+        }
+
+        // Affiliate Center Functions
+        function openAffiliateTracker() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex; 
+                align-items: center; justify-content: center; padding: 20px;
+            `;
+            
+            // Get user's affiliate code or use demo
+            const affiliateCode = localStorage.getItem('mogulmomma_affiliate_code') || 'SARAH123';
+            const totalEarnings = localStorage.getItem('affiliate_total_earnings') || '485.50';
+            const monthlyEarnings = localStorage.getItem('affiliate_monthly_earnings') || '145.50';
+            const referralCount = localStorage.getItem('affiliate_referrals') || '10';
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 30px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="color: #1e293b; margin: 0;">📊 My Affiliate Dashboard</h2>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">×</button>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #fef3c7, #fbbf24); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                        <div style="color: #92400e; font-weight: 600; text-align: center;">Your Affiliate Code: ${affiliateCode}</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #f8fafc; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #10b981;">$${totalEarnings}</div>
+                            <div style="color: #64748b; font-size: 14px;">Total Earned</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #7c3aed;">$${monthlyEarnings}</div>
+                            <div style="color: #64748b; font-size: 14px;">This Month</div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #f8fafc; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #f59e0b;">${referralCount}</div>
+                            <div style="color: #64748b; font-size: 14px;">Total Referrals</div>
+                        </div>
+                        <div style="background: #f8fafc; padding: 15px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 24px; font-weight: bold; color: #ef4444;">$48.50</div>
+                            <div style="color: #64748b; font-size: 14px;">Per Referral</div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <a href="affiliate-dashboard.html" style="background: linear-gradient(135deg, #7c3aed, #c084fc); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: 600; display: inline-block;">View Full Dashboard</a>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        function openAffiliateLinks() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); z-index: 10000; display: flex; 
+                align-items: center; justify-content: center; padding: 20px;
+            `;
+            
+            const affiliateCode = localStorage.getItem('mogulmomma_affiliate_code') || 'SARAH123';
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 30px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 style="color: #1e293b; margin: 0;">🔗 My Affiliate Links</h2>
+                        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">×</button>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #7c3aed; margin-bottom: 10px;">Main Landing Page</h4>
+                        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 14px; border: 1px solid #e2e8f0; position: relative;">
+                            https://mogulmomma.com?ref=${affiliateCode}
+                            <button onclick="navigator.clipboard.writeText('https://mogulmomma.com?ref=${affiliateCode}').then(() => alert('✅ Link copied!'))" style="position: absolute; right: 8px; top: 8px; background: #7c3aed; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer;">Copy</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #7c3aed; margin-bottom: 10px;">Membership Page</h4>
+                        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 14px; border: 1px solid #e2e8f0; position: relative;">
+                            https://mogulmomma.com/mogulmomma-membership.html?ref=${affiliateCode}
+                            <button onclick="navigator.clipboard.writeText('https://mogulmomma.com/mogulmomma-membership.html?ref=${affiliateCode}').then(() => alert('✅ Link copied!'))" style="position: absolute; right: 8px; top: 8px; background: #7c3aed; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer;">Copy</button>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <h4 style="color: #7c3aed; margin-bottom: 10px;">Assessment Page</h4>
+                        <div style="background: #f8fafc; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 14px; border: 1px solid #e2e8f0; position: relative;">
+                            https://mogulmomma.com/mogul-mama-assessment.html?ref=${affiliateCode}
+                            <button onclick="navigator.clipboard.writeText('https://mogulmomma.com/mogul-mama-assessment.html?ref=${affiliateCode}').then(() => alert('✅ Link copied!'))" style="position: absolute; right: 8px; top: 8px; background: #7c3aed; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer;">Copy</button>
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #fef3c7, #fbbf24); padding: 15px; border-radius: 12px; margin-top: 20px;">
+                        <div style="color: #92400e; font-weight: 600; margin-bottom: 8px;">💡 Sharing Tips</div>
+                        <div style="color: #92400e; font-size: 14px;">
+                            • Share in relevant Facebook groups<br>
+                            • Include in your email signature<br>
+                            • Share with friends considering a career change<br>
+                            • Post on LinkedIn with your story
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        function openAffiliateSharing() {
+            const affiliateCode = localStorage.getItem('mogulmomma_affiliate_code') || 'SARAH123';
+            const shareText = `🚀 I found an amazing community for accomplished women ready to transform their careers! 
+            
+✨ MogulMomma has AI-powered tools, expert guidance, and a supportive community of ambitious women.
+
+If you're ready to turn your dreams into reality, check it out: https://mogulmomma.com?ref=${affiliateCode}
+
+#CareerTransition #WomenInBusiness #DreamMapping #MogulMomma`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'MogulMomma - Transform Your Dreams Into Reality',
+                    text: shareText,
+                    url: `https://mogulmomma.com?ref=${affiliateCode}`
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    alert('✅ Affiliate message copied to clipboard! Paste it wherever you want to share.');
+                }).catch(() => {
+                    alert(`📱 Quick Share Message:
+
+${shareText}
+
+Copy this message to share with your network!`);
+                });
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDailyInspiration();
+            updateShareButtonText();
+            console.log('MogulMomma Community loaded! 👑');
+        });
+    </script>
+
+    <!-- Authentication Protection - Temporarily Disabled for Demo -->
+    <script src="supabase-config.js"></script>
+    <script>
+        // Demo mode - no authentication required
+        console.log('Community page loaded in demo mode');
+        
+        // Add a demo notice to header
+        function addDemoNotice() {
+            const header = document.querySelector('.header-content');
+            if (header) {
+                const demoNotice = document.createElement('div');
+                demoNotice.innerHTML = '🚀 Demo Mode';
+                demoNotice.style.cssText = 'color: #7c3aed; font-weight: 600; background: rgba(124, 58, 237, 0.1); padding: 8px 15px; border-radius: 20px; font-size: 0.9rem;';
+                header.appendChild(demoNotice);
+            }
+        }
+        
+        // Add demo notice when page loads
+        addDemoNotice();
+    </script>
+</body>
+</html>

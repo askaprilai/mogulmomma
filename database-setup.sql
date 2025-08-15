@@ -10,8 +10,29 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   email TEXT,
   full_name TEXT,
   avatar_url TEXT,
+  professional_title TEXT,
+  bio TEXT,
+  industry TEXT,
+  location TEXT,
+  linkedin_url TEXT,
+  website_url TEXT,
+  allow_connections BOOLEAN DEFAULT true,
+  show_in_directory BOOLEAN DEFAULT true,
+  last_active TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  member_since TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Member connections table
+CREATE TABLE IF NOT EXISTS public.member_connections (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  requester_id UUID REFERENCES public.profiles(id),
+  recipient_id UUID REFERENCES public.profiles(id),
+  status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'accepted', 'declined')),
+  message TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  responded_at TIMESTAMP WITH TIME ZONE
 );
 
 -- Subscriptions table

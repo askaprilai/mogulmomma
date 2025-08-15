@@ -1,2 +1,26 @@
-{"buildCommand": null, "outputDirectory": 
-  ".", "installCommand": null}
+{
+  "buildCommand": null,
+  "outputDirectory": ".",
+  "installCommand": null,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/dashboard", "destination": "/member-dashboard.html" },
+    { "source": "/community", "destination": "/community-page.html" },
+    { "source": "/assessment", "destination": "/mogul-mama-assessment.html" },
+    { "source": "/membership", "destination": "/mogulmomma-membership.html" },
+    { "source": "/admin", "destination": "/admin-dashboard.html" },
+    { "source": "/affiliate", "destination": "/affiliate-dashboard.html" },
+    { "source": "/signup", "destination": "/signup.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/member-dashboard", "destination": "/member-dashboard.html" },
+    { "source": "/ai-tools", "destination": "/ai-tools.html" },
+    { "source": "/ai-tools-unlimited", "destination": "/ai-tools-unlimited.html" },
+    { "source": "/calendar", "destination": "/content-scheduler.html" },
+    { "source": "/content-scheduler", "destination": "/content-scheduler.html" },
+    { "source": "/trial-access", "destination": "/trial-access.html" },
+    { "source": "/trial", "destination": "/trial-access.html" },
+    { "source": "/email-test", "destination": "/email-test.html" },
+    { "source": "/community-demo", "destination": "/community-page.html?demo=true" },
+    { "source": "/test-guide", "destination": "/test-member-guide.html" }
+  ]
+}

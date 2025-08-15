@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmailJS Test - MogulMomma</title>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #7c3aed;
+            margin-bottom: 20px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #ef4444;
+        }
+        .config {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 EmailJS Test for MogulMomma</h1>
+        
+        <div class="config">
+            <strong>Current Configuration:</strong><br>
+            Service ID: service_d4gai0i<br>
+            Template ID: template_tcyaiym<br>
+            User ID: SAU17WFhPmeQLrng7
+        </div>
+        
+        <form id="testForm">
+            <input type="text" id="testName" placeholder="Your name" value="Test User" required>
+            <input type="email" id="testEmail" placeholder="Your email" required>
+            <textarea id="testMessage" placeholder="Test message" rows="4">This is a test email from the MogulMomma EmailJS integration. If you receive this, the email system is working correctly!</textarea>
+            
+            <button type="submit" id="sendBtn">🚀 Send Test Email</button>
+        </form>
+        
+        <div id="result"></div>
+        
+        <div style="margin-top: 30px; padding: 15px; background: #fef3c7; border-radius: 8px; border: 1px solid #f59e0b;">
+            <strong>📝 Test Instructions:</strong>
+            <ol style="margin-top: 10px; padding-left: 20px;">
+                <li>Enter your email address</li>
+                <li>Click "Send Test Email"</li>
+                <li>Check your inbox (and spam folder)</li>
+                <li>Verify the email contains the test message</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Initialize EmailJS
+        emailjs.init("SAU17WFhPmeQLrng7");
+        
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('sendBtn');
+            const result = document.getElementById('result');
+            const originalText = btn.textContent;
+            
+            // Disable button and show loading
+            btn.disabled = true;
+            btn.textContent = '⏳ Sending...';
+            result.innerHTML = '';
+            
+            try {
+                console.log('Testing EmailJS configuration...');
+                
+                const params = {
+                    to_name: document.getElementById('testName').value,
+                    to_email: document.getElementById('testEmail').value,
+                    from_name: "MogulMomma Test",
+                    message: document.getElementById('testMessage').value,
+                    subject: "🧪 EmailJS Test - MogulMomma Platform",
+                    reply_to: "hello@mogulmomma.com"
+                };
+                
+                console.log('Sending with params:', params);
+                
+                const response = await emailjs.send(
+                    "service_d4gai0i",
+                    "template_tcyaiym", 
+                    params
+                );
+                
+                console.log('EmailJS Response:', response);
+                
+                result.className = 'result success';
+                result.innerHTML = `
+                    ✅ <strong>Email sent successfully!</strong><br>
+                    Status: ${response.status}<br>
+                    Message ID: ${response.text}<br>
+                    <small>Check your inbox at ${params.to_email}</small>
+                `;
+                
+            } catch (error) {
+                console.error('EmailJS Error:', error);
+                
+                result.className = 'result error';
+                result.innerHTML = `
+                    ❌ <strong>Email sending failed:</strong><br>
+                    Error: ${error.message || error}<br>
+                    <small>Check the console for more details</small>
+                `;
+            }
+            
+            // Re-enable button
+            btn.disabled = false;
+            btn.textContent = originalText;
+        });
+    </script>
+</body>
+</html>
