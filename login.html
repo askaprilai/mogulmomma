@@ -183,7 +183,7 @@
             </button>
         </form>
         
-        <p>Don't have an account? <a href="signup.html" class="signup-link">Join MogulMomma</a></p>
+        <p>Don't have an account? <a href="/signup" class="signup-link">Join MogulMomma</a></p>
         <p style="margin-top: 1rem;"><a href="forgot-password.html" class="signup-link">Forgot your password?</a></p>
     </div>
 
@@ -201,7 +201,7 @@
             if (user) {
                 showMessage('You are already signed in! Redirecting...', 'success');
                 setTimeout(() => {
-                    window.location.href = 'community-page.html';
+                    window.location.href = '/community';
                 }, 2000);
             }
         }
