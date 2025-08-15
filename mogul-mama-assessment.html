@@ -2000,7 +2000,18 @@
                         to_email: email,
                         from_name: 'MogulMomma Team',
                         subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
-                        message: emailTemplate,
+                        archetype_name: archetype.name,
+                        archetype_description: archetype.description,
+                        strengths_list: (archetype.strengths || ['Natural leadership abilities', 'Strategic thinking', 'Problem-solving skills', 'Professional experience']).map((strength, index) => `${index + 1}. ${strength}`).join('\n'),
+                        focus_areas: (archetype.challenges || ['Building confidence in new direction', 'Developing new skills', 'Creating clear action plan', 'Building supportive network']).map((area, index) => `${index + 1}. ${area}`).join('\n'),
+                        action_plan: `Week 1-2: Clarify your vision for ${dreamRole || 'your new direction'} - write down exactly what success looks like
+Week 3-4: Identify 3 people in your target field and reach out for informational interviews
+Week 5-6: Start building one new skill relevant to ${dreamRole || 'your goals'}
+Week 7-8: Create a transition timeline with specific milestones`,
+                        next_steps: `• Join the MogulMomma community for ongoing support
+• Book a clarity coaching session if you need additional guidance
+• Start networking in your target industry
+• Consider working with a mentor for accountability`,
                         reply_to: "hello@mogulmomma.com"
                     };
                     
@@ -2029,7 +2040,18 @@
                         to_email: email,
                         from_name: "MogulMomma Team",
                         subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
-                        message: emailTemplate,
+                        archetype_name: archetype.name,
+                        archetype_description: archetype.description,
+                        strengths_list: (archetype.strengths || ['Natural leadership abilities', 'Strategic thinking', 'Problem-solving skills', 'Professional experience']).map((strength, index) => `${index + 1}. ${strength}`).join('\n'),
+                        focus_areas: (archetype.challenges || ['Building confidence in new direction', 'Developing new skills', 'Creating clear action plan', 'Building supportive network']).map((area, index) => `${index + 1}. ${area}`).join('\n'),
+                        action_plan: `Week 1-2: Clarify your vision for ${dreamRole || 'your new direction'} - write down exactly what success looks like
+Week 3-4: Identify 3 people in your target field and reach out for informational interviews
+Week 5-6: Start building one new skill relevant to ${dreamRole || 'your goals'}
+Week 7-8: Create a transition timeline with specific milestones`,
+                        next_steps: `• Join the MogulMomma community for ongoing support
+• Book a clarity coaching session if you need additional guidance
+• Start networking in your target industry
+• Consider working with a mentor for accountability`,
                         reply_to: "hello@mogulmomma.com"
                     };
                     
