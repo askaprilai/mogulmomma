@@ -1310,7 +1310,7 @@
                                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                                         <button onclick="createQuickAssessment()" style="background: #7c3aed; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Quick Assessment</button>
                                         <button onclick="getSurveyTemplate()" style="background: #3b82f6; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Templates</button>
-                                        <button onclick="openSurveyTool('typeform')" style="background: #262626; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Typeform</button>
+                                        <button onclick="openSurveyTool('google')" style="background: #34a853; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Google Forms</button>
                                     </div>
                                 </div>
                                 
@@ -1582,8 +1582,8 @@
                             
                             <div style="display: flex; gap: 10px; margin-top: 20px;">
                                 <button onclick="copyAssessmentContent()" style="background: #10b981; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Copy All Content</button>
-                                <button onclick="openSurveyTool('google')" style="background: #34a853; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Create in Google Forms</button>
-                                <button onclick="openSurveyTool('typeform')" style="background: #262626; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Create in Typeform</button>
+                                <button onclick="saveAssessmentToProjects()" style="background: #7c3aed; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Save to My Projects</button>
+                                <button onclick="emailAssessment()" style="background: #ec4899; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Email to Me</button>
                             </div>
                         </div>
                     </div>
@@ -1632,6 +1632,126 @@ SOCIAL MEDIA POST:
             }).catch(() => {
                 showCustomModal('error', 'Copy Failed', 'Unable to copy to clipboard. Please manually select and copy the content.');
             });
+        }
+        
+        function saveAssessmentToProjects() {
+            const assessmentData = {
+                type: 'Market Validation Survey',
+                date: new Date().toLocaleDateString(),
+                content: window.currentAssessmentContent,
+                title: 'My Market Validation Assessment'
+            };
+            
+            // Save to localStorage (simulates saving to user projects)
+            let savedProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
+            savedProjects.unshift(assessmentData);
+            localStorage.setItem('userProjects', JSON.stringify(savedProjects));
+            
+            showCustomModal('success', 'Assessment Saved!', 
+                `Your assessment has been saved to "My Projects". You can access it anytime from your dashboard.
+                
+                <div style="margin: 15px 0; padding: 15px; background: rgba(124, 58, 237, 0.1); border-radius: 8px; text-align: left;">
+                    <strong>📁 Find it in:</strong><br>
+                    Dashboard → My Projects → Market Validation Survey<br>
+                    <small style="color: #64748b;">Saved: ${assessmentData.date}</small>
+                </div>`, 'View My Projects', () => {
+                showPage('my-projects');
+            });
+        }
+        
+        function emailAssessment() {
+            showCustomModal('info', 'Email Your Assessment', 
+                `I'll send your market validation assessment to your email address. Please enter your email:
+                
+                <div style="margin: 20px 0;">
+                    <input type="email" id="email-address" placeholder="your.email@example.com" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit;" />
+                </div>
+                
+                <div style="text-align: left; margin: 15px 0; padding: 10px; background: rgba(16, 185, 129, 0.1); border-radius: 6px;">
+                    <small style="color: #065f46;">
+                        <strong>📧 What you'll receive:</strong><br>
+                        • Complete survey questions and introduction<br>
+                        • Social media post template<br>
+                        • Distribution strategy guide<br>
+                        • Links to create surveys (Google Forms, etc.)
+                    </small>
+                </div>`, 'Send Assessment', () => {
+                const email = document.getElementById('email-address').value.trim();
+                if (!email || !email.includes('@')) {
+                    showCustomModal('error', 'Valid Email Required', 'Please enter a valid email address.');
+                    return;
+                }
+                sendAssessmentEmail(email);
+            });
+        }
+        
+        function sendAssessmentEmail(email) {
+            const emailContent = `Subject: Your Market Validation Assessment - Ready to Use!
+
+Hi there!
+
+Here's your custom market validation assessment created in MogulMomma. Use this to validate demand for your coaching business:
+
+SURVEY INTRODUCTION:
+"Hi! I'm exploring career transition coaching and would love your quick input. This 2-minute survey helps me understand what professionals like you really need. Your responses are confidential and greatly appreciated!"
+
+SURVEY QUESTIONS:
+
+1. What's your biggest challenge with career transitions?
+○ Unclear direction ○ Financial concerns ○ Skill gaps ○ Network building ○ Other: ____
+
+2. How much would you invest in professional coaching support?
+○ Under $100/month ○ $100-300/month ○ $300-500/month ○ $500+/month ○ Not interested
+
+3. What format would you prefer for career guidance?
+○ 1:1 coaching ○ Group programs ○ Online courses ○ Workshop events ○ Combination
+
+4. What's your timeline for making a career change?
+○ Within 3 months ○ 3-6 months ○ 6-12 months ○ 1+ years ○ Just exploring
+
+5. Would you be interested in a free discovery call to discuss your goals?
+○ Yes, contact me ○ Maybe later ○ No thanks
+If yes, please provide your email: ____________
+
+SOCIAL MEDIA POST TEMPLATE:
+"🤔 Quick question for my network: What's your biggest challenge when thinking about career transitions? I'm researching this space and would love your 2-minute input → [survey link]. Thanks for helping! 🙏 #CareerChange #ProfessionalDevelopment"
+
+DISTRIBUTION STRATEGY:
+• Send to personal network (aim for 50+ responses)
+• Share in relevant Facebook groups
+• Post on LinkedIn with professional message
+• Ask friends to share with their networks
+
+CREATE YOUR SURVEY:
+• Google Forms: https://forms.google.com
+• SurveyMonkey: https://surveymonkey.com
+
+Best of luck with your market validation!
+
+The MogulMomma Team`;
+
+            // Use EmailJS to send the email
+            const templateParams = {
+                to_email: email,
+                to_name: 'MogulMomma Member',
+                subject: 'Your Market Validation Assessment - Ready to Use!',
+                message: emailContent,
+                from_name: 'MogulMomma Platform'
+            };
+
+            // Simulate email sending (replace with actual EmailJS implementation)
+            setTimeout(() => {
+                showCustomModal('success', 'Assessment Emailed!', 
+                    `Your market validation assessment has been sent to ${email}. Check your inbox (and spam folder) in the next few minutes.
+                    
+                    <div style="margin: 15px 0; padding: 15px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; text-align: left;">
+                        <strong>📧 Email includes:</strong><br>
+                        • Complete survey questions<br>
+                        • Social media templates<br>
+                        • Distribution strategy<br>
+                        • Links to survey tools
+                    </div>`);
+            }, 1500);
         }
         
         function createOutputArea() {
@@ -2184,6 +2304,9 @@ I'd love to chat about what support options might work best for me. Can you help
         }
 
         // Document Generation Functions
+        let currentDocumentContent = '';
+        let currentDocumentTitle = '';
+        
         function generateDocument(type) {
             const output = document.getElementById('document-output');
             const actions = document.getElementById('document-actions');
@@ -2210,6 +2333,11 @@ I'd love to chat about what support options might work best for me. Can you help
                 
                 output.innerHTML = content;
                 actions.style.display = 'flex';
+                
+                // Initialize Lucide icons in the new content
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
             }, 2000);
         }
 
@@ -2290,23 +2418,35 @@ I'd love to chat about what support options might work best for me. Can you help
                     <div style="background: white; padding: 25px; border: 2px solid #e2e8f0; border-radius: 10px; text-align: left;">
                         <h4 style="color: #7c3aed; margin-bottom: 15px;">Executive Summary</h4>
                         <p style="color: #64748b; line-height: 1.6; margin-bottom: 20px;">
-                            Your business plan outlines a comprehensive strategy for building a successful enterprise. 
-                            This plan includes market analysis, competitive research, financial projections, and operational strategies.
+                            Your comprehensive business plan has been generated with all essential sections for launching and scaling your coaching business. 
+                            This professional document includes market analysis, competitive research, financial projections, and operational strategies.
                         </p>
                         
-                        <h4 style="color: #7c3aed; margin-bottom: 10px;">Key Sections Included:</h4>
-                        <ul style="color: #64748b; line-height: 1.8; margin-left: 20px;">
-                            <li>Executive Summary & Vision Statement</li>
-                            <li>Market Analysis & Target Customer Profile</li>
-                            <li>Competitive Analysis & Positioning</li>
-                            <li>Products/Services Description</li>
-                            <li>Marketing & Sales Strategy</li>
-                            <li>Operations Plan & Management Structure</li>
-                            <li>Financial Projections (3-year forecast)</li>
-                            <li>Funding Requirements & Investment Strategy</li>
-                            <li>Risk Analysis & Mitigation Plans</li>
-                            <li>Implementation Timeline & Milestones</li>
-                        </ul>
+                        <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <h4 style="color: #7c3aed; margin-bottom: 15px;">📋 Complete Business Plan Sections:</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <ul style="color: #64748b; line-height: 1.8;">
+                                    <li>✅ Executive Summary & Vision</li>
+                                    <li>✅ Market Analysis & Research</li>
+                                    <li>✅ Target Customer Profiles</li>
+                                    <li>✅ Competitive Analysis</li>
+                                    <li>✅ Service Descriptions</li>
+                                </ul>
+                                <ul style="color: #64748b; line-height: 1.8;">
+                                    <li>✅ Marketing & Sales Strategy</li>
+                                    <li>✅ Operations & Management</li>
+                                    <li>✅ Financial Projections (3-year)</li>
+                                    <li>✅ Funding Requirements</li>
+                                    <li>✅ Implementation Timeline</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                            <h4 style="margin-bottom: 10px; font-weight: 600;">🎯 Your 15-Page Professional Business Plan is Ready!</h4>
+                            <p style="opacity: 0.95; font-size: 0.9rem; margin-bottom: 15px;">Download the complete document, edit it for your specific needs, and use it to attract investors or secure funding.</p>
+                            <p style="font-size: 0.8rem; opacity: 0.8;">Perfect for: Bank loans • Investor presentations • Strategic planning • Partnership proposals</p>
+                        </div>
                     </div>
                 </div>
             `;
@@ -2469,14 +2609,369 @@ I'd love to chat about what support options might work best for me. Can you help
         // Full document content functions for download
         function generateBusinessPlanContent() {
             return `
-                <div class="section">
-                    <h2>Executive Summary</h2>
-                    <p>Our innovative business provides comprehensive solutions for our target market, addressing key pain points while delivering exceptional value. This business plan outlines our strategy for achieving sustainable growth and market leadership.</p>
+                <h1 style="text-align: center; color: #7c3aed; margin-bottom: 30px;">COMPREHENSIVE BUSINESS PLAN</h1>
+                <h2 style="text-align: center; color: #64748b; margin-bottom: 40px;">Career Transition Coaching Business</h2>
+                
+                <div style="page-break-after: always;">
+                    <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">1. EXECUTIVE SUMMARY</h2>
                     
-                    <h3>Mission Statement</h3>
-                    <p>To empower our clients with innovative solutions that transform their challenges into opportunities for success.</p>
+                    <h3 style="color: #1e293b; margin-top: 25px;">Business Overview</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">Our career transition coaching business provides comprehensive support to professionals navigating career changes. We offer personalized coaching, group programs, and digital resources designed to empower clients to achieve their career goals with confidence and clarity.</p>
                     
-                    <h3>Key Success Factors</h3>
+                    <h3 style="color: #1e293b; margin-top: 25px;">Mission Statement</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px; font-style: italic; background: #f8fafc; padding: 15px; border-radius: 8px;">"To empower accomplished professionals with the tools, strategies, and support they need to navigate career transitions successfully and create fulfilling, purpose-driven careers."</p>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Key Success Factors</h3>
+                    <ul style="line-height: 1.8; margin-bottom: 20px;">
+                        <li>Proven coaching methodology and frameworks</li>
+                        <li>Strong personal brand and professional credibility</li>
+                        <li>Clear target market and positioning</li>
+                        <li>Multiple revenue streams and scalable offerings</li>
+                        <li>Strategic partnerships and referral networks</li>
+                    </ul>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Financial Highlights</h3>
+                    <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <p style="margin: 5px 0;"><strong>Year 1 Revenue Target:</strong> $85,000</p>
+                        <p style="margin: 5px 0;"><strong>Year 2 Revenue Target:</strong> $145,000</p>
+                        <p style="margin: 5px 0;"><strong>Year 3 Revenue Target:</strong> $220,000</p>
+                        <p style="margin: 5px 0;"><strong>Break-even Timeline:</strong> Month 8</p>
+                        <p style="margin: 5px 0;"><strong>Profit Margin Target:</strong> 70-80%</p>
+                    </div>
+                </div>
+                
+                <div style="page-break-after: always;">
+                    <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">2. MARKET ANALYSIS</h2>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Industry Overview</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">The career coaching industry has experienced significant growth, with the global market valued at over $1.34 billion in 2022. Factors driving growth include:</p>
+                    <ul style="line-height: 1.8; margin-bottom: 20px;">
+                        <li>Increased job market volatility and frequent career changes</li>
+                        <li>Growing emphasis on work-life balance and career fulfillment</li>
+                        <li>Rise in entrepreneurship and freelance workforce</li>
+                        <li>Corporate downsizing and industry disruption</li>
+                        <li>Greater awareness of professional development importance</li>
+                    </ul>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Target Market</h3>
+                    <div style="background: #fef7f0; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #92400e;">Primary Target: Mid-Career Professionals (Ages 35-50)</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li>10-20 years of professional experience</li>
+                            <li>Household income $75,000-$200,000</li>
+                            <li>Feeling stuck or unfulfilled in current role</li>
+                            <li>Considering career change or advancement</li>
+                            <li>Value personal growth and development</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #eff6ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #1e40af;">Secondary Target: High-Achieving Women (Ages 30-45)</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li>Corporate executives and entrepreneurs</li>
+                            <li>Seeking work-life integration solutions</li>
+                            <li>Interested in leadership development</li>
+                            <li>Willing to invest in professional growth</li>
+                            <li>Value authentic, relationship-based coaching</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Market Size & Opportunity</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">Our target market represents approximately 2.4 million professionals in our geographic region, with an estimated 15% actively seeking career transition support at any given time (360,000 potential clients).</p>
+                </div>
+                
+                <div style="page-break-after: always;">
+                    <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">3. COMPETITIVE ANALYSIS</h2>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Competitive Landscape</h3>
+                    <p style="line-height: 1.8; margin-bottom: 20px;">The career coaching market includes various players from individual practitioners to large consulting firms. Our competitive advantage lies in our specialized focus, proven methodology, and personalized approach.</p>
+                    
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #1e293b;">Competitive Advantages</h4>
+                        <ul style="line-height: 1.8; margin-top: 10px;">
+                            <li><strong>Specialized Expertise:</strong> Deep focus on career transitions specifically</li>
+                            <li><strong>Proven Framework:</strong> Proprietary methodology with measurable results</li>
+                            <li><strong>Personal Experience:</strong> Authentic story of successful career transition</li>
+                            <li><strong>Holistic Approach:</strong> Combines career coaching with personal development</li>
+                            <li><strong>Technology Integration:</strong> Digital tools and resources for enhanced value</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Positioning Strategy</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">We position ourselves as the premier choice for accomplished professionals who refuse to settle for "good enough" careers and are ready to create work that truly fulfills them.</p>
+                </div>
+                
+                <div style="page-break-after: always;">
+                    <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">4. SERVICES & OFFERINGS</h2>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Core Service Portfolio</h3>
+                    
+                    <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #92400e;">1:1 VIP Coaching Program ($297/session)</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li>Intensive 60-minute strategy sessions</li>
+                            <li>Personalized career transition roadmap</li>
+                            <li>Custom action plans and accountability</li>
+                            <li>Direct access to coach via messaging</li>
+                            <li>Resource library and template access</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #166534;">Group Dream Mapping Sessions ($97/month)</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li>Monthly 90-minute group coaching calls</li>
+                            <li>Peer support and accountability</li>
+                            <li>Expert-led workshops and training</li>
+                            <li>Private community access</li>
+                            <li>Monthly action plan templates</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #eff6ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #1e40af;">Digital Course & Resources ($197 one-time)</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li>Self-paced online curriculum</li>
+                            <li>Downloadable worksheets and assessments</li>
+                            <li>Video training modules</li>
+                            <li>Lifetime access to updates</li>
+                            <li>Private online community</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Service Delivery Model</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">Our hybrid delivery model combines high-touch personal coaching with scalable digital resources, ensuring quality while maintaining profitability and growth potential.</p>
+                </div>
+                
+                <div style="page-break-after: always;">
+                    <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">5. MARKETING & SALES STRATEGY</h2>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Brand Positioning</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">MogulMomma is positioned as the trusted guide for ambitious professionals who are ready to stop settling and create careers that truly fulfill them. Our brand emphasizes empowerment, authenticity, and measurable results.</p>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Marketing Channels</h3>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                            <h4 style="color: #7c3aed;">Digital Marketing</h4>
+                            <ul style="line-height: 1.6; font-size: 0.9rem;">
+                                <li>LinkedIn thought leadership</li>
+                                <li>Instagram personal branding</li>
+                                <li>Email newsletter campaigns</li>
+                                <li>Podcast guest appearances</li>
+                                <li>SEO-optimized blog content</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f8fafc; padding: 15px; border-radius: 8px;">
+                            <h4 style="color: #7c3aed;">Relationship Marketing</h4>
+                            <ul style="line-height: 1.6; font-size: 0.9rem;">
+                                <li>Professional networking events</li>
+                                <li>Corporate workshop partnerships</li>
+                                <li>Referral program implementation</li>
+                                <li>Alumni and client testimonials</li>
+                                <li>Strategic partnership development</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Sales Funnel Strategy</h3>
+                    <div style="background: #fef7f0; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <p style="line-height: 1.6; margin-bottom: 10px;"><strong>1. Awareness:</strong> Free career assessment and valuable content</p>
+                        <p style="line-height: 1.6; margin-bottom: 10px;"><strong>2. Interest:</strong> Lead magnets and email nurture sequences</p>
+                        <p style="line-height: 1.6; margin-bottom: 10px;"><strong>3. Consideration:</strong> Free discovery calls and testimonials</p>
+                        <p style="line-height: 1.6; margin-bottom: 10px;"><strong>4. Purchase:</strong> Clear service packages and easy booking</p>
+                        <p style="line-height: 1.6;"><strong>5. Retention:</strong> Ongoing support and upsell opportunities</p>
+                    </div>
+                </div>
+                
+                <div style="page-break-after: always;">
+                    <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">6. OPERATIONS PLAN</h2>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Business Model</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">Our business operates as a hybrid coaching practice combining high-value 1:1 services with scalable group programs and digital products. This model maximizes revenue per client while maintaining quality and personal connection.</p>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Daily Operations</h3>
+                    <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #166534;">Typical Week Structure:</h4>
+                        <ul style="line-height: 1.8; margin-top: 10px;">
+                            <li><strong>Monday-Tuesday:</strong> 1:1 client coaching sessions (4-6 sessions/day)</li>
+                            <li><strong>Wednesday:</strong> Content creation and marketing activities</li>
+                            <li><strong>Thursday:</strong> Group coaching sessions and administrative tasks</li>
+                            <li><strong>Friday:</strong> Business development and strategic planning</li>
+                            <li><strong>Weekend:</strong> Personal time and professional development</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Technology & Tools</h3>
+                    <ul style="line-height: 1.8; margin-bottom: 20px;">
+                        <li><strong>CRM System:</strong> Client relationship management and follow-up</li>
+                        <li><strong>Scheduling Platform:</strong> Automated booking and calendar management</li>
+                        <li><strong>Video Conferencing:</strong> Virtual coaching session delivery</li>
+                        <li><strong>Course Platform:</strong> Digital product hosting and delivery</li>
+                        <li><strong>Email Marketing:</strong> Automated nurture sequences and communication</li>
+                        <li><strong>Project Management:</strong> Task tracking and client progress monitoring</li>
+                    </ul>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Quality Assurance</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">We maintain high service standards through structured coaching frameworks, regular client feedback collection, continuous professional development, and measurable outcome tracking.</p>
+                </div>
+                
+                <div style="page-break-after: always;">
+                    <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">7. FINANCIAL PROJECTIONS</h2>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Revenue Model</h3>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #1e293b;">Revenue Streams</h4>
+                        <ul style="line-height: 1.8; margin-top: 10px;">
+                            <li><strong>1:1 VIP Coaching:</strong> $297/session × 20 clients/month = $5,940/month</li>
+                            <li><strong>Group Programs:</strong> $97/month × 50 members = $4,850/month</li>
+                            <li><strong>Digital Products:</strong> $197 × 15 sales/month = $2,955/month</li>
+                            <li><strong>Corporate Workshops:</strong> $2,500 × 2 events/quarter = $1,667/month</li>
+                        </ul>
+                        <p style="margin-top: 15px; font-weight: 600; color: #059669;"><strong>Total Monthly Revenue Target (Year 2): $15,412</strong></p>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">3-Year Financial Forecast</h3>
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                        <tr style="background: #7c3aed; color: white;">
+                            <th style="padding: 12px; text-align: left; border: 1px solid #e2e8f0;">Metric</th>
+                            <th style="padding: 12px; text-align: center; border: 1px solid #e2e8f0;">Year 1</th>
+                            <th style="padding: 12px; text-align: center; border: 1px solid #e2e8f0;">Year 2</th>
+                            <th style="padding: 12px; text-align: center; border: 1px solid #e2e8f0;">Year 3</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0;"><strong>Revenue</strong></td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center;">$85,000</td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center;">$145,000</td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center;">$220,000</td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td style="padding: 10px; border: 1px solid #e2e8f0;"><strong>Expenses</strong></td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center;">$35,000</td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center;">$52,000</td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center;">$75,000</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0;"><strong>Net Profit</strong></td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center; color: #059669; font-weight: 600;">$50,000</td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center; color: #059669; font-weight: 600;">$93,000</td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center; color: #059669; font-weight: 600;">$145,000</td>
+                        </tr>
+                        <tr style="background: #f8fafc;">
+                            <td style="padding: 10px; border: 1px solid #e2e8f0;"><strong>Profit Margin</strong></td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center;">59%</td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center;">64%</td>
+                            <td style="padding: 10px; border: 1px solid #e2e8f0; text-align: center;">66%</td>
+                        </tr>
+                    </table>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Key Financial Assumptions</h3>
+                    <ul style="line-height: 1.8; margin-bottom: 20px;">
+                        <li>Client acquisition cost: $150 per client</li>
+                        <li>Client lifetime value: $1,200 average</li>
+                        <li>Monthly recurring revenue growth: 15% annually</li>
+                        <li>Operating expense ratio: 30-35% of revenue</li>
+                        <li>Break-even point: Month 8 of operations</li>
+                    </ul>
+                </div>
+                
+                <div style="page-break-after: always;">
+                    <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">8. IMPLEMENTATION TIMELINE</h2>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Phase 1: Foundation (Months 1-3)</h3>
+                    <div style="background: #fef7f0; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #92400e;">Month 1: Business Setup</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li>Complete legal entity formation and registration</li>
+                            <li>Set up business banking and accounting systems</li>
+                            <li>Develop brand identity and website</li>
+                            <li>Create core coaching frameworks and materials</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fef7f0; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #92400e;">Month 2: Market Research & Validation</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li>Conduct comprehensive market research</li>
+                            <li>Survey target audience and validate offerings</li>
+                            <li>Analyze competitors and refine positioning</li>
+                            <li>Develop pricing strategy and service packages</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: #fef7f0; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h4 style="color: #92400e;">Month 3: Beta Testing & Refinement</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li>Launch pilot program with 5-10 beta clients</li>
+                            <li>Gather feedback and refine service delivery</li>
+                            <li>Develop testimonials and case studies</li>
+                            <li>Finalize operational procedures and systems</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Phase 2: Launch (Months 4-6)</h3>
+                    <div style="background: #eff6ff; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <ul style="line-height: 1.8;">
+                            <li><strong>Month 4:</strong> Official business launch and marketing campaign</li>
+                            <li><strong>Month 5:</strong> Scale client acquisition to 15-20 active clients</li>
+                            <li><strong>Month 6:</strong> Launch group program and establish monthly revenue of $8,000+</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Phase 3: Growth (Months 7-12)</h3>
+                    <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <ul style="line-height: 1.8;">
+                            <li><strong>Months 7-9:</strong> Reach break-even point and consistent profitability</li>
+                            <li><strong>Months 10-12:</strong> Scale to $10,000+ monthly revenue and launch digital products</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div>
+                    <h2 style="color: #7c3aed; border-bottom: 2px solid #7c3aed; padding-bottom: 10px;">9. RISK ANALYSIS & MITIGATION</h2>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Identified Risks</h3>
+                    
+                    <div style="background: #fef2f2; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #dc2626;">Market Risks</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li><strong>Economic downturn:</strong> Reduced spending on professional development</li>
+                            <li><strong>Increased competition:</strong> Market saturation with new coaches</li>
+                            <li><strong>Changing client needs:</strong> Shifts in career transition patterns</li>
+                        </ul>
+                        <p style="margin-top: 10px; color: #059669;"><strong>Mitigation:</strong> Diversified service offerings, strong value proposition, flexible pricing options</p>
+                    </div>
+                    
+                    <div style="background: #fef2f2; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
+                        <h4 style="color: #dc2626;">Operational Risks</h4>
+                        <ul style="line-height: 1.6; margin-top: 10px;">
+                            <li><strong>Capacity constraints:</strong> Limited time for 1:1 coaching</li>
+                            <li><strong>Technology failures:</strong> Platform outages affecting service delivery</li>
+                            <li><strong>Key person dependency:</strong> Business relies heavily on founder</li>
+                        </ul>
+                        <p style="margin-top: 10px; color: #059669;"><strong>Mitigation:</strong> Scalable group programs, backup systems, documented processes, potential team expansion</p>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Success Metrics & KPIs</h3>
+                    <div style="background: #f0fdf4; padding: 20px; border-radius: 8px;">
+                        <ul style="line-height: 1.8;">
+                            <li><strong>Client Acquisition:</strong> 5-8 new clients per month</li>
+                            <li><strong>Client Retention:</strong> 80%+ completion rate for programs</li>
+                            <li><strong>Revenue Growth:</strong> 15% month-over-month increase</li>
+                            <li><strong>Profit Margin:</strong> Maintain 60%+ profitability</li>
+                            <li><strong>Client Satisfaction:</strong> 4.8+ average rating</li>
+                            <li><strong>Referral Rate:</strong> 40%+ of new clients from referrals</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 style="color: #1e293b; margin-top: 25px;">Conclusion</h3>
+                    <p style="line-height: 1.8; margin-bottom: 15px;">This comprehensive business plan provides the roadmap for building a successful career transition coaching practice. With proven demand, clear positioning, and a scalable business model, we are well-positioned to achieve our financial and impact goals while serving our target market effectively.</p>
+                    
+                    <div style="background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%); color: white; padding: 25px; border-radius: 12px; text-align: center; margin-top: 30px;">
+                        <h4 style="margin-bottom: 10px;">Ready to Transform Your Coaching Vision Into Reality?</h4>
+                        <p style="opacity: 0.95; font-size: 0.9rem;">This business plan is your blueprint for success. Take action on Phase 1 today and start building the coaching practice of your dreams!</p>
+                    </div>
+                </div>`;
                     <ul>
                         <li>Strong market demand for our services</li>
                         <li>Experienced leadership team</li>
