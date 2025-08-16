@@ -1731,32 +1731,72 @@ Best,
         }
         
         function bookPremiumCoaching() {
-            showCustomModal('info', 'VIP 1:1 Expert Coaching', 
-                `Get personalized, private guidance from a certified career transition expert who will create a custom strategy just for you.
+            const roadmapGoal = document.getElementById('roadmap-input')?.value || 'career transition goals';
+            
+            showCustomModal('info', 'Chat with a VIP Coaching Expert', 
+                `Let's have a quick chat to see if VIP 1:1 coaching is the right fit for your situation. Our expert will understand your needs and recommend the best path forward.
                 
                 <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px;">
-                    <strong>Your VIP Session ($297):</strong><br>
-                    • 60-minute private strategy session<br>
-                    • Detailed roadmap review and refinement<br>
-                    • Custom positioning and differentiation strategy<br>
-                    • Personalized 30-day action plan<br>
-                    • Follow-up email with resources<br>
-                    • 2 weeks of email support
+                    <strong>VIP 1:1 Coaching Includes:</strong><br>
+                    • 60-minute private strategy session ($297)<br>
+                    • Custom roadmap review and refinement<br>
+                    • Personalized positioning strategy<br>
+                    • 30-day action plan just for you<br>
+                    • Follow-up resources and 2 weeks support
                 </div>
                 
-                <div style="margin: 15px 0; padding: 15px; background: rgba(124, 58, 237, 0.2); border-radius: 8px; border-left: 4px solid #7c3aed;">
-                    <strong>👑 Perfect for you if:</strong><br>
-                    • You prefer private, confidential guidance<br>
-                    • You have unique or complex circumstances<br>
-                    • You want immediate, personalized attention<br>
-                    • You're ready to fast-track your results
+                <div style="margin: 15px 0; padding: 15px; background: rgba(16, 185, 129, 0.2); border-radius: 8px; border-left: 4px solid #10b981;">
+                    <strong>💬 Why chat first?</strong><br>
+                    • Get immediate answers to your questions<br>
+                    • Ensure VIP coaching fits your specific needs<br>
+                    • Learn about all available support options<br>
+                    • No pressure - just expert guidance
                 </div>
                 
                 <p style="font-size: 0.9rem; opacity: 0.9; text-align: center; margin-top: 15px;">
-                    <strong>Limited spots available</strong> - Our expert coaches only take 5 new VIP clients per month
-                </p>`, 'Book VIP Session', () => {
-                window.open('https://calendly.com/mogulmomma-vip-coaching', '_blank');
+                    <strong>Quick response guaranteed</strong> - Usually within 15 minutes during business hours
+                </p>`, 'Chat with Expert Now', () => {
+                startWhatsAppChat('vip-coaching', roadmapGoal);
             });
+        }
+        
+        function startWhatsAppChat(service, context) {
+            const businessNumber = '13059651023'; // Your WhatsApp Business number
+            let message = '';
+            
+            switch(service) {
+                case 'vip-coaching':
+                    message = `Hi! I just completed my roadmap in MogulMomma and I'm interested in learning more about VIP 1:1 coaching.
+
+My business goal: ${context}
+
+I'd love to chat about whether VIP coaching is right for my situation and learn more about the process. What would be the next steps?`;
+                    break;
+                    
+                case 'group-sessions':
+                    message = `Hi! I'm a MogulMomma member interested in joining the Group Dream Mapping sessions.
+
+My current focus: ${context}
+
+Can you help me understand how to get started with the monthly group calls?`;
+                    break;
+                    
+                case 'general-support':
+                    message = `Hi! I'm working through my MogulMomma roadmap and could use some guidance.
+
+My situation: ${context}
+
+I'd love to chat about what support options might work best for me. Can you help?`;
+                    break;
+                    
+                default:
+                    message = `Hi! I'm a MogulMomma member and would love to chat about the coaching and support options available. Can you help me understand what might be the best fit for my goals?`;
+            }
+            
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${businessNumber}?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
         }
         
         function bookCoachingCall() {
