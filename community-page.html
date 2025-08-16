@@ -1663,24 +1663,41 @@
 
         // Composer tools
         function addImage() {
-            console.log('Adding image...');
-            // Would open image selector/upload
+            const textarea = document.getElementById('post-content');
+            const currentText = textarea.value;
+            const imageTemplate = '\n\n📸 [Image: Describe your photo here - career milestone, workspace setup, inspiration board, etc.]\n\n';
+            textarea.value = currentText + imageTemplate;
+            textarea.focus();
+            updatePostButton();
         }
 
         function addPoll() {
-            console.log('Adding poll...');
-            // Would add poll creation interface
+            const textarea = document.getElementById('post-content');
+            const currentText = textarea.value;
+            const pollTemplate = '\n\n📊 POLL: [Your question here?]\n🔹 Option 1\n🔹 Option 2\n🔹 Option 3\n\nVote in comments! 👇\n\n';
+            textarea.value = currentText + pollTemplate;
+            textarea.focus();
+            updatePostButton();
         }
 
         function addMilestone() {
-            console.log('Adding milestone...');
-            // Would add milestone tracking
+            const textarea = document.getElementById('post-content');
+            const currentText = textarea.value;
+            const milestoneTemplate = '\n\n🎯 MILESTONE ACHIEVED!\n\n✨ What I accomplished: [Your achievement here]\n💪 How it felt: [Your emotions/experience]\n📈 What I learned: [Key insights]\n🚀 Next goal: [What\'s next]\n\n#MilestoneMonday #Progress #MogulMomma\n\n';
+            textarea.value = currentText + milestoneTemplate;
+            textarea.focus();
+            updatePostButton();
         }
 
         function addResource() {
-            console.log('Adding resource...');
-            // Would add resource link interface
+            const textarea = document.getElementById('post-content');
+            const currentText = textarea.value;
+            const resourceTemplate = '\n\n📎 RESOURCE SHARE\n\n🔗 Link: [URL or resource name]\n💡 What it is: [Brief description]\n⭐ Why it\'s helpful: [Benefits/use case]\n🎯 Perfect for: [Target audience]\n\n#Resources #Tools #CareerDevelopment\n\n';
+            textarea.value = currentText + resourceTemplate;
+            textarea.focus();
+            updatePostButton();
         }
+
 
         // Search functionality
         const searchInput = document.querySelector('.search-input');

@@ -2288,19 +2288,21 @@ I'd love to chat about what support options might work best for me. Can you help
 
         // Action Functions
         function saveProject(type) {
-            alert(`✅ Project saved! You can find it in your "My Projects" section.`);
+            showCustomModal('success', 'Project Saved!', 'Your project has been saved successfully! You can find it in your "My Projects" section anytime.', 'View My Projects', () => {
+                showPage('my-projects');
+            });
         }
 
         function exportPDF(type) {
-            alert(`📄 PDF export starting... Check your downloads folder in a few moments.`);
+            showCustomModal('info', 'Generating PDF...', 'Your PDF is being generated and will be ready for download shortly. Check your downloads folder in a few moments.', 'Got It!');
         }
 
         function shareProject(type) {
-            alert(`🔗 Share link copied to clipboard! Anyone with this link can view your project.`);
+            showCustomModal('success', 'Share Link Ready!', 'The share link has been copied to your clipboard! Anyone with this link can view your project. Perfect for getting feedback or showcasing your work.', 'Perfect!');
         }
 
         function copyToClipboard(type) {
-            alert(`📋 Content copied to clipboard!`);
+            showCustomModal('success', 'Copied!', 'Content has been copied to your clipboard. You can now paste it anywhere you need it.', 'Great!');
         }
 
         // Document Generation Functions
@@ -2372,7 +2374,7 @@ I'd love to chat about what support options might work best for me. Can you help
             const actions = document.getElementById('document-actions');
             
             if (!documentType || !input.trim()) {
-                alert('Please select a document type and describe your requirements.');
+                showCustomModal('error', 'Input Required', 'Please select a document type and describe your requirements to generate your custom document.', 'Got It!');
                 return;
             }
             
