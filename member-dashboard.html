@@ -1281,12 +1281,119 @@
                     </div>
                     
                     <div style="margin-top: 25px; padding: 20px; background: #f8fafc; border-radius: 12px;">
-                        <h4 style="color: #7c3aed; margin-bottom: 10px;">💡 Next Steps</h4>
-                        <p style="color: #64748b;">Start with Phase 1, Week 1: Research 5 successful coaches in your target niche and analyze their positioning. Create a simple survey to validate demand from your network.</p>
+                        <h4 style="color: #7c3aed; margin-bottom: 10px;"><i class="btn-icon" data-lucide="lightbulb"></i>Next Steps</h4>
+                        <p style="color: #64748b; margin-bottom: 15px;">Start with Phase 1, Week 1: Research 5 successful coaches in your target niche and analyze their positioning. Create a simple survey to validate demand from your network.</p>
+                    </div>
+                    
+                    <!-- Smart Recommendations Section -->
+                    <div style="margin-top: 25px; padding: 25px; background: linear-gradient(135deg, #7c3aed 0%, #c084fc 50%, #f472b6 100%); border-radius: 16px; color: white;">
+                        <h4 style="margin-bottom: 15px; font-size: 1.3rem;"><i class="btn-icon" data-lucide="sparkles"></i>Ready to Bring Your Vision to Life?</h4>
+                        <p style="margin-bottom: 20px; opacity: 0.95; line-height: 1.6;">Now that you have your roadmap, it's time to create a powerful brand identity that attracts your ideal clients and sets you apart from the competition.</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                            <div style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; backdrop-filter: blur(10px);">
+                                <h5 style="margin-bottom: 8px; font-weight: 600;"><i class="btn-icon" data-lucide="palette"></i>Brand Identity</h5>
+                                <p style="font-size: 0.9rem; opacity: 0.9;">Create your logo, colors, fonts, and visual style guide</p>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 12px; backdrop-filter: blur(10px);">
+                                <h5 style="margin-bottom: 8px; font-weight: 600;"><i class="btn-icon" data-lucide="message-circle"></i>Brand Voice</h5>
+                                <p style="font-size: 0.9rem; opacity: 0.9;">Define your messaging, tone, and unique value proposition</p>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <button onclick="startBrandJourney()" style="background: white; color: #7c3aed; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;">
+                                <i data-lucide="palette" style="width: 16px; height: 16px;"></i>
+                                Use Brand Builder
+                            </button>
+                            <button onclick="openAIBrandHelper()" style="background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.3); padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;">
+                                <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+                                Get AI Help
+                            </button>
+                        </div>
                     </div>
                 `;
                 actions.style.display = 'flex';
+                
+                // Initialize Lucide icons in the new content
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
             }, 2000);
+        }
+        
+        // Smart Brand Journey Functions
+        function startBrandJourney() {
+            // Smooth transition to brand builder
+            showCustomModal('info', 'Starting Your Brand Journey', 'Let\'s create a powerful brand identity that attracts your ideal clients!', 'Let\'s Go!', () => {
+                showPage('brand-identity');
+                // Auto-populate brand builder with roadmap context
+                const roadmapInput = document.getElementById('roadmap-input')?.value;
+                const brandInput = document.getElementById('brand-input');
+                if (roadmapInput && brandInput) {
+                    brandInput.value = `Based on my coaching business goal: ${roadmapInput}`;
+                    brandInput.focus();
+                }
+            });
+        }
+        
+        function openAIBrandHelper() {
+            const roadmapGoal = document.getElementById('roadmap-input')?.value || 'your business vision';
+            
+            // Create AI-powered brand prompts
+            const brandPrompts = [
+                `Help me develop a brand identity for my coaching business. My goal is: "${roadmapGoal}". I need help with logo concepts, color schemes, and brand personality that will attract my ideal clients.`,
+                
+                `Create a brand messaging strategy for my new coaching business. My vision: "${roadmapGoal}". Help me define my unique value proposition, brand voice, and key messages that differentiate me from competitors.`,
+                
+                `Design a brand style guide for my coaching practice. Business concept: "${roadmapGoal}". I need recommendations for fonts, colors, imagery style, and overall visual direction that conveys professionalism and trustworthiness.`
+            ];
+            
+            showCustomModal('info', 'AI Brand Assistant', 
+                `I'll help you create powerful brand prompts for ChatGPT, Claude, or any AI tool. Choose what you need help with:
+                
+                <div style="margin: 20px 0; text-align: left;">
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 10px 0; cursor: pointer;" onclick="copyBrandPrompt(0)">
+                        <strong>🎨 Visual Brand Identity</strong><br>
+                        <small style="color: #64748b;">Logo, colors, fonts, and visual style guide</small>
+                    </div>
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 10px 0; cursor: pointer;" onclick="copyBrandPrompt(1)">
+                        <strong>💬 Brand Messaging</strong><br>
+                        <small style="color: #64748b;">Value proposition, brand voice, and key messages</small>
+                    </div>
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 10px 0; cursor: pointer;" onclick="copyBrandPrompt(2)">
+                        <strong>📋 Complete Style Guide</strong><br>
+                        <small style="color: #64748b;">Comprehensive brand guidelines and direction</small>
+                    </div>
+                </div>
+                
+                Click any option to copy the perfect prompt to your clipboard!`, 'Got It!');
+            
+            // Store prompts globally for copying
+            window.brandPrompts = brandPrompts;
+        }
+        
+        function copyBrandPrompt(index) {
+            const prompt = window.brandPrompts[index];
+            navigator.clipboard.writeText(prompt).then(() => {
+                closeCustomModal();
+                showCustomModal('success', 'Prompt Copied!', 
+                    `Perfect! I've copied a professional brand prompt to your clipboard. 
+                    
+                    <div style="margin: 15px 0; padding: 15px; background: #f0f9ff; border-radius: 8px; text-align: left;">
+                        <strong>Next Steps:</strong><br>
+                        1. Open ChatGPT, Claude, or your preferred AI tool<br>
+                        2. Paste the prompt (Ctrl+V or Cmd+V)<br>
+                        3. Add any specific details about your business<br>
+                        4. Get your custom brand strategy!
+                    </div>
+                    
+                    Want to use our Brand Builder instead? Just click "Use Brand Builder" below.`, 'Open ChatGPT', () => {
+                    window.open('https://chat.openai.com', '_blank');
+                });
+            }).catch(() => {
+                showCustomModal('error', 'Copy Failed', 'Unable to copy to clipboard. Please try again or manually copy the prompt.');
+            });
         }
 
         function generateBrand() {
