@@ -87,6 +87,29 @@
             overflow: hidden;
         }
 
+        /* Progress Bar Styles */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #ffffff, #f8fafc);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
         .header::before {
             content: '';
             position: absolute;
@@ -708,6 +731,81 @@
             display: none;
         }
 
+        /* Step-by-Step Flow */
+        .question-step {
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .question-step.active {
+            display: block;
+        }
+
+        .step-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #7c3aed 0%, #c084fc 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .nav-button:disabled {
+            background: #e2e8f0;
+            color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .nav-button.secondary {
+            background: transparent;
+            color: #7c3aed;
+            border: 2px solid #7c3aed;
+            box-shadow: none;
+        }
+
+        .nav-button.secondary:hover {
+            background: #7c3aed;
+            color: white;
+        }
+
+        /* Validation Styles */
+        .validation-error {
+            color: #dc2626;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #fef2f2;
+            border-radius: 8px;
+            border-left: 4px solid #ef4444;
+            display: none;
+        }
+
+        .question.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .assessment-content {
@@ -720,7 +818,7 @@
                 padding: 25px;
             }
             
-            .navigation {
+            .step-navigation {
                 flex-direction: column;
                 gap: 15px;
                 padding: 20px;
@@ -755,6 +853,14 @@
             <p class="subtitle">Discover Your Next Chapter & Transform Your Career Transition</p>
             <div class="tagline">
                 <strong>Designed Specifically for Accomplished Women Ready for More</strong>
+            </div>
+            
+            <!-- Progress Indicator -->
+            <div class="progress-container" id="progressContainer" style="display: none;">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-text" id="progressText" style="display: none;">
+                Question 1 of 15 • About 10 minutes remaining
             </div>
         </div>
 
@@ -1996,109 +2102,45 @@
                 
                 console.log('✅ EmailJS library is available');
                 
-                // Check if MogulMommaEmail is available from emailjs-config.js
-                if (typeof MogulMommaEmail !== 'undefined') {
-                    console.log('🎯 Using MogulMommaEmail helper');
-                    
-                    const emailParams = {
-                        to_name: firstName,
-                        to_email: email,
-                        from_name: 'MogulMomma Team',
-                        subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
-                        archetype_name: archetype.name,
-                        archetype_description: archetype.description,
-                        strengths_list: (archetype.strengths || ['Natural leadership abilities', 'Strategic thinking', 'Problem-solving skills', 'Professional experience']).map((strength, index) => `${index + 1}. ${strength}`).join('\n'),
-                        focus_areas: (archetype.challenges || ['Building confidence in new direction', 'Developing new skills', 'Creating clear action plan', 'Building supportive network']).map((area, index) => `${index + 1}. ${area}`).join('\n'),
-                        action_plan: `Week 1-2: Clarify your vision for ${dreamRole || 'your new direction'} - write down exactly what success looks like
-Week 3-4: Identify 3 people in your target field and reach out for informational interviews
-Week 5-6: Start building one new skill relevant to ${dreamRole || 'your goals'}
-Week 7-8: Create a transition timeline with specific milestones`,
-                        next_steps: `• Join the MogulMomma community for ongoing support
-• Book a clarity coaching session if you need additional guidance
-• Start networking in your target industry
-• Consider working with a mentor for accountability`,
-                        reply_to: "hello@mogulmomma.com"
-                    };
-                    
-                    console.log('📤 Sending via MogulMommaEmail with params:', {
-                        to_email: email,
-                        subject: emailParams.subject,
-                        from_name: emailParams.from_name,
-                        message_length: emailTemplate.length
-                    });
-                    
-                    const result = await MogulMommaEmail.sendTestEmail(emailParams);
-                    console.log('✅ Assessment report sent successfully via MogulMommaEmail:', result);
-                    
-                    // Also save to backup system
-                    await saveEmailBackup(email, firstName, emailTemplate);
-                    return true;
-                    
-                } else {
-                    // Fallback to direct EmailJS with correct service ID
-                    console.log('⚠️ MogulMommaEmail not available, using direct EmailJS');
-                    console.log('🔧 Using service: service_vntq4ai');
-                    console.log('📋 Using template: template_tcyaiym');
-                    
-                    const strengthsList = (archetype.strengths || ['Natural leadership abilities', 'Strategic thinking', 'Problem-solving skills', 'Professional experience']).map((strength, index) => `${index + 1}. ${strength}`).join('\n');
-                    const focusAreas = (archetype.challenges || ['Building confidence in new direction', 'Developing new skills', 'Creating clear action plan', 'Building supportive network']).map((area, index) => `${index + 1}. ${area}`).join('\n');
-                    
-                    console.log('🔍 DEBUGGING EMAIL PARAMS:');
-                    console.log('archetype.name:', archetype.name);
-                    console.log('archetype.description:', archetype.description);
-                    console.log('strengthsList:', strengthsList);
-                    console.log('focusAreas:', focusAreas);
-                    console.log('dreamRole:', dreamRole);
-                    
-                    const emailParams = {
-                        to_name: firstName,
-                        to_email: email,
-                        from_name: "MogulMomma Team",
-                        subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
-                        archetype_name: archetype.name,
-                        archetype_description: archetype.description,
-                        strengths_list: strengthsList,
-                        focus_areas: focusAreas,
-                        action_plan: `Week 1-2: Clarify your vision for ${dreamRole || 'your new direction'} - write down exactly what success looks like
-Week 3-4: Identify 3 people in your target field and reach out for informational interviews
-Week 5-6: Start building one new skill relevant to ${dreamRole || 'your goals'}
-Week 7-8: Create a transition timeline with specific milestones`,
-                        next_steps: `• Join the MogulMomma community for ongoing support
-• Book a clarity coaching session if you need additional guidance
-• Start networking in your target industry
-• Consider working with a mentor for accountability`,
-                        reply_to: "hello@mogulmomma.com"
-                    };
-                    
-                    console.log('📧 FINAL EMAIL PARAMS:', JSON.stringify(emailParams, null, 2));
-                    
-                    console.log('📤 Sending via direct EmailJS with params:', {
-                        service: "service_vntq4ai",
-                        template: "template_tcyaiym",
-                        to_email: email,
-                        subject: emailParams.subject,
-                        from_name: emailParams.from_name,
-                        message_length: emailTemplate.length
-                    });
-                    
-                    const emailPromise = emailjs.send(
-                        "service_vntq4ai",
-                        "template_tcyaiym",
-                        emailParams
-                    );
-                    
-                    // Add 10 second timeout
-                    const timeoutPromise = new Promise((_, reject) => 
-                        setTimeout(() => reject(new Error('Email timeout after 10 seconds')), 10000)
-                    );
-                    
-                    const result = await Promise.race([emailPromise, timeoutPromise]);
-                    console.log('✅ Assessment report sent successfully via direct EmailJS:', result);
-                    
-                    // Also save to backup system
-                    await saveEmailBackup(email, firstName, emailTemplate);
-                    return true;
-                }
+                // Use direct EmailJS with simple parameters that work
+                console.log('📧 Using direct EmailJS with HTML template');
+                console.log('🔧 Using service: service_vntq4ai');
+                console.log('📋 Using template: template_tcyaiym');
+                
+                // Try different parameter names that EmailJS templates commonly use
+                const emailParams = {
+                    to_name: firstName,
+                    to_email: email,
+                    user_email: email,  // Alternative name
+                    email: email,       // Another alternative
+                    from_name: "MogulMomma Team",
+                    subject: `Your Personalized MogulMomma Clarity Report - ${archetype.name}`,
+                    message: emailTemplate,
+                    reply_to: "hello@mogulmomma.com"
+                };
+                
+                console.log('📤 Sending simple HTML email with ALL params:');
+                console.log('📧 EXACT PARAMETERS BEING SENT:', JSON.stringify(emailParams, null, 2));
+                console.log('📊 Service: service_vntq4ai');
+                console.log('📊 Template: template_tcyaiym');
+                
+                const emailPromise = emailjs.send(
+                    "service_vntq4ai",
+                    "template_tcyaiym",
+                    emailParams
+                );
+                
+                // Add 10 second timeout
+                const timeoutPromise = new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error('Email timeout after 10 seconds')), 10000)
+                );
+                
+                const result = await Promise.race([emailPromise, timeoutPromise]);
+                console.log('✅ Assessment report sent successfully:', result);
+                
+                // Backup system disabled
+                console.log('📧 Email sent successfully, backup not needed');
+                return true;
                 
             } catch (error) {
                 console.error('💥 Assessment email failed with error:', error);
@@ -2108,9 +2150,9 @@ Week 7-8: Create a transition timeline with specific milestones`,
                     stack: error.stack
                 });
                 
-                // Fallback: Save assessment results for manual sending
-                console.log('💾 Saving to backup system...');
-                await saveEmailBackup(email, firstName, emailTemplate);
+                // Fallback: Log the issue (backup system disabled)
+                console.log('💾 Email failed, would save to backup system...');
+                console.log('📧 Email details for manual sending:', { email, firstName, templateLength: emailTemplate.length });
                 
                 // Return false so user knows there was an issue
                 console.log('❌ Returning false due to email sending failure');
@@ -2148,8 +2190,31 @@ Week 7-8: Create a transition timeline with specific milestones`,
         }
 
         function createAssessmentEmailTemplate(firstName, currentRole, dreamRole, archetype) {
-            return `
-<!DOCTYPE html>
+            // Use fallback values if fields are missing
+            const safeFirstName = firstName || 'there';
+            const safeCurrentRole = currentRole || 'your current role';
+            const safeDreamRole = dreamRole || 'your dream role';
+            const safeArchetypeName = archetype?.name || 'Career Transformer';
+            const safeDescription = archetype?.description || 'You are ready to make a meaningful change in your career and create the life you truly want.';
+            
+            // Handle strengths - either from archetype or default list
+            const strengthsList = archetype?.strengths || [
+                'Strong leadership and management experience',
+                'Strategic thinking and problem-solving abilities', 
+                'Excellent communication and interpersonal skills',
+                'Proven track record of driving results',
+                'Natural mentoring and coaching instincts'
+            ];
+            
+            // Handle challenges/focus areas - either from archetype or default list  
+            const focusAreasList = archetype?.challenges || archetype?.focus_areas || [
+                'Building your personal brand outside of corporate',
+                'Developing new skills and expertise in your target field',
+                'Creating marketing and client acquisition systems', 
+                'Transitioning from employee to entrepreneur mindset'
+            ];
+            
+            return `<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -2179,21 +2244,21 @@ Week 7-8: Create a transition timeline with specific milestones`,
         </div>
         
         <div class="content">
-            <h2>Hi ${firstName}! 🌟</h2>
-            <p>Thank you for completing the MogulMomma Clarity Assessment. Based on your responses, we've created this personalized report to help guide your transition from <strong>${currentRole}</strong> to <strong>${dreamRole}</strong>.</p>
+            <h2>Hi ${safeFirstName}! 🌟</h2>
+            <p>Thank you for completing the MogulMomma Clarity Assessment. Based on your responses, we've created this personalized report to help guide your transition from <strong>${safeCurrentRole}</strong> to <strong>${safeDreamRole}</strong>.</p>
             
             <div class="section">
-                <h3>🎯 Your Archetype: ${archetype.name}</h3>
-                <p>${archetype.description}</p>
+                <h3>🎯 Your Archetype: ${safeArchetypeName}</h3>
+                <p>${safeDescription}</p>
                 
                 <h3>💪 Your Strengths</h3>
                 <ul>
-                    ${(archetype.strengths || ['Natural leadership abilities', 'Strategic thinking', 'Problem-solving skills', 'Professional experience']).map(strength => `<li>${strength}</li>`).join('')}
+                    ${strengthsList.map(strength => `<li>${strength}</li>`).join('')}
                 </ul>
                 
                 <h3>🎯 Your Focus Areas</h3>
                 <ul>
-                    ${(archetype.challenges || ['Building confidence in new direction', 'Developing new skills', 'Creating clear action plan', 'Building supportive network']).map(challenge => `<li>${challenge}</li>`).join('')}
+                    ${focusAreasList.map(area => `<li>${area}</li>`).join('')}
                 </ul>
             </div>
             
@@ -2201,15 +2266,15 @@ Week 7-8: Create a transition timeline with specific milestones`,
                 <h3>🗺️ Your Personalized Action Plan</h3>
                 <p><strong>Next 30 Days:</strong></p>
                 <ul>
-                    <li>Clarify your vision for ${dreamRole} - write down exactly what success looks like</li>
+                    <li>Clarify your vision for ${safeDreamRole} - write down exactly what success looks like</li>
                     <li>Identify 3 people in your target field and reach out for informational interviews</li>
-                    <li>Start building one new skill relevant to ${dreamRole}</li>
+                    <li>Start building one new skill relevant to ${safeDreamRole}</li>
                     <li>Create a transition timeline with specific milestones</li>
                 </ul>
                 
                 <p><strong>Next 60-90 Days:</strong></p>
                 <ul>
-                    <li>Begin building your professional brand around ${dreamRole}</li>
+                    <li>Begin building your professional brand around ${safeDreamRole}</li>
                     <li>Start networking in your target industry</li>
                     <li>Create a portfolio or demonstration of your capabilities</li>
                     <li>Consider working with a coach or mentor for accountability</li>
@@ -2240,7 +2305,7 @@ Week 7-8: Create a transition timeline with specific milestones`,
                 </ul>
                 
                 <div style="text-align: center;">
-                    <a href="https://mogulmomma.com/mogulmomma-membership.html" class="cta">Join MogulMomma Community - $97/month</a>
+                    <a href="https://mogulmomma.com/membership" class="cta">Join MogulMomma Community - $97/month</a>
                 </div>
             </div>
             
@@ -2255,8 +2320,7 @@ Week 7-8: Create a transition timeline with specific milestones`,
         </div>
     </div>
 </body>
-</html>
-            `;
+</html>`;
         }
 
         function isValidEmail(email) {
