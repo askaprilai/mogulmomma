@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MogulMomma Member Dashboard</title>
+    <!-- Add Lucide Icons for sophisticated iconography -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <style>
         * {
             margin: 0;
@@ -110,6 +112,45 @@
 
         .nav-icon {
             font-size: 1.2rem;
+        }
+
+        /* Sophisticated Icon Styles */
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 1em;
+            height: 1em;
+            margin-right: 0.3em;
+            vertical-align: middle;
+        }
+
+        .icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .nav-icon-lucide {
+            width: 1em;
+            height: 1em;
+            margin-right: 0.4em;
+        }
+
+        .tool-icon-lucide {
+            width: 1.2em;
+            height: 1.2em;
+            margin-right: 0.4em;
+            margin-bottom: 0.5em;
+            color: #7c3aed;
+        }
+
+        .btn-icon {
+            width: 0.9em;
+            height: 0.9em;
+            margin-right: 0.3em;
         }
 
         /* Main Content */
@@ -598,7 +639,7 @@
                     <span>Dashboard</span>
                 </div>
                 <a href="/community" class="nav-item">
-                    <span class="nav-icon">👥</span>
+                    <i class="nav-icon-lucide" data-lucide="users"></i>
                     <span>Community</span>
                 </a>
                 <div class="nav-item" onclick="window.location.href='/ai-tools-unlimited'">
@@ -606,23 +647,23 @@
                     <span>Content Generator</span>
                 </div>
                 <div class="nav-item" onclick="showPage('roadmap-builder')">
-                    <span class="nav-icon">🗺️</span>
+                    <i class="nav-icon-lucide" data-lucide="map"></i>
                     <span>Roadmap Builder</span>
                 </div>
                 <div class="nav-item" onclick="showPage('brand-creator')">
-                    <span class="nav-icon">🎨</span>
+                    <i class="nav-icon-lucide" data-lucide="palette"></i>
                     <span>Brand Creator</span>
                 </div>
                 <div class="nav-item" onclick="showPage('ai-coach')">
-                    <span class="nav-icon">🤖</span>
+                    <i class="nav-icon-lucide" data-lucide="bot"></i>
                     <span>AI Coach</span>
                 </div>
                 <div class="nav-item" onclick="showPage('documents')">
-                    <span class="nav-icon">📋</span>
+                    <i class="nav-icon-lucide" data-lucide="clipboard"></i>
                     <span>Documents</span>
                 </div>
                 <div class="nav-item" onclick="showPage('my-projects')">
-                    <span class="nav-icon">💼</span>
+                    <i class="nav-icon-lucide" data-lucide="briefcase"></i>
                     <span>My Projects</span>
                 </div>
                 <a href="/calendar" class="nav-item">
@@ -662,16 +703,16 @@
                 </div>
 
                 <!-- AI Tools Grid -->
-                <h2 style="margin-bottom: 25px; color: #1e293b;">🤖 Your AI-Powered Toolkit</h2>
+                <h2 style="margin-bottom: 25px; color: #1e293b;"><i class="tool-icon-lucide" data-lucide="sparkles"></i>Your AI-Powered Toolkit</h2>
                 <div class="tools-grid">
                     <div class="tool-card" onclick="showPage('roadmap-builder')">
-                        <span class="tool-icon">🗺️</span>
+                        <i class="tool-icon-lucide" data-lucide="map"></i>
                         <h3 class="tool-title">Smart Roadmap Builder</h3>
                         <p class="tool-description">Transform your dreams into detailed, actionable step-by-step plans with timelines and milestones.</p>
                     </div>
 
                     <div class="tool-card" onclick="showPage('brand-creator')">
-                        <span class="tool-icon">🎨</span>
+                        <i class="tool-icon-lucide" data-lucide="palette"></i>
                         <h3 class="tool-title">Brand Identity Creator</h3>
                         <p class="tool-description">Design your complete brand identity, messaging, and visual elements that reflect your authentic self.</p>
                     </div>
@@ -683,26 +724,26 @@
                     </div>
 
                     <div class="tool-card" onclick="showPage('ai-coach')">
-                        <span class="tool-icon">🤖</span>
+                        <i class="tool-icon-lucide" data-lucide="bot"></i>
                         <h3 class="tool-title">24/7 AI Coach</h3>
                         <p class="tool-description">Get instant guidance, clarity, and support for any challenge or decision you're facing.</p>
                     </div>
 
                     <div class="tool-card" onclick="showPage('documents')">
-                        <span class="tool-icon">📋</span>
+                        <i class="tool-icon-lucide" data-lucide="clipboard"></i>
                         <h3 class="tool-title">Document Generator</h3>
                         <p class="tool-description">Create professional business plans, contracts, proposals, and financial projections.</p>
                     </div>
 
                     <div class="tool-card" onclick="showPage('my-projects')">
-                        <span class="tool-icon">💼</span>
+                        <i class="tool-icon-lucide" data-lucide="briefcase"></i>
                         <h3 class="tool-title">Project Manager</h3>
                         <p class="tool-description">Organize, track, and manage all your dreams and projects in one intelligent workspace.</p>
                     </div>
                 </div>
 
                 <!-- Recent Activity -->
-                <h3 style="margin: 40px 0 20px 0; color: #1e293b;">📈 Recent Activity</h3>
+                <h3 style="margin: 40px 0 20px 0; color: #1e293b;"><i class="tool-icon-lucide" data-lucide="trending-up"></i>Recent Activity</h3>
                 <div id="recent-activity-container" class="saved-projects">
                     <!-- Dynamic recent activity will load here -->
                 </div>
@@ -721,7 +762,7 @@
             <!-- Roadmap Builder Page -->
             <div id="roadmap-builder-page" class="page" style="display: none;">
                 <div class="page-header">
-                    <h1 class="page-title">🗺️ Smart Roadmap Builder</h1>
+                    <h1 class="page-title"><i class="tool-icon-lucide" data-lucide="map"></i>Smart Roadmap Builder</h1>
                     <p class="page-subtitle">Transform your dreams into detailed, actionable step-by-step plans</p>
                 </div>
 
@@ -743,7 +784,7 @@
                     </div>
 
                     <button class="generate-btn" onclick="generateRoadmap()">
-                        ✨ Generate My Roadmap
+                        <i class="btn-icon" data-lucide="sparkles"></i>Generate My Roadmap
                     </button>
 
                     <div class="output-section">
@@ -767,7 +808,7 @@
             <!-- Brand Creator Page -->
             <div id="brand-creator-page" class="page" style="display: none;">
                 <div class="page-header">
-                    <h1 class="page-title">🎨 Brand Identity Creator</h1>
+                    <h1 class="page-title"><i class="tool-icon-lucide" data-lucide="palette"></i>Brand Identity Creator</h1>
                     <p class="page-subtitle">Design your complete brand identity and messaging</p>
                 </div>
 
@@ -861,7 +902,7 @@
             <!-- AI Coach Page -->
             <div id="ai-coach-page" class="page" style="display: none;">
                 <div class="page-header">
-                    <h1 class="page-title">🤖 Your Personal AI Coach</h1>
+                    <h1 class="page-title"><i class="tool-icon-lucide" data-lucide="bot"></i>Your Personal AI Coach</h1>
                     <p class="page-subtitle">Get instant clarity, guidance, and support 24/7</p>
                 </div>
 
@@ -913,7 +954,7 @@
             <!-- Documents Page -->
             <div id="documents-page" class="page" style="display: none;">
                 <div class="page-header">
-                    <h1 class="page-title">📋 Document Generator</h1>
+                    <h1 class="page-title"><i class="tool-icon-lucide" data-lucide="file-text"></i>Document Generator</h1>
                     <p class="page-subtitle">Create professional business plans, contracts, and proposals</p>
                 </div>
 
@@ -1013,7 +1054,7 @@
             <!-- My Projects Page -->
             <div id="my-projects-page" class="page" style="display: none;">
                 <div class="page-header">
-                    <h1 class="page-title">💼 My Projects</h1>
+                    <h1 class="page-title"><i class="tool-icon-lucide" data-lucide="briefcase"></i>My Projects</h1>
                     <p class="page-subtitle">Manage and organize all your dreams and projects</p>
                 </div>
 
@@ -2596,6 +2637,15 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Load recent activity on dashboard
             loadRecentActivity();
+            
+            // Initialize Lucide icons for sophisticated look
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+                console.log('✨ Sophisticated Lucide icons initialized in dashboard');
+            } else {
+                console.warn('Lucide icons library not loaded');
+            }
+            
             console.log('MogulMomma Member Dashboard loaded successfully! 👑');
         });
     </script>
