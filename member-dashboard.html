@@ -1328,13 +1328,48 @@
                             </div>
                         </div>
                         
-                        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 12px; text-align: center;">
-                            <h5 style="margin-bottom: 10px; font-weight: 600;"><i class="btn-icon" data-lucide="users"></i>Need Personal Support?</h5>
-                            <p style="margin-bottom: 15px; opacity: 0.95; font-size: 0.95rem;">Get expert guidance, accountability, and real-time feedback on your progress</p>
-                            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                                <button onclick="bookCoachingCall()" style="background: white; color: #10b981; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Book 1:1 Call</button>
-                                <button onclick="joinAccountabilityGroup()" style="background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.3); padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Join Accountability Group</button>
+                        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 25px; border-radius: 12px; text-align: center;">
+                            <h5 style="margin-bottom: 15px; font-weight: 600; font-size: 1.1rem;"><i class="btn-icon" data-lucide="users"></i>Choose Your Support Level</h5>
+                            <p style="margin-bottom: 20px; opacity: 0.95; font-size: 0.95rem;">Get the right level of guidance and accountability for your journey</p>
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                                <!-- Community Support - Included -->
+                                <div style="background: rgba(255, 255, 255, 0.15); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px); text-align: left;">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <i data-lucide="users" style="width: 16px; height: 16px;"></i>
+                                        <strong style="font-size: 1rem;">Community Support</strong>
+                                        <span style="background: rgba(255, 255, 255, 0.3); padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">INCLUDED</span>
+                                    </div>
+                                    <p style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 12px;">Connect with peers, share wins, get encouragement</p>
+                                    <button onclick="joinCommunitySupport()" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.8rem; width: 100%;">Join Community</button>
+                                </div>
+                                
+                                <!-- Group Coaching - Included in Membership -->
+                                <div style="background: rgba(255, 255, 255, 0.15); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px); text-align: left; border: 2px solid rgba(255, 255, 255, 0.4);">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <i data-lucide="map" style="width: 16px; height: 16px;"></i>
+                                        <strong style="font-size: 1rem;">Group Dream Mapping</strong>
+                                        <span style="background: #f59e0b; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">INCLUDED</span>
+                                    </div>
+                                    <p style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 8px;">Expert-led monthly sessions included with your membership</p>
+                                    <p style="font-size: 0.75rem; opacity: 0.8; margin-bottom: 12px;">• Monthly group calls • Templates & resources • Expert guidance</p>
+                                    <button onclick="joinGroupMapping()" style="background: white; color: #10b981; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.8rem; width: 100%;">Join Sessions</button>
+                                </div>
+                                
+                                <!-- 1:1 Coaching - Premium Plus -->
+                                <div style="background: rgba(255, 255, 255, 0.15); padding: 20px; border-radius: 12px; backdrop-filter: blur(10px); text-align: left;">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <i data-lucide="crown" style="width: 16px; height: 16px;"></i>
+                                        <strong style="font-size: 1rem;">1:1 Expert Coaching</strong>
+                                        <span style="background: linear-gradient(135deg, #7c3aed, #f472b6); padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: 600;">VIP</span>
+                                    </div>
+                                    <p style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 8px;">Private coaching with certified career transition experts</p>
+                                    <p style="font-size: 0.75rem; opacity: 0.8; margin-bottom: 12px;">• 60-min strategy sessions • Custom action plans • Direct access</p>
+                                    <button onclick="bookPremiumCoaching()" style="background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.4); padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.8rem; width: 100%;">Book Session ($297)</button>
+                                </div>
                             </div>
+                            
+                            <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">💡 Most members start with Group Dream Mapping (included!) and upgrade to VIP coaching for complex situations or faster results.</p>
                         </div>
                     </div>
                     
@@ -1666,36 +1701,72 @@ Best,
             });
         }
         
-        function bookCoachingCall() {
-            showCustomModal('info', 'Book Your Strategy Call', 
-                `Get personalized guidance from an expert coach who understands your journey. We'll review your roadmap, discuss your research findings, and create a customized action plan.
+        function joinGroupMapping() {
+            showCustomModal('success', 'Group Dream Mapping Sessions', 
+                `Great news! Group Dream Mapping sessions are included with your MogulMomma membership. Join our signature monthly group coaching sessions where we transform your dreams into detailed action plans.
                 
                 <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px;">
-                    <strong>Your 60-Minute Strategy Session:</strong><br>
-                    • Roadmap review and refinement<br>
-                    • Market research analysis<br>
-                    • Positioning and differentiation strategy<br>
-                    • Next 30-day action plan<br>
-                    • Resource recommendations
-                </div>`, 'Book Strategy Call', () => {
-                window.open('https://calendly.com/mogulmomma-strategy', '_blank');
+                    <strong>Included with Your Membership:</strong><br>
+                    • Monthly 90-minute group coaching calls<br>
+                    • Expert guidance on your specific roadmap<br>
+                    • Peer feedback and accountability<br>
+                    • Live Q&A with career transition experts<br>
+                    • Action plan worksheets and templates<br>
+                    • Private group community access
+                </div>
+                
+                <div style="margin: 15px 0; padding: 15px; background: rgba(16, 185, 129, 0.2); border-radius: 8px; border-left: 4px solid #10b981;">
+                    <strong>✨ Next Group Session:</strong><br>
+                    • Date: Third Tuesday of every month<br>
+                    • Time: 7:00 PM ET / 4:00 PM PT<br>
+                    • Duration: 90 minutes<br>
+                    • Platform: Private Zoom room (link sent via email)
+                </div>
+                
+                <p style="font-size: 0.9rem; opacity: 0.9; text-align: center; margin-top: 15px;">
+                    You'll receive a calendar invite and session materials 24 hours before each call.
+                </p>`, 'Reserve My Spot', () => {
+                window.open('/community?action=join-group-sessions', '_blank');
             });
         }
         
-        function joinAccountabilityGroup() {
-            showCustomModal('info', 'Join Accountability Group', 
-                `Connect with other accomplished women on similar journeys! Our accountability groups provide peer support, weekly check-ins, and collaborative problem-solving.
+        function bookPremiumCoaching() {
+            showCustomModal('info', 'VIP 1:1 Expert Coaching', 
+                `Get personalized, private guidance from a certified career transition expert who will create a custom strategy just for you.
                 
                 <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px;">
-                    <strong>Group Benefits:</strong><br>
-                    • Weekly group calls with peers<br>
-                    • Shared resources and templates<br>
-                    • Peer feedback on your progress<br>
-                    • Accountability for action items<br>
-                    • Network of supportive women
-                </div>`, 'Join Group', () => {
-                window.open('/community', '_blank');
+                    <strong>Your VIP Session ($297):</strong><br>
+                    • 60-minute private strategy session<br>
+                    • Detailed roadmap review and refinement<br>
+                    • Custom positioning and differentiation strategy<br>
+                    • Personalized 30-day action plan<br>
+                    • Follow-up email with resources<br>
+                    • 2 weeks of email support
+                </div>
+                
+                <div style="margin: 15px 0; padding: 15px; background: rgba(124, 58, 237, 0.2); border-radius: 8px; border-left: 4px solid #7c3aed;">
+                    <strong>👑 Perfect for you if:</strong><br>
+                    • You prefer private, confidential guidance<br>
+                    • You have unique or complex circumstances<br>
+                    • You want immediate, personalized attention<br>
+                    • You're ready to fast-track your results
+                </div>
+                
+                <p style="font-size: 0.9rem; opacity: 0.9; text-align: center; margin-top: 15px;">
+                    <strong>Limited spots available</strong> - Our expert coaches only take 5 new VIP clients per month
+                </p>`, 'Book VIP Session', () => {
+                window.open('https://calendly.com/mogulmomma-vip-coaching', '_blank');
             });
+        }
+        
+        function bookCoachingCall() {
+            // Redirect to the premium coaching function
+            bookPremiumCoaching();
+        }
+        
+        function joinAccountabilityGroup() {
+            // Redirect to group mapping as the premium option
+            joinGroupMapping();
         }
         
         function joinCommunitySupport() {
