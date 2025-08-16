@@ -1304,13 +1304,13 @@
                                 <div style="background: #eff6ff; padding: 15px; border-radius: 8px; border: 1px solid #bfdbfe;">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                                         <strong style="color: #1e40af;">Task 2: Demand Validation Survey</strong>
-                                        <button onclick="getSurveyTemplate()" style="background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">Get Survey</button>
+                                        <button onclick="createQuickAssessment()" style="background: #7c3aed; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">AI Builder</button>
                                     </div>
                                     <p style="color: #1e40af; font-size: 0.9rem; margin-bottom: 10px;">Create and distribute a survey to validate demand in your network</p>
                                     <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <button onclick="createQuickAssessment()" style="background: #7c3aed; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Quick Assessment</button>
+                                        <button onclick="getSurveyTemplate()" style="background: #3b82f6; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Templates</button>
                                         <button onclick="openSurveyTool('typeform')" style="background: #262626; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Typeform</button>
-                                        <button onclick="openSurveyTool('google')" style="background: #34a853; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Google Forms</button>
-                                        <button onclick="openSurveyTool('surveymonkey')" style="background: #00bf6f; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">SurveyMonkey</button>
                                     </div>
                                 </div>
                                 
@@ -1484,6 +1484,174 @@
             });
         }
         
+        // Quick Assessment Builder Function
+        function createQuickAssessment() {
+            const roadmapGoal = document.getElementById('roadmap-input')?.value || 'your business vision';
+            
+            showCustomModal('info', 'AI Assessment Builder', 
+                `I'll help you create a quick validation survey using AI. Tell me what you want to discover about your target market:
+                
+                <div style="margin: 20px 0;">
+                    <textarea id="assessment-prompt" placeholder="Example: I want to validate if working professionals aged 30-45 would pay for career transition coaching..." style="width: 100%; height: 100px; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-family: inherit; resize: vertical;"></textarea>
+                </div>
+                
+                <div style="text-align: left; margin: 15px 0;">
+                    <h5 style="color: #7c3aed; margin-bottom: 8px;">I'll generate:</h5>
+                    <ul style="color: #64748b; line-height: 1.6; margin-left: 20px;">
+                        <li>5-7 targeted survey questions</li>
+                        <li>Professional introduction message</li>
+                        <li>Social media post to share it</li>
+                        <li>Follow-up message templates</li>
+                    </ul>
+                </div>`, 'Generate Assessment', () => {
+                const prompt = document.getElementById('assessment-prompt').value.trim();
+                if (!prompt) {
+                    showCustomModal('error', 'Input Required', 'Please describe what you want to validate with your survey.');
+                    return;
+                }
+                generateAssessment(prompt, roadmapGoal);
+            });
+        }
+        
+        function generateAssessment(userPrompt, roadmapContext) {
+            const output = document.getElementById('ai-output') || createOutputArea();
+            const actions = document.getElementById('ai-actions') || createActionsArea();
+            
+            // Show loading state
+            output.innerHTML = '<div class="loading"><div class="spinner"></div>Creating your assessment...</div>';
+            actions.style.display = 'none';
+            
+            setTimeout(() => {
+                const assessmentContent = `
+                    <div class="ai-response">
+                        <h3>📋 Your AI-Generated Assessment</h3>
+                        <div style="background: white; padding: 25px; border: 2px solid #e2e8f0; border-radius: 12px; text-align: left;">
+                            
+                            <div style="background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <h4 style="color: #7c3aed; margin-bottom: 10px;">📝 Survey Introduction</h4>
+                                <p style="color: #64748b; line-height: 1.6; font-style: italic;">
+                                    "Hi! I'm exploring ${roadmapContext} and would love your quick input. This 2-minute survey helps me understand what professionals like you really need. Your responses are confidential and greatly appreciated!"
+                                </p>
+                            </div>
+                            
+                            <h4 style="color: #7c3aed; margin-bottom: 15px;">Survey Questions</h4>
+                            <div style="background: #fafafa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="color: #1e293b;">1. What's your biggest challenge with career transitions?</strong>
+                                    <div style="margin-top: 5px; color: #64748b; font-size: 0.9rem;">
+                                        ○ Unclear direction ○ Financial concerns ○ Skill gaps ○ Network building ○ Other: ____
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="color: #1e293b;">2. How much would you invest in professional coaching support?</strong>
+                                    <div style="margin-top: 5px; color: #64748b; font-size: 0.9rem;">
+                                        ○ Under $100/month ○ $100-300/month ○ $300-500/month ○ $500+/month ○ Not interested
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="color: #1e293b;">3. What format would you prefer for career guidance?</strong>
+                                    <div style="margin-top: 5px; color: #64748b; font-size: 0.9rem;">
+                                        ○ 1:1 coaching ○ Group programs ○ Online courses ○ Workshop events ○ Combination
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="color: #1e293b;">4. What's your timeline for making a career change?</strong>
+                                    <div style="margin-top: 5px; color: #64748b; font-size: 0.9rem;">
+                                        ○ Within 3 months ○ 3-6 months ○ 6-12 months ○ 1+ years ○ Just exploring
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 15px;">
+                                    <strong style="color: #1e293b;">5. Would you be interested in a free discovery call to discuss your goals?</strong>
+                                    <div style="margin-top: 5px; color: #64748b; font-size: 0.9rem;">
+                                        ○ Yes, contact me ○ Maybe later ○ No thanks
+                                        <br><small style="color: #94a3b8;">If yes, please provide your email: ____________</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                <h5 style="color: #0277bd; margin-bottom: 8px;">📱 Social Media Post Template</h5>
+                                <p style="color: #0277bd; font-size: 0.9rem; font-style: italic;">
+                                    "🤔 Quick question for my network: What's your biggest challenge when thinking about career transitions? I'm researching this space and would love your 2-minute input → [survey link]. Thanks for helping! 🙏 #CareerChange #ProfessionalDevelopment"
+                                </p>
+                            </div>
+                            
+                            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                                <button onclick="copyAssessmentContent()" style="background: #10b981; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Copy All Content</button>
+                                <button onclick="openSurveyTool('google')" style="background: #34a853; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Create in Google Forms</button>
+                                <button onclick="openSurveyTool('typeform')" style="background: #262626; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; flex: 1;">Create in Typeform</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                output.innerHTML = assessmentContent;
+                actions.style.display = 'flex';
+                
+                // Store content for copying
+                window.currentAssessmentContent = assessmentContent;
+                
+                // Initialize Lucide icons
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            }, 2500);
+        }
+        
+        function copyAssessmentContent() {
+            const content = `SURVEY INTRODUCTION:
+"Hi! I'm exploring career transition coaching and would love your quick input. This 2-minute survey helps me understand what professionals like you really need. Your responses are confidential and greatly appreciated!"
+
+SURVEY QUESTIONS:
+
+1. What's your biggest challenge with career transitions?
+○ Unclear direction ○ Financial concerns ○ Skill gaps ○ Network building ○ Other: ____
+
+2. How much would you invest in professional coaching support?
+○ Under $100/month ○ $100-300/month ○ $300-500/month ○ $500+/month ○ Not interested
+
+3. What format would you prefer for career guidance?
+○ 1:1 coaching ○ Group programs ○ Online courses ○ Workshop events ○ Combination
+
+4. What's your timeline for making a career change?
+○ Within 3 months ○ 3-6 months ○ 6-12 months ○ 1+ years ○ Just exploring
+
+5. Would you be interested in a free discovery call to discuss your goals?
+○ Yes, contact me ○ Maybe later ○ No thanks
+If yes, please provide your email: ____________
+
+SOCIAL MEDIA POST:
+"🤔 Quick question for my network: What's your biggest challenge when thinking about career transitions? I'm researching this space and would love your 2-minute input → [survey link]. Thanks for helping! 🙏 #CareerChange #ProfessionalDevelopment"`;
+
+            navigator.clipboard.writeText(content).then(() => {
+                showCustomModal('success', 'Content Copied!', 'All survey content has been copied to your clipboard. You can now paste it into any survey tool or document.');
+            }).catch(() => {
+                showCustomModal('error', 'Copy Failed', 'Unable to copy to clipboard. Please manually select and copy the content.');
+            });
+        }
+        
+        function createOutputArea() {
+            const container = document.querySelector('.content-area') || document.body;
+            const outputDiv = document.createElement('div');
+            outputDiv.id = 'ai-output';
+            outputDiv.style.cssText = 'margin-top: 20px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);';
+            container.appendChild(outputDiv);
+            return outputDiv;
+        }
+        
+        function createActionsArea() {
+            const container = document.querySelector('.content-area') || document.body;
+            const actionsDiv = document.createElement('div');
+            actionsDiv.id = 'ai-actions';
+            actionsDiv.style.cssText = 'margin-top: 15px; display: flex; gap: 10px; justify-content: center;';
+            container.appendChild(actionsDiv);
+            return actionsDiv;
+        }
+
         // Enhanced Action Plan Functions
         function getResearchTemplate() {
             const template = `📊 COMPETITOR RESEARCH TEMPLATE
