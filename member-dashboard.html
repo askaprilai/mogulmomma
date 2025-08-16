@@ -1280,9 +1280,62 @@
                         </div>
                     </div>
                     
-                    <div style="margin-top: 25px; padding: 20px; background: #f8fafc; border-radius: 12px;">
-                        <h4 style="color: #7c3aed; margin-bottom: 10px;"><i class="btn-icon" data-lucide="lightbulb"></i>Next Steps</h4>
-                        <p style="color: #64748b; margin-bottom: 15px;">Start with Phase 1, Week 1: Research 5 successful coaches in your target niche and analyze their positioning. Create a simple survey to validate demand from your network.</p>
+                    <div style="margin-top: 25px; padding: 25px; background: #f8fafc; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <h4 style="color: #7c3aed; margin-bottom: 15px; font-size: 1.2rem;"><i class="btn-icon" data-lucide="lightbulb"></i>Your Immediate Action Plan</h4>
+                        <p style="color: #64748b; margin-bottom: 20px; font-weight: 500;">Start with Phase 1, Week 1: Research 5 successful coaches in your target niche and analyze their positioning. Create a simple survey to validate demand from your network.</p>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; border-left: 4px solid #10b981;">
+                            <h5 style="color: #065f46; margin-bottom: 12px; font-weight: 600;"><i class="btn-icon" data-lucide="target"></i>Week 1 Mission: Market Research & Validation</h5>
+                            
+                            <div style="display: grid; gap: 15px;">
+                                <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #bbf7d0;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <strong style="color: #166534;">Task 1: Competitor Research</strong>
+                                        <button onclick="getResearchTemplate()" style="background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">Get Template</button>
+                                    </div>
+                                    <p style="color: #166534; font-size: 0.9rem; margin-bottom: 10px;">Research 5 successful coaches in your niche and analyze their positioning</p>
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <button onclick="openResearchTool('linkedin')" style="background: #0077b5; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">LinkedIn Search</button>
+                                        <button onclick="openResearchTool('google')" style="background: #4285f4; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Google Research</button>
+                                        <button onclick="openResearchTool('instagram')" style="background: #e4405f; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Instagram Analysis</button>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #eff6ff; padding: 15px; border-radius: 8px; border: 1px solid #bfdbfe;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <strong style="color: #1e40af;">Task 2: Demand Validation Survey</strong>
+                                        <button onclick="getSurveyTemplate()" style="background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">Get Survey</button>
+                                    </div>
+                                    <p style="color: #1e40af; font-size: 0.9rem; margin-bottom: 10px;">Create and distribute a survey to validate demand in your network</p>
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <button onclick="openSurveyTool('typeform')" style="background: #262626; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Typeform</button>
+                                        <button onclick="openSurveyTool('google')" style="background: #34a853; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Google Forms</button>
+                                        <button onclick="openSurveyTool('surveymonkey')" style="background: #00bf6f; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">SurveyMonkey</button>
+                                    </div>
+                                </div>
+                                
+                                <div style="background: #fef3c7; padding: 15px; border-radius: 8px; border: 1px solid #fcd34d;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <strong style="color: #92400e;">Task 3: Network Activation</strong>
+                                        <button onclick="getNetworkTemplate()" style="background: #f59e0b; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">Get Scripts</button>
+                                    </div>
+                                    <p style="color: #92400e; font-size: 0.9rem; margin-bottom: 10px;">Reach out to your network with professional messaging</p>
+                                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                                        <button onclick="scheduleCheckin()" style="background: #7c3aed; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Schedule Check-in</button>
+                                        <button onclick="joinCommunitySupport()" style="background: #ec4899; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; cursor: pointer;">Community Support</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                            <h5 style="margin-bottom: 10px; font-weight: 600;"><i class="btn-icon" data-lucide="users"></i>Need Personal Support?</h5>
+                            <p style="margin-bottom: 15px; opacity: 0.95; font-size: 0.95rem;">Get expert guidance, accountability, and real-time feedback on your progress</p>
+                            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                                <button onclick="bookCoachingCall()" style="background: white; color: #10b981; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Book 1:1 Call</button>
+                                <button onclick="joinAccountabilityGroup()" style="background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.3); padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.9rem;">Join Accountability Group</button>
+                            </div>
+                        </div>
                     </div>
                     
                     <!-- Smart Recommendations Section -->
@@ -1393,6 +1446,271 @@
                 });
             }).catch(() => {
                 showCustomModal('error', 'Copy Failed', 'Unable to copy to clipboard. Please try again or manually copy the prompt.');
+            });
+        }
+        
+        // Enhanced Action Plan Functions
+        function getResearchTemplate() {
+            const template = `📊 COMPETITOR RESEARCH TEMPLATE
+            
+🎯 COACH RESEARCH FRAMEWORK:
+
+For each of the 5 coaches, document:
+
+1. BASIC INFO:
+   • Name & Business Name
+   • Website/Social Media URLs
+   • Target Audience Description
+   • Years in Business
+
+2. POSITIONING ANALYSIS:
+   • What makes them unique?
+   • Key messages/taglines
+   • Pricing structure (if visible)
+   • Services offered
+
+3. CONTENT STRATEGY:
+   • What topics do they cover?
+   • Content frequency/style
+   • Engagement levels
+   • Most popular content types
+
+4. CLIENT RESULTS:
+   • Testimonials/case studies
+   • Before/after stories
+   • Success metrics they share
+
+5. MARKET GAPS:
+   • What are they NOT addressing?
+   • Who might they be missing?
+   • What could you do differently?
+
+💡 RESEARCH SOURCES:
+✓ LinkedIn profiles & company pages
+✓ Instagram/Facebook business accounts  
+✓ Websites & about pages
+✓ Podcast appearances
+✓ Course/program sales pages
+✓ Client testimonials & reviews
+
+🎯 KEY QUESTION: 
+How can I serve this market differently or better?`;
+
+            navigator.clipboard.writeText(template).then(() => {
+                showCustomModal('success', 'Research Template Ready!', 
+                    `I've copied a comprehensive competitor research template to your clipboard. This will help you systematically analyze your competition and find your unique positioning.
+                    
+                    <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; text-align: left;">
+                        <strong>Next Steps:</strong><br>
+                        1. Paste this template into a Google Doc or Notion page<br>
+                        2. Use the research tools to find coaches<br>
+                        3. Fill out the template for each coach<br>
+                        4. Look for patterns and gaps in the market
+                    </div>`, 'Start Researching!');
+            }).catch(() => {
+                showCustomModal('error', 'Copy Failed', 'Unable to copy template. Please try again.');
+            });
+        }
+        
+        function getSurveyTemplate() {
+            const surveyQuestions = `📋 MARKET VALIDATION SURVEY
+
+🎯 SURVEY TITLE: "Help Me Understand Your Career Challenges"
+
+📝 INTRODUCTION:
+"Hi! I'm exploring ways to better support accomplished women in career transitions. Your insights would be incredibly valuable - this takes just 3 minutes."
+
+❓ SURVEY QUESTIONS:
+
+1. What's your current professional situation?
+   □ Employed but looking for change
+   □ Recently left my job
+   □ Taking a career break
+   □ Starting something new
+   □ Other: ________
+
+2. What's your biggest challenge right now? (Select all that apply)
+   □ Unclear about my next direction
+   □ Lack of confidence in my abilities
+   □ Financial concerns about transition
+   □ Not sure how to position myself
+   □ Building a new network
+   □ Work-life balance struggles
+
+3. If you could wave a magic wand, what would your ideal career look like?
+   [Open text field]
+
+4. What type of support would be most valuable to you?
+   □ One-on-one coaching sessions
+   □ Group coaching programs
+   □ Online courses and resources
+   □ Networking opportunities
+   □ Accountability partnerships
+   □ Career transition roadmaps
+
+5. How much would you invest in the right support program?
+   □ Under $500
+   □ $500-1,000
+   □ $1,000-2,500
+   □ $2,500-5,000
+   □ $5,000+
+
+6. What's worked best for you in past transitions or challenges?
+   [Open text field]
+
+7. Would you be interested in learning more about a program specifically for accomplished women in transition?
+   □ Yes, definitely interested
+   □ Maybe, depends on details
+   □ No, not right now
+
+💡 DISTRIBUTION PLAN:
+• Send to personal network (aim for 50+ responses)
+• Share in relevant Facebook groups
+• Post on LinkedIn with professional message
+• Ask friends to share with their networks`;
+
+            navigator.clipboard.writeText(surveyQuestions).then(() => {
+                showCustomModal('success', 'Survey Template Ready!', 
+                    `I've created a comprehensive market validation survey for you! This will help you understand your potential clients' real needs and validate demand for your coaching services.
+                    
+                    <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; text-align: left;">
+                        <strong>Ready to Create Your Survey:</strong><br>
+                        1. Copy the template from your clipboard<br>
+                        2. Choose a survey platform<br>
+                        3. Customize questions for your specific niche<br>
+                        4. Aim for 50+ responses for solid validation
+                    </div>`, 'Create Survey Now!');
+            }).catch(() => {
+                showCustomModal('error', 'Copy Failed', 'Unable to copy survey template. Please try again.');
+            });
+        }
+        
+        function getNetworkTemplate() {
+            const networkScripts = `💬 NETWORK OUTREACH TEMPLATES
+
+🔥 LINKEDIN MESSAGE:
+"Hi [Name], I hope you're doing well! I'm exploring a new direction in my career and would love your insights. I'm considering launching coaching services for accomplished women in career transitions. 
+
+Given your experience and network, I'd really value your perspective on this market. Would you be open to a quick 15-minute call this week? 
+
+Also, if you know anyone who might benefit from career transition support, I'd be grateful for any introductions. Thank you!"
+
+📧 EMAIL TEMPLATE:
+Subject: Quick favor - career transition insights?
+
+Hi [Name],
+
+I hope this finds you well! I'm reaching out because I'm exploring an exciting new direction and would really value your insights.
+
+I'm considering launching coaching services specifically for accomplished women navigating career transitions - whether they're leaving corporate, starting businesses, or pivoting to new fields.
+
+Would you be open to a brief call this week to share your thoughts on:
+• Whether you see this as a real need in your network
+• What challenges you've observed women facing
+• Any advice on positioning or approach
+
+I'm also conducting a short survey to validate demand. If you know anyone who might be interested in this type of support, I'd be grateful for introductions or if you could share the survey.
+
+Thanks so much for considering this!
+
+Best,
+[Your name]`;
+
+            navigator.clipboard.writeText(networkScripts).then(() => {
+                showCustomModal('success', 'Network Scripts Ready!', 
+                    `I've created professional outreach templates for every situation! These scripts will help you reach out to your network authentically and gather valuable insights.
+                    
+                    <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; text-align: left;">
+                        <strong>Your Outreach Strategy:</strong><br>
+                        1. Start with warm connections who know your background<br>
+                        2. Personalize each message with specific details<br>
+                        3. Be genuinely curious about their insights<br>
+                        4. Follow up with survey links after conversations
+                    </div>`, 'Start Networking!');
+            }).catch(() => {
+                showCustomModal('error', 'Copy Failed', 'Unable to copy network templates. Please try again.');
+            });
+        }
+        
+        function openResearchTool(platform) {
+            const searches = {
+                'linkedin': 'https://www.linkedin.com/search/results/people/?keywords=career%20coach%20women',
+                'google': 'https://www.google.com/search?q="career+coach+for+women"+"coaching+business"',
+                'instagram': 'https://www.instagram.com/explore/tags/careercoach/'
+            };
+            window.open(searches[platform], '_blank');
+        }
+        
+        function openSurveyTool(platform) {
+            const tools = {
+                'typeform': 'https://www.typeform.com',
+                'google': 'https://forms.google.com',
+                'surveymonkey': 'https://www.surveymonkey.com'
+            };
+            window.open(tools[platform], '_blank');
+        }
+        
+        function scheduleCheckin() {
+            showCustomModal('info', 'Schedule Your Check-in', 
+                `Stay on track with weekly check-ins! I'll help you stay accountable and provide guidance as you work through your action plan.
+                
+                <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px;">
+                    <strong>Weekly Check-in Includes:</strong><br>
+                    • Progress review on your Week 1 tasks<br>
+                    • Feedback on your research findings<br>
+                    • Help interpreting survey results<br>
+                    • Next week's action plan<br>
+                    • Q&A and troubleshooting
+                </div>`, 'Book Check-in Call', () => {
+                window.open('https://calendly.com/mogulmomma-checkin', '_blank');
+            });
+        }
+        
+        function bookCoachingCall() {
+            showCustomModal('info', 'Book Your Strategy Call', 
+                `Get personalized guidance from an expert coach who understands your journey. We'll review your roadmap, discuss your research findings, and create a customized action plan.
+                
+                <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px;">
+                    <strong>Your 60-Minute Strategy Session:</strong><br>
+                    • Roadmap review and refinement<br>
+                    • Market research analysis<br>
+                    • Positioning and differentiation strategy<br>
+                    • Next 30-day action plan<br>
+                    • Resource recommendations
+                </div>`, 'Book Strategy Call', () => {
+                window.open('https://calendly.com/mogulmomma-strategy', '_blank');
+            });
+        }
+        
+        function joinAccountabilityGroup() {
+            showCustomModal('info', 'Join Accountability Group', 
+                `Connect with other accomplished women on similar journeys! Our accountability groups provide peer support, weekly check-ins, and collaborative problem-solving.
+                
+                <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px;">
+                    <strong>Group Benefits:</strong><br>
+                    • Weekly group calls with peers<br>
+                    • Shared resources and templates<br>
+                    • Peer feedback on your progress<br>
+                    • Accountability for action items<br>
+                    • Network of supportive women
+                </div>`, 'Join Group', () => {
+                window.open('/community', '_blank');
+            });
+        }
+        
+        function joinCommunitySupport() {
+            showCustomModal('info', 'Community Support', 
+                `Join our private community of accomplished women supporting each other through career transitions. Get daily encouragement, share wins, and ask questions!
+                
+                <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.1); border-radius: 8px;">
+                    <strong>Community Features:</strong><br>
+                    • Private community access<br>
+                    • Daily check-ins and wins sharing<br>
+                    • Expert Q&A sessions<br>
+                    • Resource library access<br>
+                    • Peer mentoring opportunities
+                </div>`, 'Join Community', () => {
+                window.open('/community', '_blank');
             });
         }
 
