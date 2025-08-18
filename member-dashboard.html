@@ -1218,11 +1218,25 @@
                 item.classList.remove('active');
             });
             
-            // Show selected page
-            document.getElementById(pageId + '-page').style.display = 'block';
+            // Show the requested page
+            let targetPage;
+            if (pageId === 'dashboard') {
+                targetPage = document.getElementById('dashboard');
+            } else {
+                const fullPageId = pageId.includes('-page') ? pageId : pageId + '-page';
+                targetPage = document.getElementById(fullPageId);
+            }
             
-            // Add active class to clicked nav item
-            event.target.closest('.nav-item').classList.add('active');
+            if (targetPage) {
+                targetPage.style.display = 'block';
+            } else {
+                console.error('Page not found:', pageId);
+            }
+            
+            // Initialize Lucide icons for the new page
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         }
 
         // AI Tool Functions
