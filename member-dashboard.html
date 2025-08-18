@@ -916,10 +916,19 @@
                     </button>
                     <button onclick="
                         alert('Navigating to roadmap builder...');
+                        console.log('Hiding dashboard page');
                         document.getElementById('dashboard-page').style.display='none';
-                        document.getElementById('roadmap-builder-page').style.display='block';
+                        console.log('Showing roadmap builder page');
+                        const roadmapPage = document.getElementById('roadmap-builder-page');
+                        console.log('Roadmap page found:', !!roadmapPage);
+                        if (roadmapPage) {
+                            roadmapPage.style.display='block';
+                            alert('Navigation successful!');
+                        } else {
+                            alert('Error: roadmap-builder-page not found');
+                        }
                     " style="background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-left: 10px;">
-                        🗺️ Go to Roadmap Builder
+                        🗺️ Go to Roadmap Builder (Debug)
                     </button>
                 </div>
 
