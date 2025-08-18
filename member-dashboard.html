@@ -834,13 +834,19 @@
                 <!-- AI Tools Grid -->
                 <h2 style="margin-bottom: 25px; color: #1e293b;"><i class="tool-icon-lucide" data-lucide="sparkles"></i>Your AI-Powered Toolkit</h2>
                 <div class="tools-grid">
-                    <div class="tool-card" onclick="showPage('roadmap-builder')" style="cursor: pointer;">
+                    <div class="tool-card" style="cursor: pointer;" onclick="
+                        document.getElementById('dashboard-page').style.display='none';
+                        document.getElementById('roadmap-builder-page').style.display='block';
+                    ">
                         <span class="tool-icon">🗺️</span>
                         <h3 class="tool-title">Smart Roadmap Builder</h3>
                         <p class="tool-description">Transform your dreams into detailed, actionable step-by-step plans with timelines and milestones.</p>
                     </div>
 
-                    <div class="tool-card" onclick="showPage('brand-creator')" style="cursor: pointer;">
+                    <div class="tool-card" style="cursor: pointer;" onclick="
+                        document.getElementById('dashboard-page').style.display='none';
+                        document.getElementById('brand-creator-page').style.display='block';
+                    ">
                         <span class="tool-icon">🎨</span>
                         <h3 class="tool-title">Brand Identity Creator</h3>
                         <p class="tool-description">Design your complete brand identity, messaging, and visual elements that reflect your authentic self.</p>
@@ -852,19 +858,28 @@
                         <p class="tool-description">Create social media posts, website copy, emails, and marketing materials in your unique voice.</p>
                     </div>
 
-                    <div class="tool-card" onclick="showPage('ai-coach')" style="cursor: pointer;">
+                    <div class="tool-card" style="cursor: pointer;" onclick="
+                        document.getElementById('dashboard-page').style.display='none';
+                        document.getElementById('ai-coach-page').style.display='block';
+                    ">
                         <span class="tool-icon">🤖</span>
                         <h3 class="tool-title">24/7 AI Coach</h3>
                         <p class="tool-description">Get instant guidance, clarity, and support for any challenge or decision you're facing.</p>
                     </div>
 
-                    <div class="tool-card" onclick="showPage('documents')" style="cursor: pointer;">
+                    <div class="tool-card" style="cursor: pointer;" onclick="
+                        document.getElementById('dashboard-page').style.display='none';
+                        document.getElementById('documents-page').style.display='block';
+                    ">
                         <span class="tool-icon">📋</span>
                         <h3 class="tool-title">Document Generator</h3>
                         <p class="tool-description">Create professional business plans, contracts, proposals, and financial projections.</p>
                     </div>
 
-                    <div class="tool-card" onclick="showPage('my-projects')" style="cursor: pointer;">
+                    <div class="tool-card" style="cursor: pointer;" onclick="
+                        document.getElementById('dashboard-page').style.display='none';
+                        document.getElementById('my-projects-page').style.display='block';
+                    ">
                         <span class="tool-icon">💼</span>
                         <h3 class="tool-title">Project Manager</h3>
                         <p class="tool-description">Organize, track, and manage all your dreams and projects in one intelligent workspace.</p>
