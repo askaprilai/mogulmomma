@@ -909,6 +909,20 @@
                     </div>
                 </div>
 
+                <!-- Quick Test on Main Dashboard -->
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <button onclick="alert('Dashboard JavaScript works!')" style="background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        🔧 Test JavaScript on Dashboard
+                    </button>
+                    <button onclick="
+                        alert('Navigating to roadmap builder...');
+                        document.getElementById('dashboard-page').style.display='none';
+                        document.getElementById('roadmap-builder-page').style.display='block';
+                    " style="background: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-left: 10px;">
+                        🗺️ Go to Roadmap Builder
+                    </button>
+                </div>
+
                 <!-- AI Tools Grid -->
                 <h2 style="margin-bottom: 25px; color: #1e293b;"><i class="tool-icon-lucide" data-lucide="sparkles"></i>Your AI-Powered Toolkit</h2>
                 <div class="tools-grid">
