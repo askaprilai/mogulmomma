@@ -763,7 +763,12 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <nav>
-                <div class="nav-item active" onclick="showPage('dashboard')">
+                <div class="nav-item active" onclick="
+                    document.querySelectorAll('.page').forEach(p => p.style.display='none');
+                    document.getElementById('dashboard-page').style.display='block';
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    this.classList.add('active');
+                ">
                     <span class="nav-icon">🏠</span>
                     <span>Dashboard</span>
                 </div>
@@ -775,23 +780,48 @@
                     <span class="nav-icon">📝</span>
                     <span>Content Generator</span>
                 </div>
-                <div class="nav-item" onclick="showPage('roadmap-builder')">
+                <div class="nav-item" onclick="
+                    document.querySelectorAll('.page').forEach(p => p.style.display='none');
+                    document.getElementById('roadmap-builder-page').style.display='block';
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    this.classList.add('active');
+                ">
                     <i class="nav-icon-lucide" data-lucide="map"></i>
                     <span>Roadmap Builder</span>
                 </div>
-                <div class="nav-item" onclick="showPage('brand-creator')">
+                <div class="nav-item" onclick="
+                    document.querySelectorAll('.page').forEach(p => p.style.display='none');
+                    document.getElementById('brand-creator-page').style.display='block';
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    this.classList.add('active');
+                ">
                     <i class="nav-icon-lucide" data-lucide="palette"></i>
                     <span>Brand Creator</span>
                 </div>
-                <div class="nav-item" onclick="showPage('ai-coach')">
+                <div class="nav-item" onclick="
+                    document.querySelectorAll('.page').forEach(p => p.style.display='none');
+                    document.getElementById('ai-coach-page').style.display='block';
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    this.classList.add('active');
+                ">
                     <i class="nav-icon-lucide" data-lucide="bot"></i>
                     <span>AI Coach</span>
                 </div>
-                <div class="nav-item" onclick="showPage('documents')">
+                <div class="nav-item" onclick="
+                    document.querySelectorAll('.page').forEach(p => p.style.display='none');
+                    document.getElementById('documents-page').style.display='block';
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    this.classList.add('active');
+                ">
                     <i class="nav-icon-lucide" data-lucide="clipboard"></i>
                     <span>Documents</span>
                 </div>
-                <div class="nav-item" onclick="showPage('my-projects')">
+                <div class="nav-item" onclick="
+                    document.querySelectorAll('.page').forEach(p => p.style.display='none');
+                    document.getElementById('my-projects-page').style.display='block';
+                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                    this.classList.add('active');
+                ">
                     <i class="nav-icon-lucide" data-lucide="briefcase"></i>
                     <span>My Projects</span>
                 </div>
