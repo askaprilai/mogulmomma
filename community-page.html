@@ -1041,23 +1041,23 @@
             <div class="sidebar-section">
                 <h3 class="sidebar-title">Trending Topics</h3>
                 <ul class="trending-topics">
-                    <li class="trending-topic">
+                    <li class="trending-topic" onclick="searchByTag('CareerTransition')">
                         <div class="topic-name">#CareerTransition</div>
                         <div class="topic-count">127 posts this week</div>
                     </li>
-                    <li class="trending-topic">
+                    <li class="trending-topic" onclick="searchByTag('AITools')">
                         <div class="topic-name">#AITools</div>
                         <div class="topic-count">89 posts this week</div>
                     </li>
-                    <li class="trending-topic">
+                    <li class="trending-topic" onclick="searchByTag('WomenInBusiness')">
                         <div class="topic-name">#WomenInBusiness</div>
                         <div class="topic-count">156 posts this week</div>
                     </li>
-                    <li class="trending-topic">
+                    <li class="trending-topic" onclick="searchByTag('DreamMapping')">
                         <div class="topic-name">#DreamMapping</div>
                         <div class="topic-count">73 posts this week</div>
                     </li>
-                    <li class="trending-topic">
+                    <li class="trending-topic" onclick="searchByTag('Mindset')">
                         <div class="topic-name">#Mindset</div>
                         <div class="topic-count">94 posts this week</div>
                     </li>
@@ -1077,6 +1077,28 @@
                 ✅ Your post has been shared with the community!
             </div>
 
+            <!-- Action Plan Highlight -->
+            <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #3b82f6; border-radius: 16px; padding: 25px; margin-bottom: 25px;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <div style="background: #3b82f6; color: white; padding: 12px; border-radius: 12px; font-size: 1.5rem;">🗺️</div>
+                    <div>
+                        <h3 style="color: #1e40af; margin-bottom: 5px;">Ready to Turn Dreams into Action Plans?</h3>
+                        <p style="color: #3730a3; font-size: 0.95rem;">Use our proprietary Dream Mapping tool to create your personalized roadmap</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button onclick="window.open('/member-dashboard', '_blank')" style="background: #3b82f6; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        🚀 Start Dream Mapping
+                    </button>
+                    <button onclick="window.open('/assessment', '_blank')" style="background: white; color: #3b82f6; border: 2px solid #3b82f6; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        📋 Take Assessment
+                    </button>
+                    <button onclick="shareActionPlan()" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid #93c5fd; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                        📤 Share Your Plan
+                    </button>
+                </div>
+            </div>
+
             <!-- Post Composer -->
             <div class="post-composer">
                 <div class="composer-header">
@@ -1090,7 +1112,7 @@
                 <textarea 
                     class="post-input" 
                     id="post-input"
-                    placeholder="Share your journey, ask a question, or celebrate a win with the community..."
+                    placeholder="Share your action plan progress, ask for accountability support, or celebrate a milestone..."
                 ></textarea>
                 
                 <div class="composer-actions">
@@ -1098,6 +1120,7 @@
                         <button class="tool-btn" onclick="addImage()">📷 Photo</button>
                         <button class="tool-btn" onclick="addPoll()">📊 Poll</button>
                         <button class="tool-btn" onclick="addMilestone()">🎯 Milestone</button>
+                        <button class="tool-btn" onclick="addActionPlan()">🗺️ Action Plan</button>
                         <button class="tool-btn" onclick="addResource()">📎 Resource</button>
                     </div>
                     <button class="post-btn" onclick="sharePost()" id="share-btn" disabled>Share Post</button>
@@ -1137,10 +1160,10 @@
                         Use the tools in the sidebar to access AI assistance, schedule content, track your progress, and more. Your transformation journey starts here! ✨
                     </div>
                     <div class="post-tags">
-                        <span class="post-tag">#Welcome</span>
-                        <span class="post-tag">#Community</span>
-                        <span class="post-tag">#GetStarted</span>
-                        <span class="post-tag">#MogulMomma</span>
+                        <span class="post-tag" onclick="searchByTag('Welcome')">#Welcome</span>
+                        <span class="post-tag" onclick="searchByTag('Community')">#Community</span>
+                        <span class="post-tag" onclick="searchByTag('GetStarted')">#GetStarted</span>
+                        <span class="post-tag" onclick="searchByTag('MogulMomma')">#MogulMomma</span>
                     </div>
                     <div class="post-actions">
                         <button class="action-btn" onclick="toggleLike(this)">
@@ -1690,12 +1713,35 @@
         }
 
         function addResource() {
-            const textarea = document.getElementById('post-content');
+            const textarea = document.getElementById('post-input');
             const currentText = textarea.value;
             const resourceTemplate = '\n\n📎 RESOURCE SHARE\n\n🔗 Link: [URL or resource name]\n💡 What it is: [Brief description]\n⭐ Why it\'s helpful: [Benefits/use case]\n🎯 Perfect for: [Target audience]\n\n#Resources #Tools #CareerDevelopment\n\n';
             textarea.value = currentText + resourceTemplate;
             textarea.focus();
             updatePostButton();
+        }
+
+        function addActionPlan() {
+            const textarea = document.getElementById('post-input');
+            const currentText = textarea.value;
+            const actionPlanTemplate = '\n\n🗺️ MY ACTION PLAN UPDATE\n\n🎯 Current Goal: [What you\'re working on]\n📅 Timeline: [Your deadline]\n✅ Progress This Week:\n   • [Completed task 1]\n   • [Completed task 2]\n   • [Completed task 3]\n\n🔥 Next Week I Will:\n   • [Planned task 1]\n   • [Planned task 2]\n   • [Planned task 3]\n\n💪 Accountability Ask: [How the community can support you]\n\n#ActionPlan #DreamMapping #Accountability #GetThingsDone\n\n';
+            textarea.value = currentText + actionPlanTemplate;
+            textarea.focus();
+            updatePostButton();
+        }
+
+        function shareActionPlan() {
+            const textarea = document.getElementById('post-input');
+            const actionPlanShareTemplate = '🗺️ Just completed my MogulMomma Dream Mapping session!\n\nMy 90-day action plan is ready and I\'m excited to share my progress with this amazing community. \n\n🎯 My main goal: [Insert your goal here]\n📋 Key milestones mapped out\n⚡ Feeling motivated and ready to take action!\n\nWho else is ready to turn their dreams into actionable plans? Drop a 🙋‍♀️ if you want to be accountability partners!\n\n#DreamMapping #ActionPlan #MogulMomma #Accountability';
+            textarea.value = actionPlanShareTemplate;
+            textarea.focus();
+            updatePostButton();
+        }
+
+        function searchByTag(tag) {
+            const searchInput = document.querySelector('.search-input');
+            searchInput.value = '#' + tag;
+            performSearch(tag.toLowerCase());
         }
 
 
