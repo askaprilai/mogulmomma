@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple JavaScript Test</title>
+</head>
+<body>
+    <h1>JavaScript Test Page</h1>
+    
+    <button onclick="alert('JavaScript works!')" style="background: red; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+        🔧 Test JavaScript
+    </button>
+    
+    <button onclick="testFunction()" style="background: green; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-left: 10px;">
+        🧪 Test Custom Function
+    </button>
+    
+    <div id="output" style="margin-top: 20px; padding: 20px; background: #f0f0f0; border-radius: 10px;">
+        Results will appear here...
+    </div>
+
+    <script>
+        console.log('🚀 JavaScript is loading...');
+        
+        function testFunction() {
+            alert('✅ Custom function works!');
+            document.getElementById('output').innerHTML = '<h3>✅ Success!</h3><p>JavaScript and custom functions are working properly.</p>';
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 Page loaded successfully');
+        });
+    </script>
+</body>
+</html>
