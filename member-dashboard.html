@@ -1290,10 +1290,14 @@
 
         // AI Tool Functions
         function generateRoadmap() {
+            console.log('generateRoadmap function called'); // Debug line
             const input = document.getElementById('roadmap-input').value;
             const timeline = document.getElementById('roadmap-timeline').value;
             const output = document.getElementById('roadmap-output');
             const actions = document.getElementById('roadmap-actions');
+            
+            console.log('Input value:', input); // Debug line
+            console.log('Timeline value:', timeline); // Debug line
             
             if (!input.trim()) {
                 output.innerHTML = '<div style="color: #ef4444; text-align: center; padding: 20px;">Please describe your dream or goal first!</div>';
