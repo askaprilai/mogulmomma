@@ -974,23 +974,90 @@
                 </div>
 
                 <div class="tool-workspace">
-                    <div class="input-section">
-                        <label class="input-label">Describe Your Dream or Goal</label>
-                        <textarea class="ai-input" id="roadmap-input" placeholder="Example: I want to start a coaching business helping women in tech transition to leadership roles. I have 15 years of experience in tech but I'm not sure how to begin monetizing my expertise..."></textarea>
+                    <!-- Smart Interview Mode -->
+                    <div id="interview-mode" style="display: block;">
+                        <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 2px solid #3b82f6; border-radius: 16px; padding: 25px; margin-bottom: 25px;">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                                <div style="background: #3b82f6; color: white; padding: 12px; border-radius: 12px; font-size: 1.5rem;">🧠</div>
+                                <div>
+                                    <h3 style="color: #1e40af; margin-bottom: 5px;">Smart Dream Mapping Interview</h3>
+                                    <p style="color: #3730a3; font-size: 0.95rem;">I'll ask you targeted questions to understand your vision and build your perfect roadmap</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <button onclick="startGuidedInterview()" style="background: #3b82f6; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                    🚀 Start Guided Interview
+                                </button>
+                                <button onclick="useQuickPrompts()" style="background: white; color: #3b82f6; border: 2px solid #3b82f6; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                    ⚡ Quick Prompts
+                                </button>
+                                <button onclick="showAdvancedMode()" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6; border: 1px solid #93c5fd; padding: 12px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                                    🔧 Advanced Mode
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Question Categories -->
+                        <div id="question-categories" style="display: none;">
+                            <h3 style="color: #1e293b; margin-bottom: 20px;">Tell me about yourself - click any area to get specific questions:</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 25px;">
+                                <div class="question-category" onclick="loadQuestions('vision')" style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 10px;">💭</div>
+                                    <h4 style="color: #92400e; margin-bottom: 8px;">Your Vision & Dreams</h4>
+                                    <p style="color: #78350f; font-size: 0.9rem;">What you want to achieve and why it matters</p>
+                                </div>
+                                <div class="question-category" onclick="loadQuestions('current')" style="background: #f0f9ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 10px;">📍</div>
+                                    <h4 style="color: #1e40af; margin-bottom: 8px;">Current Situation</h4>
+                                    <p style="color: #1e3a8a; font-size: 0.9rem;">Where you are now and what you have</p>
+                                </div>
+                                <div class="question-category" onclick="loadQuestions('challenges')" style="background: #fef2f2; border: 2px solid #ef4444; border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 10px;">🚧</div>
+                                    <h4 style="color: #dc2626; margin-bottom: 8px;">Challenges & Obstacles</h4>
+                                    <p style="color: #991b1b; font-size: 0.9rem;">What's been holding you back</p>
+                                </div>
+                                <div class="question-category" onclick="loadQuestions('resources')" style="background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 10px;">💪</div>
+                                    <h4 style="color: #059669; margin-bottom: 8px;">Skills & Resources</h4>
+                                    <p style="color: #047857; font-size: 0.9rem;">Your strengths and available resources</p>
+                                </div>
+                                <div class="question-category" onclick="loadQuestions('timeline')" style="background: #faf5ff; border: 2px solid #8b5cf6; border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 10px;">⏰</div>
+                                    <h4 style="color: #7c3aed; margin-bottom: 8px;">Timeline & Urgency</h4>
+                                    <p style="color: #6d28d9; font-size: 0.9rem;">When you want to achieve this</p>
+                                </div>
+                                <div class="question-category" onclick="loadQuestions('lifestyle')" style="background: #ecfdf5; border: 2px solid #06b6d4; border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.3s ease;">
+                                    <div style="font-size: 1.5rem; margin-bottom: 10px;">🏡</div>
+                                    <h4 style="color: #0891b2; margin-bottom: 8px;">Lifestyle & Constraints</h4>
+                                    <p style="color: #0e7490; font-size: 0.9rem;">Your life situation and limitations</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic Questions -->
+                        <div id="dynamic-questions" style="display: none;"></div>
                     </div>
 
-                    <div class="input-section">
-                        <label class="input-label">Timeline Preference</label>
-                        <select class="ai-select" id="roadmap-timeline">
-                            <option value="3-months">3 Months</option>
-                            <option value="6-months">6 Months</option>
-                            <option value="12-months" selected>12 Months</option>
-                            <option value="18-months">18 Months</option>
-                            <option value="custom">Custom Timeline</option>
-                        </select>
+                    <!-- Traditional Mode (Hidden by default) -->
+                    <div id="traditional-mode" style="display: none;">
+                        <div class="input-section">
+                            <label class="input-label">Describe Your Dream or Goal</label>
+                            <textarea class="ai-input" id="roadmap-input" placeholder="Example: I want to start a coaching business helping women in tech transition to leadership roles. I have 15 years of experience in tech but I'm not sure how to begin monetizing my expertise..."></textarea>
+                        </div>
+
+                        <div class="input-section">
+                            <label class="input-label">Timeline Preference</label>
+                            <select class="ai-select" id="roadmap-timeline">
+                                <option value="3-months">3 Months</option>
+                                <option value="6-months">6 Months</option>
+                                <option value="12-months" selected>12 Months</option>
+                                <option value="18-months">18 Months</option>
+                                <option value="custom">Custom Timeline</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <button class="generate-btn" onclick="generateRoadmap()">
+                    <button class="generate-btn" onclick="generateRoadmap()" id="generate-roadmap-btn" style="display: none;">
                         <i class="btn-icon" data-lucide="sparkles"></i>Generate My Roadmap
                     </button>
 
@@ -1854,6 +1921,163 @@ The MogulMomma Team`;
             }, 1500);
         }
         
+        // Dream Mapping Interview Functions
+        function startGuidedInterview() {
+            document.getElementById('question-categories').style.display = 'block';
+            document.getElementById('interview-mode').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function useQuickPrompts() {
+            document.getElementById('dynamic-questions').innerHTML = `
+                <div style="background: white; border: 2px solid #10b981; border-radius: 16px; padding: 25px; margin-bottom: 25px;">
+                    <h3 style="color: #059669; margin-bottom: 20px;">⚡ Quick Start Prompts</h3>
+                    <p style="color: #047857; margin-bottom: 20px;">Click any prompt below to fill in your roadmap details quickly:</p>
+                    
+                    <div style="display: grid; gap: 15px;">
+                        <button onclick="fillPrompt('business')" style="background: #f0fdf4; border: 2px solid #10b981; color: #047857; padding: 15px; border-radius: 10px; text-align: left; cursor: pointer; font-weight: 500;">
+                            🚀 "I want to start a [type] business that helps [target audience] with [problem they face]. I have [your background/skills] but need help with [specific challenge]..."
+                        </button>
+                        <button onclick="fillPrompt('career')" style="background: #f0f9ff; border: 2px solid #3b82f6; color: #1e40af; padding: 15px; border-radius: 10px; text-align: left; cursor: pointer; font-weight: 500;">
+                            💼 "I want to transition from [current role] to [desired role/industry]. My goal is to [specific outcome] within [timeframe]. The biggest challenge I face is [obstacle]..."
+                        </button>
+                        <button onclick="fillPrompt('skills')" style="background: #fef3c7; border: 2px solid #f59e0b; color: #92400e; padding: 15px; border-radius: 10px; text-align: left; cursor: pointer; font-weight: 500;">
+                            🎯 "I have expertise in [your skills/experience] and want to monetize this by [how you want to use it]. My ideal outcome is [what success looks like] but I'm stuck on [specific barrier]..."
+                        </button>
+                        <button onclick="fillPrompt('lifestyle')" style="background: #faf5ff; border: 2px solid #8b5cf6; color: #7c3aed; padding: 15px; border-radius: 10px; text-align: left; cursor: pointer; font-weight: 500;">
+                            🏡 "I want to create [type of work/business] that allows me to [lifestyle goal] while earning [income goal]. I need to work around [constraints] and my timeline is [urgency]..."
+                        </button>
+                    </div>
+                    
+                    <div style="margin-top: 20px; text-align: center;">
+                        <button onclick="showAdvancedMode()" style="background: #3b82f6; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            Continue to Advanced Mode →
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('dynamic-questions').style.display = 'block';
+            document.getElementById('dynamic-questions').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showAdvancedMode() {
+            document.getElementById('interview-mode').style.display = 'none';
+            document.getElementById('traditional-mode').style.display = 'block';
+            document.getElementById('generate-roadmap-btn').style.display = 'block';
+            document.getElementById('traditional-mode').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function loadQuestions(category) {
+            const questions = {
+                vision: [
+                    "What specific outcome do you want to achieve in the next 12 months?",
+                    "Why is this goal important to you personally?",
+                    "What would success look like in concrete terms?",
+                    "How will your life be different when you achieve this?",
+                    "What impact do you want to have on others?"
+                ],
+                current: [
+                    "What's your current professional situation?",
+                    "What skills and experience do you already have?",
+                    "What resources (time, money, network) are available to you?",
+                    "What's working well in your current situation?",
+                    "What connections or relationships could help you?"
+                ],
+                challenges: [
+                    "What's been holding you back from pursuing this goal?",
+                    "What are your biggest fears or concerns about making this change?",
+                    "What obstacles have you encountered before?",
+                    "What knowledge or skills do you feel you're missing?",
+                    "What external barriers (time, money, family) exist?"
+                ],
+                resources: [
+                    "What strengths and talents can you leverage?",
+                    "Who in your network could support or advise you?",
+                    "What budget can you allocate to this goal?",
+                    "How much time per week can you dedicate to this?",
+                    "What tools, platforms, or systems do you already have access to?"
+                ],
+                timeline: [
+                    "When do you want to achieve your main goal?",
+                    "Are there any important deadlines or milestones?",
+                    "What's driving the urgency (or lack thereof)?",
+                    "How does this timeline fit with other life commitments?",
+                    "What needs to happen first before you can make progress?"
+                ],
+                lifestyle: [
+                    "How many hours per week can you realistically work on this?",
+                    "What family or personal commitments need to be considered?",
+                    "Do you need to maintain current income while pursuing this?",
+                    "Are you willing to take calculated risks?",
+                    "What would make this journey sustainable for you long-term?"
+                ]
+            };
+
+            const questionList = questions[category] || [];
+            let answersCollected = {};
+
+            const questionHTML = `
+                <div style="background: white; border: 2px solid #3b82f6; border-radius: 16px; padding: 25px; margin-bottom: 25px;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <button onclick="document.getElementById('question-categories').style.display='block'; document.getElementById('dynamic-questions').style.display='none';" style="background: #f1f5f9; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer;">← Back</button>
+                        <h3 style="color: #1e40af; margin: 0;">Answer these questions to build your roadmap:</h3>
+                    </div>
+                    
+                    <div id="question-container">
+                        ${questionList.map((q, index) => `
+                            <div style="margin-bottom: 20px; padding: 20px; background: #f8fafc; border-radius: 12px; border-left: 4px solid #3b82f6;">
+                                <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #1e293b;">${index + 1}. ${q}</label>
+                                <textarea id="answer-${category}-${index}" placeholder="Take your time to think about this..." style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; min-height: 80px; resize: vertical;"></textarea>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button onclick="processAnswers('${category}')" style="background: #3b82f6; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 1.1rem;">
+                            Process My Answers →
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('dynamic-questions').innerHTML = questionHTML;
+            document.getElementById('dynamic-questions').style.display = 'block';
+            document.getElementById('question-categories').style.display = 'none';
+            document.getElementById('dynamic-questions').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function fillPrompt(type) {
+            const prompts = {
+                business: "I want to start a coaching business that helps women in tech transition to leadership roles. I have 15 years of experience in software development and team leadership, but need help with monetizing my expertise and building a client base...",
+                career: "I want to transition from corporate marketing to freelance consulting. My goal is to replace my current $85k salary within 18 months. The biggest challenge I face is building credibility and finding my first clients...",
+                skills: "I have expertise in project management and process optimization and want to monetize this by offering consulting services to small businesses. My ideal outcome is earning $120k annually while working flexible hours, but I'm stuck on pricing and packaging my services...",
+                lifestyle: "I want to create an online coaching business that allows me to work from anywhere while earning $10k per month. I need to work around school pickup times and my timeline is to launch within 6 months..."
+            };
+            
+            showAdvancedMode();
+            setTimeout(() => {
+                document.getElementById('roadmap-input').value = prompts[type];
+                document.getElementById('roadmap-input').focus();
+            }, 500);
+        }
+
+        function processAnswers(category) {
+            const questions = document.querySelectorAll(`[id^="answer-${category}-"]`);
+            let compiledAnswers = `My ${category} details:\n\n`;
+            
+            questions.forEach((textarea, index) => {
+                if (textarea.value.trim()) {
+                    compiledAnswers += `${index + 1}. ${textarea.value.trim()}\n\n`;
+                }
+            });
+            
+            showAdvancedMode();
+            setTimeout(() => {
+                const currentText = document.getElementById('roadmap-input').value;
+                document.getElementById('roadmap-input').value = currentText + '\n\n' + compiledAnswers;
+                document.getElementById('roadmap-input').focus();
+            }, 500);
+        }
+
         function createOutputArea() {
             const container = document.querySelector('.content-area') || document.body;
             const outputDiv = document.createElement('div');
