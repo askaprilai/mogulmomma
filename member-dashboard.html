@@ -996,6 +996,16 @@
                                 </button>
                             </div>
                         </div>
+                        
+                        <!-- Debug Test Buttons -->
+                        <div style="text-align: center; margin-bottom: 20px; display: grid; gap: 10px;">
+                            <button onclick="simpleTest()" style="background: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                🔧 Test JavaScript
+                            </button>
+                            <button onclick="testGenerateRoadmap()" style="background: #10b981; color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 1.1rem;">
+                                🧪 Test Generate Roadmap (Skip Interview)
+                            </button>
+                        </div>
 
                         <!-- Question Categories -->
                         <div id="question-categories" style="display: none;">
@@ -2285,6 +2295,41 @@ Format the response in HTML with proper styling for display in a web dashboard.`
 
         function joinAccountability() {
             window.open('/community', '_blank');
+        }
+
+        // Test function to bypass interview
+        function testGenerateRoadmap() {
+            alert('🧪 Test button clicked! Check console for details.');
+            console.log('Test generate roadmap function called');
+            
+            const output = document.getElementById('roadmap-output');
+            const actions = document.getElementById('roadmap-actions');
+            
+            console.log('Output element:', output);
+            console.log('Actions element:', actions);
+            
+            if (!output) {
+                console.error('roadmap-output element not found');
+                alert('❌ Error: roadmap-output element not found');
+                return;
+            }
+            
+            // Set test input
+            const testInput = "I want to start a coaching business helping women transition to leadership roles. I have 15 years of experience but need help monetizing my expertise.";
+            const testTimeline = "12-months";
+            
+            console.log('Calling generateRoadmapWithAI with test data');
+            
+            // Show loading first
+            output.innerHTML = '<div style="text-align: center; padding: 40px;"><div style="font-size: 2rem; margin-bottom: 10px;">🔄</div><p>Generating your roadmap...</p></div>';
+            
+            // Call the AI function
+            generateRoadmapWithAI(testInput, testTimeline, output, actions);
+        }
+
+        // Simple test to check if JavaScript is working
+        function simpleTest() {
+            alert('✅ JavaScript is working! Functions are loaded correctly.');
         }
 
         function createOutputArea() {
