@@ -24,6 +24,9 @@
     { "source": "/email-test-simple", "destination": "/assessment-email-test.html" },
     { "source": "/template-test", "destination": "/template-test.html" },
     { "source": "/community-demo", "destination": "/community-page.html?demo=true" },
-    { "source": "/test-guide", "destination": "/test-member-guide.html" }
+    { "source": "/test-guide", "destination": "/test-member-guide.html" },
+    { "source": "/privacy-policy", "destination": "/privacy-policy.html" },
+    { "source": "/terms-of-service", "destination": "/terms-of-service.html" },
+    { "source": "/about", "destination": "/about.html" }
   ]
 }
