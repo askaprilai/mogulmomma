@@ -795,12 +795,7 @@
                     <span class="nav-icon">📝</span>
                     <span>Content Generator</span>
                 </div>
-                <div class="nav-item" onclick="
-                    document.querySelectorAll('.page').forEach(p => p.style.display='none');
-                    document.getElementById('roadmap-builder-page').style.display='block';
-                    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                    this.classList.add('active');
-                ">
+                <div class="nav-item" onclick="window.location.href='/roadmap-builder-clean.html'">
                     <i class="nav-icon-lucide" data-lucide="map"></i>
                     <span>Roadmap Builder</span>
                 </div>
@@ -1001,15 +996,15 @@
                                 </div>
                             </div>
                             <div style="text-align: center; margin: 20px 0;">
-                                <button onclick="generateRoadmap()" style="background: #3b82f6; color: white; border: none; padding: 15px 25px; margin: 5px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                <button onclick="window.location.href='/roadmap-builder-clean.html'" style="background: #3b82f6; color: white; border: none; padding: 15px 25px; margin: 5px; border-radius: 8px; font-weight: 600; cursor: pointer;">
                                     🚀 Start Guided Interview
                                 </button>
                                 <br>
-                                <button onclick="generateRoadmap()" style="background: white; color: #3b82f6; border: 2px solid #3b82f6; padding: 15px 25px; margin: 5px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                <button onclick="window.location.href='/roadmap-builder-clean.html'" style="background: white; color: #3b82f6; border: 2px solid #3b82f6; padding: 15px 25px; margin: 5px; border-radius: 8px; font-weight: 600; cursor: pointer;">
                                     ⚡ Quick Prompts
                                 </button>
                                 <br>
-                                <button onclick="generateRoadmap()" style="background: #f0f9ff; color: #3b82f6; border: 1px solid #3b82f6; padding: 15px 25px; margin: 5px; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                                <button onclick="window.location.href='/roadmap-builder-clean.html'" style="background: #f0f9ff; color: #3b82f6; border: 1px solid #3b82f6; padding: 15px 25px; margin: 5px; border-radius: 8px; font-weight: 600; cursor: pointer;">
                                     🔧 Advanced Mode
                                 </button>
                             </div>
