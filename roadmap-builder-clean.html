@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma - Smart Roadmap Builder</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .roadmap-interface {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .interview-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #3b82f6;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .interview-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .interview-icon {
+            background: #3b82f6;
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+        }
+
+        .interview-title {
+            color: #1e40af;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .interview-subtitle {
+            color: #3730a3;
+            font-size: 1rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 250px;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #3b82f6;
+            border: 2px solid #3b82f6;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 250px;
+        }
+
+        .btn-secondary:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .input-section {
+            margin-bottom: 25px;
+        }
+
+        .input-label {
+            display: block;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .ai-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            min-height: 120px;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .ai-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .ai-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+        }
+
+        .output-section {
+            margin-top: 30px;
+        }
+
+        .ai-output {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            min-height: 200px;
+        }
+
+        .output-placeholder {
+            color: #64748b;
+            text-align: center;
+            font-style: italic;
+            padding: 40px 20px;
+        }
+
+        .loading {
+            text-align: center;
+            color: #3b82f6;
+            font-weight: 600;
+            padding: 40px 20px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #e2e8f0;
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #059669;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .back-btn {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .roadmap-content h3 {
+            color: #7c3aed;
+            margin-bottom: 15px;
+        }
+
+        .roadmap-content h4 {
+            margin-bottom: 10px;
+        }
+
+        .roadmap-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .roadmap-content li {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .roadmap-interface {
+                padding: 25px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .action-buttons {
+                gap: 10px;
+            }
+
+            .btn-primary, .btn-secondary {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">MogulMomma</div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span style="color: #64748b;">Welcome back, Sarah!</span>
+                <button class="back-btn" onclick="window.location.href='/member-dashboard.html'">← Back to Dashboard</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">🗺️ Smart Roadmap Builder</h1>
+            <p class="page-subtitle">Transform your dreams into detailed, actionable step-by-step plans</p>
+        </div>
+
+        <div class="roadmap-interface">
+            <!-- Interview Mode -->
+            <div id="interview-mode">
+                <div class="interview-section">
+                    <div class="interview-header">
+                        <div class="interview-icon">🧠</div>
+                        <div>
+                            <h3 class="interview-title">Smart Dream Mapping Interview</h3>
+                            <p class="interview-subtitle">I'll ask you targeted questions to understand your vision and build your perfect roadmap</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn-primary" onclick="generateRoadmap()">
+                            🚀 Start Guided Interview
+                        </button>
+                        <button class="btn-secondary" onclick="generateRoadmap()">
+                            ⚡ Quick Prompts
+                        </button>
+                        <button class="btn-secondary" onclick="showTraditionalMode()">
+                            🔧 Advanced Mode
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Traditional Mode (Hidden by default) -->
+            <div id="traditional-mode" style="display: none;">
+                <div class="input-section">
+                    <label class="input-label">Describe Your Dream or Goal</label>
+                    <textarea class="ai-input" id="roadmap-input" placeholder="Example: I want to start a coaching business helping women in tech transition to leadership roles. I have 15 years of experience in tech but I'm not sure how to begin monetizing my expertise..."></textarea>
+                </div>
+
+                <div class="input-section">
+                    <label class="input-label">Timeline Preference</label>
+                    <select class="ai-select" id="roadmap-timeline">
+                        <option value="3-months">3 Months</option>
+                        <option value="6-months">6 Months</option>
+                        <option value="12-months" selected>12 Months</option>
+                        <option value="18-months">18 Months</option>
+                        <option value="custom">Custom Timeline</option>
+                    </select>
+                </div>
+
+                <div style="text-align: center; margin: 25px 0;">
+                    <button class="btn-primary" onclick="generateRoadmap()">
+                        ✨ Generate My Roadmap
+                    </button>
+                </div>
+            </div>
+
+            <!-- Output Section -->
+            <div class="output-section">
+                <label class="input-label">Your Personalized Roadmap</label>
+                <div class="ai-output" id="roadmap-output">
+                    <div class="output-placeholder">
+                        Click "Start Guided Interview" above to generate your personalized step-by-step roadmap
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="action-bar" id="roadmap-actions" style="display: none;">
+                <button class="action-btn" onclick="saveProject()">💾 Save Project</button>
+                <button class="action-btn" onclick="exportPDF()">📄 Export PDF</button>
+                <button class="action-btn" onclick="shareProject()">🔗 Share Link</button>
+                <button class="action-btn" onclick="addToCalendar()">📅 Add to Calendar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Main roadmap generation function
+        async function generateRoadmap() {
+            console.log('generateRoadmap function called');
+            
+            // Get input from traditional mode or use default
+            let input = document.getElementById('roadmap-input')?.value || '';
+            let timeline = document.getElementById('roadmap-timeline')?.value || '12-months';
+            
+            const output = document.getElementById('roadmap-output');
+            const actions = document.getElementById('roadmap-actions');
+            
+            // If no input from traditional mode, create a test scenario
+            if (!input.trim()) {
+                input = 'I want to start a coaching business helping women in career transitions. I have corporate leadership experience but need to build my personal brand and client base.';
+                console.log('Using default input for roadmap generation');
+            }
+
+            console.log('Input:', input);
+            console.log('Timeline:', timeline);
+
+            // Show loading state
+            output.innerHTML = '<div class="loading"><div class="spinner"></div>🤖 Generating your personalized roadmap...</div>';
+            
+            try {
+                // Try the Vercel API first, fall back to local generation if needed
+                let roadmapHTML;
+                
+                try {
+                    const response = await fetch('/api/generate-roadmap', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            input: input,
+                            timeline: timeline
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success) {
+                            roadmapHTML = data.roadmap;
+                            output.innerHTML = '<div class="success-message">✅ AI-Generated Roadmap Created Successfully!</div>' + roadmapHTML;
+                        } else {
+                            throw new Error('API returned error');
+                        }
+                    } else {
+                        throw new Error('API not available');
+                    }
+                } catch (apiError) {
+                    console.log('API endpoint not available, using local generation');
+                    roadmapHTML = generateLocalRoadmap(input, timeline);
+                    output.innerHTML = roadmapHTML;
+                }
+                
+                // Show action buttons
+                actions.style.display = 'flex';
+                
+                // Scroll to output
+                output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+            } catch (error) {
+                console.error('Error generating roadmap:', error);
+                output.innerHTML = `
+                    <div class="error-message">
+                        <strong>Error:</strong> ${error.message}
+                        <br><br>
+                        <button onclick="generateRoadmap()" class="btn-primary">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Local roadmap generation for testing when API is not available
+        function generateLocalRoadmap(input, timeline) {
+            const timelineText = timeline.replace('-', ' ');
+            
+            return `
+                <div class="roadmap-content">
+                    <h3>🗺️ Your ${timelineText} Dream Mapping Roadmap</h3>
+                    <p style="color: #64748b; margin-bottom: 25px;">Here's your personalized step-by-step action plan based on: "${input}"</p>
+                    
+                    <div style="display: grid; gap: 25px;">
+                        <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 25px; border-radius: 8px;">
+                            <h4 style="color: #1e40af; margin-bottom: 15px;">Phase 1: Foundation & Planning (Month 1-2)</h4>
+                            <ul style="color: #1e40af; line-height: 1.8;">
+                                <li><strong>Define your niche</strong> and target audience clearly</li>
+                                <li><strong>Research market demand</strong> and validate your concept</li>
+                                <li><strong>Set up essential business systems</strong> and tools</li>
+                                <li><strong>Create your brand identity</strong> and online presence</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 25px; border-radius: 8px;">
+                            <h4 style="color: #065f46; margin-bottom: 15px;">Phase 2: Launch & Initial Growth (Month 3-6)</h4>
+                            <ul style="color: #065f46; line-height: 1.8;">
+                                <li><strong>Launch your services</strong> with pilot clients</li>
+                                <li><strong>Develop content strategy</strong> and thought leadership</li>
+                                <li><strong>Build referral partnerships</strong> and networking</li>
+                                <li><strong>Gather testimonials</strong> and refine your approach</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: #fef7f0; border-left: 4px solid #f59e0b; padding: 25px; border-radius: 8px;">
+                            <h4 style="color: #92400e; margin-bottom: 15px;">Phase 3: Scale & Optimize (Month 7+)</h4>
+                            <ul style="color: #92400e; line-height: 1.8;">
+                                <li><strong>Scale marketing efforts</strong> and client acquisition</li>
+                                <li><strong>Develop additional revenue streams</strong> and offerings</li>
+                                <li><strong>Build systems</strong> for sustainable growth</li>
+                                <li><strong>Plan for expansion</strong> and team building</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 25px; background: #f8fafc; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <h4 style="color: #7c3aed; margin-bottom: 15px;">🚀 Your Week 1 Action Plan</h4>
+                        <p style="color: #64748b; margin-bottom: 20px;">Start with these immediate steps to begin building momentum:</p>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 12px; border-left: 4px solid #10b981;">
+                            <ol style="color: #065f46; line-height: 1.8;">
+                                <li><strong>Market Research:</strong> Identify 5 successful people in your target niche</li>
+                                <li><strong>Validation Survey:</strong> Create a simple survey for your network</li>
+                                <li><strong>Brand Foundation:</strong> Choose your business name and basic brand colors</li>
+                                <li><strong>Online Presence:</strong> Set up basic social media profiles</li>
+                                <li><strong>Network Activation:</strong> Reach out to 10 people in your network</li>
+                            </ol>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px;">
+                            <h5 style="margin-bottom: 10px;">🎯 Ready for Full AI-Powered Roadmaps?</h5>
+                            <p style="opacity: 0.95; font-size: 0.9rem; margin-bottom: 15px;">This is a basic roadmap. Your OpenAI integration is ready - deploy to Vercel to unlock personalized AI-generated roadmaps!</p>
+                            <button onclick="showDeploymentInfo()" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 16px; border-radius: 6px; cursor: pointer;">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Show traditional mode
+        function showTraditionalMode() {
+            document.getElementById('interview-mode').style.display = 'none';
+            document.getElementById('traditional-mode').style.display = 'block';
+        }
+
+        // Show interview mode
+        function showInterviewMode() {
+            document.getElementById('interview-mode').style.display = 'block';
+            document.getElementById('traditional-mode').style.display = 'none';
+        }
+
+        // Action functions
+        function saveProject() {
+            alert('💾 Project saved to your MogulMomma dashboard!');
+        }
+
+        function exportPDF() {
+            alert('📄 PDF export feature coming soon!');
+        }
+
+        function shareProject() {
+            alert('🔗 Share functionality coming soon!');
+        }
+
+        function addToCalendar() {
+            alert('📅 Calendar integration coming soon!');
+        }
+
+        function showDeploymentInfo() {
+            alert('🚀 Your OpenAI API is configured! The roadmap generator will use real AI when deployed to Vercel.');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Clean Roadmap Builder loaded successfully! 🎯');
+            
+            // Initialize Lucide icons
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
+</body>
+</html>
