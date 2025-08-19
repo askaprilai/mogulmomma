@@ -449,17 +449,13 @@
         const interviewQuestions = [
             {
                 id: 'entrepreneur_archetype',
-                title: '🌟 Your Entrepreneur Archetype',
-                question: 'Which description resonates most with you? This will help us understand your natural business strengths.',
+                title: '🌟 Your MogulMomma Archetype',
+                question: 'Based on your assessment results, which archetype describes you best? If you haven\'t taken the assessment yet, choose what resonates most with you.',
                 options: [
-                    { value: 'teacher', label: 'The Teacher - I love educating and empowering others' },
-                    { value: 'healer', label: 'The Healer - I want to help people transform and feel better' },
-                    { value: 'creator', label: 'The Creator - I love making beautiful things and expressing creativity' },
-                    { value: 'connector', label: 'The Connector - I excel at bringing people together' },
-                    { value: 'optimizer', label: 'The Optimizer - I see inefficiencies and love making things better' },
-                    { value: 'leader', label: 'The Leader - I naturally guide and inspire others' },
-                    { value: 'nurturer', label: 'The Nurturer - I care for others and create safe spaces' },
-                    { value: 'innovator', label: 'The Innovator - I love solving problems with new ideas' }
+                    { value: 'strategic_builder', label: 'The Strategic Builder - I thrive on creating sustainable, profitable ventures and strategic thinking' },
+                    { value: 'transformational_guide', label: 'The Transformational Guide - I love mentoring and helping other women breakthrough barriers' },
+                    { value: 'expert_authority', label: 'The Expert Authority - I have deep expertise and want to be recognized as a thought leader' },
+                    { value: 'innovative_creator', label: 'The Innovative Creator - I see new possibilities and love challenging the status quo' }
                 ],
                 type: 'select'
             },
@@ -675,7 +671,17 @@ IDEAL LIFESTYLE: ${interviewAnswers.ideal_lifestyle || 'Flexible work arrangemen
 
 FINANCIAL GOALS: ${interviewAnswers.income_timeline || 'Building sustainable income'}
 
-TASK: Based on this person's archetype, passions, strengths, and problems they notice, suggest 2-3 specific business ideas that align with their archetype and combine their interests with their experience. Then create a concrete 90-day action plan for the most promising idea, with specific weekly tasks that a beginner can actually do. Include practical steps like "Week 1: Create LinkedIn post about [specific topic]" and "Week 2: Reach out to 5 people in [specific industry]" not vague advice like "build your brand" or "network more". Focus on their archetype strengths to guide the business direction.
+TASK: Based on this person's archetype, passions, strengths, and problems they notice, suggest 2-3 specific business ideas that align with their archetype and combine their interests with their experience. Then create a concrete 90-day action plan for the most promising idea, with specific weekly tasks that a beginner can actually do. 
+
+IMPORTANT: For each task in the roadmap, include specific guidance on WHERE to complete it using MogulMomma platform tools:
+- Social media content creation → "Use Content Generator tool"
+- Calendar planning → "Use Calendar tool to schedule"
+- Brand development → "Use Brand Creator tool"
+- Document creation → "Use Document Generator"
+- Research tasks → "Use AI Coach to ask specific questions"
+- Content planning → "Add to My Projects for tracking"
+
+Include practical steps like "Week 1: Use Content Generator to create LinkedIn post about [specific topic]" and "Week 2: Use AI Coach to research 5 competitors in [specific industry]" rather than vague advice. Always point them to the specific MogulMomma tool that can help them complete each task.
             `.trim();
         }
 
@@ -832,30 +838,33 @@ TASK: Based on this person's archetype, passions, strengths, and problems they n
                         <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 25px; border-radius: 8px;">
                             <h4 style="color: #1e40af; margin-bottom: 15px;">Phase 1: Foundation & Validation (Month 1-2)</h4>
                             <ul style="color: #1e40af; line-height: 1.8;">
-                                <li><strong>Clarify your unique value proposition</strong> based on your experience</li>
-                                <li><strong>Validate market demand</strong> through your network and research</li>
-                                <li><strong>Address key challenges</strong> you identified in the interview</li>
-                                <li><strong>Set up foundational systems</strong> that fit your lifestyle</li>
+                                <li><strong>Week 1:</strong> Use Brand Creator tool to define your unique value proposition</li>
+                                <li><strong>Week 2:</strong> Use AI Coach to research your competition and market</li>
+                                <li><strong>Week 3:</strong> Use Content Generator to create your first LinkedIn post</li>
+                                <li><strong>Week 4:</strong> Use Calendar tool to schedule 5 validation conversations</li>
+                                <li><strong>Week 5:</strong> Use Document Generator to create your service offering outline</li>
+                                <li><strong>Week 6-8:</strong> Add progress tracking to My Projects dashboard</li>
                             </ul>
                         </div>
                         
                         <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 25px; border-radius: 8px;">
                             <h4 style="color: #065f46; margin-bottom: 15px;">Phase 2: Launch & Test (Month 3-6)</h4>
                             <ul style="color: #065f46; line-height: 1.8;">
-                                <li><strong>Start small</strong> with pilot programs that respect your time constraints</li>
-                                <li><strong>Build credibility</strong> through content and thought leadership</li>
-                                <li><strong>Test and refine</strong> your approach based on real feedback</li>
-                                <li><strong>Develop support systems</strong> for sustainable growth</li>
+                                <li><strong>Week 9-10:</strong> Use Content Generator to create your first content series</li>
+                                <li><strong>Week 11-12:</strong> Use AI Coach to research pricing strategies for your niche</li>
+                                <li><strong>Week 13-16:</strong> Use Calendar tool to schedule client calls and track feedback</li>
+                                <li><strong>Week 17-20:</strong> Use Document Generator to create client contracts and proposals</li>
+                                <li><strong>Week 21-24:</strong> Add client management to My Projects dashboard</li>
                             </ul>
                         </div>
                         
                         <div style="background: #fef7f0; border-left: 4px solid #f59e0b; padding: 25px; border-radius: 8px;">
                             <h4 style="color: #92400e; margin-bottom: 15px;">Phase 3: Scale Strategically (Month 7+)</h4>
                             <ul style="color: #92400e; line-height: 1.8;">
-                                <li><strong>Scale what works</strong> while maintaining quality</li>
-                                <li><strong>Achieve your success metrics</strong> as defined in your vision</li>
-                                <li><strong>Create passive income streams</strong> for long-term sustainability</li>
-                                <li><strong>Plan next phase</strong> of growth or expansion</li>
+                                <li><strong>Month 7-8:</strong> Use Brand Creator to develop premium offerings</li>
+                                <li><strong>Month 9-10:</strong> Use Content Generator for automated marketing content</li>
+                                <li><strong>Month 11-12:</strong> Use Document Generator to create online course materials</li>
+                                <li><strong>Ongoing:</strong> Use AI Coach for strategic business decisions and growth planning</li>
                             </ul>
                         </div>
                     </div>
@@ -866,11 +875,11 @@ TASK: Based on this person's archetype, passions, strengths, and problems they n
                         
                         <div style="background: white; padding: 20px; border-radius: 12px; border-left: 4px solid #10b981;">
                             <ol style="color: #065f46; line-height: 1.8;">
-                                <li><strong>Define your offer:</strong> Write a clear description of what you'll provide</li>
-                                <li><strong>Identify 10 potential clients:</strong> Who in your network could benefit?</li>
-                                <li><strong>Research competitors:</strong> Study 3-5 people doing similar work</li>
-                                <li><strong>Create your first content:</strong> Share your expertise publicly</li>
-                                <li><strong>Set up basic systems:</strong> Simple ways to track progress and clients</li>
+                                <li><strong>Use Brand Creator tool:</strong> Define your unique value proposition and target audience</li>
+                                <li><strong>Use AI Coach:</strong> Ask "Who are my ideal clients based on my background and skills?"</li>
+                                <li><strong>Use AI Coach:</strong> Research "Top 5 competitors in [your niche] - what are they offering?"</li>
+                                <li><strong>Use Content Generator:</strong> Create your first LinkedIn post sharing your expertise</li>
+                                <li><strong>Add to My Projects:</strong> Create a new project to track your business launch progress</li>
                             </ol>
                         </div>
                         
