@@ -359,14 +359,37 @@
                     </div>
                     
                     <div class="action-buttons">
-                        <button class="btn-primary" onclick="generateRoadmap()">
+                        <button class="btn-primary" onclick="startGuidedInterview()">
                             🚀 Start Guided Interview
                         </button>
-                        <button class="btn-secondary" onclick="generateRoadmap()">
+                        <button class="btn-secondary" onclick="startQuickPrompts()">
                             ⚡ Quick Prompts
                         </button>
                         <button class="btn-secondary" onclick="showTraditionalMode()">
                             🔧 Advanced Mode
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guided Interview Questions -->
+            <div id="interview-questions" style="display: none;">
+                <div style="background: white; border-radius: 12px; padding: 30px; border: 2px solid #3b82f6;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                        <h3 style="color: #1e40af; margin: 0;">Dream Mapping Interview</h3>
+                        <span id="question-progress" style="color: #64748b; font-size: 0.9rem;">Question 1 of 6</span>
+                    </div>
+                    
+                    <div id="current-question" style="margin-bottom: 25px;">
+                        <!-- Question content will be inserted here -->
+                    </div>
+                    
+                    <div style="display: flex; gap: 15px; justify-content: space-between;">
+                        <button id="back-btn" onclick="previousQuestion()" style="background: #64748b; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;" disabled>
+                            ← Previous
+                        </button>
+                        <button id="next-btn" onclick="nextQuestion()" style="background: #3b82f6; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer;">
+                            Next →
                         </button>
                     </div>
                 </div>
@@ -418,7 +441,291 @@
     </div>
 
     <script>
-        // Main roadmap generation function
+        // Interview system variables
+        let currentQuestionIndex = 0;
+        let interviewAnswers = {};
+        
+        // Interview questions
+        const interviewQuestions = [
+            {
+                id: 'vision',
+                title: '💭 Your Vision & Dreams',
+                question: 'What is your big dream or goal? Describe what you want to achieve and why it matters to you.',
+                placeholder: 'Example: I want to start a coaching business helping women transition to leadership roles because I believe every woman deserves to reach her full potential...',
+                type: 'textarea'
+            },
+            {
+                id: 'current_situation',
+                title: '📍 Current Situation',
+                question: 'Where are you now? Tell me about your current experience, skills, and resources.',
+                placeholder: 'Example: I have 15 years in corporate tech, strong leadership experience, great network, but no formal coaching training...',
+                type: 'textarea'
+            },
+            {
+                id: 'challenges',
+                title: '🚧 Challenges & Obstacles',
+                question: 'What has been holding you back or what challenges do you anticipate?',
+                placeholder: 'Example: I dont know how to price my services, Im afraid of putting myself out there, limited time with family commitments...',
+                type: 'textarea'
+            },
+            {
+                id: 'timeline',
+                title: '⏰ Timeline & Urgency',
+                question: 'What is your ideal timeline for achieving this goal?',
+                options: [
+                    { value: '3-months', label: 'ASAP - 3 months (High urgency)' },
+                    { value: '6-months', label: 'Moderate pace - 6 months' },
+                    { value: '12-months', label: 'Steady progress - 12 months' },
+                    { value: '18-months', label: 'Long-term - 18+ months' }
+                ],
+                type: 'select'
+            },
+            {
+                id: 'lifestyle',
+                title: '🏡 Lifestyle & Constraints',
+                question: 'Tell me about your life situation. What constraints or considerations should I factor in?',
+                placeholder: 'Example: Working full-time, two young kids, want to start as side business first, can dedicate 10 hours/week...',
+                type: 'textarea'
+            },
+            {
+                id: 'success',
+                title: '🎯 Success Vision',
+                question: 'What does success look like to you? How will you know when youve achieved your goal?',
+                placeholder: 'Example: Making $5K/month helping 20 women per year transition successfully, having flexibility to work from anywhere...',
+                type: 'textarea'
+            }
+        ];
+
+        // Start guided interview
+        function startGuidedInterview() {
+            console.log('🚀 Starting guided interview...');
+            currentQuestionIndex = 0;
+            interviewAnswers = {};
+            
+            // Hide interview mode
+            const interviewModeEl = document.getElementById('interview-mode');
+            if (interviewModeEl) {
+                interviewModeEl.style.display = 'none';
+                console.log('✅ Hidden interview-mode');
+            } else {
+                console.error('❌ Cannot find interview-mode element');
+            }
+            
+            // Show interview questions
+            const questionsEl = document.getElementById('interview-questions');
+            if (questionsEl) {
+                questionsEl.style.display = 'block';
+                console.log('✅ Showing interview-questions');
+            } else {
+                console.error('❌ Cannot find interview-questions element');
+            }
+            
+            // Hide traditional mode
+            const traditionalEl = document.getElementById('traditional-mode');
+            if (traditionalEl) {
+                traditionalEl.style.display = 'none';
+                console.log('✅ Hidden traditional-mode');
+            }
+            
+            showCurrentQuestion();
+        }
+
+        // Show current question
+        function showCurrentQuestion() {
+            console.log(`📝 Showing question ${currentQuestionIndex + 1}`);
+            const question = interviewQuestions[currentQuestionIndex];
+            const progressText = `Question ${currentQuestionIndex + 1} of ${interviewQuestions.length}`;
+            
+            const progressEl = document.getElementById('question-progress');
+            if (progressEl) {
+                progressEl.textContent = progressText;
+                console.log('✅ Updated progress text:', progressText);
+            } else {
+                console.error('❌ Cannot find question-progress element');
+            }
+            
+            let questionHTML = `
+                <h4 style="color: #1e40af; margin-bottom: 15px;">${question.title}</h4>
+                <p style="color: #64748b; margin-bottom: 20px; line-height: 1.6;">${question.question}</p>
+            `;
+            
+            if (question.type === 'textarea') {
+                questionHTML += `
+                    <textarea 
+                        id="answer-${question.id}" 
+                        placeholder="${question.placeholder}"
+                        style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; min-height: 120px; resize: vertical; font-family: inherit;"
+                    >${interviewAnswers[question.id] || ''}</textarea>
+                `;
+            } else if (question.type === 'select') {
+                questionHTML += `
+                    <select 
+                        id="answer-${question.id}" 
+                        style="width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; background: white;"
+                    >
+                        <option value="">Select your timeline...</option>
+                `;
+                question.options.forEach(option => {
+                    const selected = interviewAnswers[question.id] === option.value ? 'selected' : '';
+                    questionHTML += `<option value="${option.value}" ${selected}>${option.label}</option>`;
+                });
+                questionHTML += `</select>`;
+            }
+            
+            document.getElementById('current-question').innerHTML = questionHTML;
+            
+            // Update navigation buttons
+            document.getElementById('back-btn').disabled = currentQuestionIndex === 0;
+            const nextBtn = document.getElementById('next-btn');
+            
+            if (currentQuestionIndex === interviewQuestions.length - 1) {
+                nextBtn.textContent = 'Generate My Roadmap 🗺️';
+                nextBtn.style.background = '#10b981';
+            } else {
+                nextBtn.textContent = 'Next →';
+                nextBtn.style.background = '#3b82f6';
+            }
+        }
+
+        // Next question
+        function nextQuestion() {
+            // Save current answer
+            const question = interviewQuestions[currentQuestionIndex];
+            const answerElement = document.getElementById(`answer-${question.id}`);
+            
+            if (answerElement) {
+                const answer = answerElement.value.trim();
+                if (!answer) {
+                    alert('Please answer the question before proceeding.');
+                    return;
+                }
+                interviewAnswers[question.id] = answer;
+            }
+            
+            // Move to next question or generate roadmap
+            if (currentQuestionIndex === interviewQuestions.length - 1) {
+                generatePersonalizedRoadmap();
+            } else {
+                currentQuestionIndex++;
+                showCurrentQuestion();
+            }
+        }
+
+        // Previous question
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                // Save current answer
+                const question = interviewQuestions[currentQuestionIndex];
+                const answerElement = document.getElementById(`answer-${question.id}`);
+                if (answerElement) {
+                    interviewAnswers[question.id] = answerElement.value.trim();
+                }
+                
+                currentQuestionIndex--;
+                showCurrentQuestion();
+            }
+        }
+
+        // Generate personalized roadmap based on interview answers
+        function generatePersonalizedRoadmap() {
+            console.log('Generating personalized roadmap with answers:', interviewAnswers);
+            
+            // Hide interview questions and show output
+            document.getElementById('interview-questions').style.display = 'none';
+            
+            const output = document.getElementById('roadmap-output');
+            const actions = document.getElementById('roadmap-actions');
+            
+            // Show loading state
+            output.innerHTML = '<div class="loading"><div class="spinner"></div>🤖 Creating your personalized roadmap based on your interview...</div>';
+            
+            // Create detailed input for AI based on interview answers
+            const detailedInput = createDetailedInputFromAnswers();
+            const timeline = interviewAnswers.timeline || '12-months';
+            
+            // Generate roadmap with personalized input
+            generateRoadmapWithPersonalizedInput(detailedInput, timeline, output, actions);
+        }
+
+        // Create detailed input from interview answers
+        function createDetailedInputFromAnswers() {
+            return `
+VISION: ${interviewAnswers.vision || 'Career/business goal'}
+
+CURRENT SITUATION: ${interviewAnswers.current_situation || 'Professional with experience'}
+
+CHALLENGES: ${interviewAnswers.challenges || 'Need guidance on next steps'}
+
+LIFESTYLE CONSTRAINTS: ${interviewAnswers.lifestyle || 'Balancing multiple priorities'}
+
+SUCCESS DEFINITION: ${interviewAnswers.success || 'Achieving financial and personal goals'}
+
+TIMELINE: ${interviewAnswers.timeline || '12-months'}
+            `.trim();
+        }
+
+        // Quick prompts mode
+        function startQuickPrompts() {
+            // For now, redirect to traditional mode
+            showTraditionalMode();
+        }
+
+        // Generate roadmap with personalized input (from interview)
+        async function generateRoadmapWithPersonalizedInput(input, timeline, output, actions) {
+            console.log('Generating personalized roadmap with input:', input);
+            
+            try {
+                // Try the Vercel API first, fall back to local generation if needed
+                let roadmapHTML;
+                
+                try {
+                    const response = await fetch('/api/generate-roadmap', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            input: input,
+                            timeline: timeline
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (data.success) {
+                            roadmapHTML = data.roadmap;
+                            output.innerHTML = '<div class="success-message">✅ Personalized AI Roadmap Created!</div>' + roadmapHTML;
+                        } else {
+                            throw new Error('API returned error');
+                        }
+                    } else {
+                        throw new Error('API not available');
+                    }
+                } catch (apiError) {
+                    console.log('API endpoint not available, using local generation');
+                    roadmapHTML = generateLocalRoadmapFromAnswers(input, timeline);
+                    output.innerHTML = roadmapHTML;
+                }
+                
+                // Show action buttons
+                actions.style.display = 'flex';
+                
+                // Scroll to output
+                output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+            } catch (error) {
+                console.error('Error generating roadmap:', error);
+                output.innerHTML = `
+                    <div class="error-message">
+                        <strong>Error:</strong> ${error.message}
+                        <br><br>
+                        <button onclick="startGuidedInterview()" class="btn-primary">Start Over</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Main roadmap generation function (for traditional mode)
         async function generateRoadmap() {
             console.log('generateRoadmap function called');
             
@@ -492,6 +799,75 @@
             }
         }
 
+        // Local roadmap generation from interview answers
+        function generateLocalRoadmapFromAnswers(input, timeline) {
+            const timelineText = timeline.replace('-', ' ');
+            
+            return `
+                <div class="roadmap-content">
+                    <h3>🗺️ Your Personalized ${timelineText} Roadmap</h3>
+                    <p style="color: #64748b; margin-bottom: 25px;">Based on your interview responses, here's your customized action plan:</p>
+                    
+                    <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #3b82f6;">
+                        <h4 style="color: #1e40af; margin-bottom: 10px;">📋 Your Profile Summary</h4>
+                        <p style="color: #1e40af; font-size: 0.9rem; line-height: 1.6;">${input.substring(0, 200)}...</p>
+                    </div>
+                    
+                    <div style="display: grid; gap: 25px;">
+                        <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 25px; border-radius: 8px;">
+                            <h4 style="color: #1e40af; margin-bottom: 15px;">Phase 1: Foundation & Validation (Month 1-2)</h4>
+                            <ul style="color: #1e40af; line-height: 1.8;">
+                                <li><strong>Clarify your unique value proposition</strong> based on your experience</li>
+                                <li><strong>Validate market demand</strong> through your network and research</li>
+                                <li><strong>Address key challenges</strong> you identified in the interview</li>
+                                <li><strong>Set up foundational systems</strong> that fit your lifestyle</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 25px; border-radius: 8px;">
+                            <h4 style="color: #065f46; margin-bottom: 15px;">Phase 2: Launch & Test (Month 3-6)</h4>
+                            <ul style="color: #065f46; line-height: 1.8;">
+                                <li><strong>Start small</strong> with pilot programs that respect your time constraints</li>
+                                <li><strong>Build credibility</strong> through content and thought leadership</li>
+                                <li><strong>Test and refine</strong> your approach based on real feedback</li>
+                                <li><strong>Develop support systems</strong> for sustainable growth</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="background: #fef7f0; border-left: 4px solid #f59e0b; padding: 25px; border-radius: 8px;">
+                            <h4 style="color: #92400e; margin-bottom: 15px;">Phase 3: Scale Strategically (Month 7+)</h4>
+                            <ul style="color: #92400e; line-height: 1.8;">
+                                <li><strong>Scale what works</strong> while maintaining quality</li>
+                                <li><strong>Achieve your success metrics</strong> as defined in your vision</li>
+                                <li><strong>Create passive income streams</strong> for long-term sustainability</li>
+                                <li><strong>Plan next phase</strong> of growth or expansion</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px; padding: 25px; background: #f8fafc; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <h4 style="color: #7c3aed; margin-bottom: 15px;">🎯 Your Next Steps (Week 1)</h4>
+                        <p style="color: #64748b; margin-bottom: 20px;">Start here to build momentum toward your vision:</p>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 12px; border-left: 4px solid #10b981;">
+                            <ol style="color: #065f46; line-height: 1.8;">
+                                <li><strong>Define your offer:</strong> Write a clear description of what you'll provide</li>
+                                <li><strong>Identify 10 potential clients:</strong> Who in your network could benefit?</li>
+                                <li><strong>Research competitors:</strong> Study 3-5 people doing similar work</li>
+                                <li><strong>Create your first content:</strong> Share your expertise publicly</li>
+                                <li><strong>Set up basic systems:</strong> Simple ways to track progress and clients</li>
+                            </ol>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px;">
+                            <h5 style="margin-bottom: 10px;">✨ Congratulations!</h5>
+                            <p style="opacity: 0.95; font-size: 0.9rem;">You now have a personalized roadmap based on your unique situation. Take it one step at a time!</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         // Local roadmap generation for testing when API is not available
         function generateLocalRoadmap(input, timeline) {
             const timelineText = timeline.replace('-', ' ');
@@ -548,9 +924,9 @@
                         </div>
                         
                         <div style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-top: 20px;">
-                            <h5 style="margin-bottom: 10px;">🎯 Ready for Full AI-Powered Roadmaps?</h5>
-                            <p style="opacity: 0.95; font-size: 0.9rem; margin-bottom: 15px;">This is a basic roadmap. Your OpenAI integration is ready - deploy to Vercel to unlock personalized AI-generated roadmaps!</p>
-                            <button onclick="showDeploymentInfo()" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 16px; border-radius: 6px; cursor: pointer;">Learn More</button>
+                            <h5 style="margin-bottom: 10px;">🎯 Ready to Take Action?</h5>
+                            <p style="opacity: 0.95; font-size: 0.9rem;">This roadmap is your starting point. For a more personalized plan, try the guided interview!</p>
+                            <button onclick="startGuidedInterview()" style="background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.3); padding: 8px 16px; border-radius: 6px; cursor: pointer;">Start Interview</button>
                         </div>
                     </div>
                 </div>
