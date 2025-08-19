@@ -787,6 +787,11 @@
                     <span class="nav-icon">🏠</span>
                     <span>Dashboard</span>
                 </div>
+                <div class="nav-item" onclick="window.location.href='/roadmap-builder-clean.html'" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-left: 4px solid #3b82f6; margin-bottom: 10px;">
+                    <span class="nav-icon" style="font-size: 1.2rem;">🗺️</span>
+                    <span style="font-weight: 600; color: #1e40af;">Dream Mapping</span>
+                    <span style="background: #3b82f6; color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 8px; margin-left: auto;">CORE</span>
+                </div>
                 <a href="/community" class="nav-item">
                     <i class="nav-icon-lucide" data-lucide="users"></i>
                     <span>Community</span>
@@ -794,10 +799,6 @@
                 <div class="nav-item" onclick="window.location.href='/ai-tools-unlimited'">
                     <span class="nav-icon">📝</span>
                     <span>Content Generator</span>
-                </div>
-                <div class="nav-item" onclick="window.location.href='/roadmap-builder-clean.html'">
-                    <i class="nav-icon-lucide" data-lucide="map"></i>
-                    <span>Roadmap Builder</span>
                 </div>
                 <div class="nav-item" onclick="
                     document.querySelectorAll('.page').forEach(p => p.style.display='none');
@@ -851,23 +852,34 @@
                     <p class="page-subtitle">Ready to make your dreams reality? Your AI-powered toolkit is waiting.</p>
                 </div>
 
-                <!-- Stats -->
-                <div class="welcome-stats">
-                    <div class="stat-card">
-                        <div class="stat-number">3</div>
-                        <div class="stat-label">Active Projects</div>
+                <!-- Dream Mapping Tool - Signature Feature -->
+                <div style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border: 3px solid #3b82f6; border-radius: 20px; padding: 30px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);">
+                    <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                        <div style="background: #3b82f6; color: white; padding: 20px; border-radius: 20px; font-size: 2.5rem;">🗺️</div>
+                        <div>
+                            <h2 style="color: #1e40af; margin-bottom: 8px; font-size: 1.8rem;">Dream Mapping Tool</h2>
+                            <p style="color: #3730a3; font-size: 1.1rem; margin-bottom: 10px; font-weight: 500;">Our signature methodology transforms your vision into actionable roadmaps</p>
+                            <div style="background: rgba(59, 130, 246, 0.1); padding: 8px 12px; border-radius: 8px; display: inline-block;">
+                                <span style="color: #1e40af; font-weight: 600; font-size: 0.9rem;">✨ SIGNATURE TOOL</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">12</div>
-                        <div class="stat-label">AI Generations</div>
+                    <div style="text-align: center;">
+                        <button onclick="window.location.href='/roadmap-builder-clean.html'" style="background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%); color: white; border: none; padding: 15px 40px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); transition: all 0.3s ease;">
+                            🚀 Start Dream Mapping
+                        </button>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">8</div>
-                        <div class="stat-label">Documents Created</div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px;">
+                    <div style="background: white; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #e2e8f0;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #7c3aed; margin-bottom: 5px;">3</div>
+                        <div style="font-size: 0.85rem; color: #64748b;">Active Projects</div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">24</div>
-                        <div class="stat-label">Days Active</div>
+                    <div style="background: white; padding: 15px; border-radius: 12px; text-align: center; border: 1px solid #e2e8f0;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: #7c3aed; margin-bottom: 5px;">12</div>
+                        <div style="font-size: 0.85rem; color: #64748b;">AI Generations</div>
                     </div>
                 </div>
 
