@@ -445,53 +445,64 @@
         let currentQuestionIndex = 0;
         let interviewAnswers = {};
         
-        // Interview questions
+        // Interview questions - redesigned for passion discovery starting with archetype
         const interviewQuestions = [
             {
-                id: 'vision',
-                title: '💭 Your Vision & Dreams',
-                question: 'What is your big dream or goal? Describe what you want to achieve and why it matters to you.',
-                placeholder: 'Example: I want to start a coaching business helping women transition to leadership roles because I believe every woman deserves to reach her full potential...',
-                type: 'textarea'
-            },
-            {
-                id: 'current_situation',
-                title: '📍 Current Situation',
-                question: 'Where are you now? Tell me about your current experience, skills, and resources.',
-                placeholder: 'Example: I have 15 years in corporate tech, strong leadership experience, great network, but no formal coaching training...',
-                type: 'textarea'
-            },
-            {
-                id: 'challenges',
-                title: '🚧 Challenges & Obstacles',
-                question: 'What has been holding you back or what challenges do you anticipate?',
-                placeholder: 'Example: I dont know how to price my services, Im afraid of putting myself out there, limited time with family commitments...',
-                type: 'textarea'
-            },
-            {
-                id: 'timeline',
-                title: '⏰ Timeline & Urgency',
-                question: 'What is your ideal timeline for achieving this goal?',
+                id: 'entrepreneur_archetype',
+                title: '🌟 Your Entrepreneur Archetype',
+                question: 'Which description resonates most with you? This will help us understand your natural business strengths.',
                 options: [
-                    { value: '3-months', label: 'ASAP - 3 months (High urgency)' },
-                    { value: '6-months', label: 'Moderate pace - 6 months' },
-                    { value: '12-months', label: 'Steady progress - 12 months' },
-                    { value: '18-months', label: 'Long-term - 18+ months' }
+                    { value: 'teacher', label: 'The Teacher - I love educating and empowering others' },
+                    { value: 'healer', label: 'The Healer - I want to help people transform and feel better' },
+                    { value: 'creator', label: 'The Creator - I love making beautiful things and expressing creativity' },
+                    { value: 'connector', label: 'The Connector - I excel at bringing people together' },
+                    { value: 'optimizer', label: 'The Optimizer - I see inefficiencies and love making things better' },
+                    { value: 'leader', label: 'The Leader - I naturally guide and inspire others' },
+                    { value: 'nurturer', label: 'The Nurturer - I care for others and create safe spaces' },
+                    { value: 'innovator', label: 'The Innovator - I love solving problems with new ideas' }
                 ],
                 type: 'select'
             },
             {
-                id: 'lifestyle',
-                title: '🏡 Lifestyle & Constraints',
-                question: 'Tell me about your life situation. What constraints or considerations should I factor in?',
-                placeholder: 'Example: Working full-time, two young kids, want to start as side business first, can dedicate 10 hours/week...',
+                id: 'energy_passion',
+                title: '✨ What Lights You Up?',
+                question: 'Think about the last time you felt completely energized and excited. What were you doing? What topics, activities, or conversations make you lose track of time?',
+                placeholder: 'Example: I love helping friends figure out their careers. I get so excited when I see someone have a breakthrough about what they really want. I could talk about personal development for hours...',
                 type: 'textarea'
             },
             {
-                id: 'success',
-                title: '🎯 Success Vision',
-                question: 'What does success look like to you? How will you know when youve achieved your goal?',
-                placeholder: 'Example: Making $5K/month helping 20 women per year transition successfully, having flexibility to work from anywhere...',
+                id: 'natural_strengths',
+                title: '🌟 Your Natural Superpowers',
+                question: 'What do people always come to you for help with? What seems easy to you but hard for others? What compliments do you get repeatedly?',
+                placeholder: 'Example: People always ask me for fashion advice, or how to organize their spaces, or how to talk to their boss. Friends say I have a gift for making complex things simple...',
+                type: 'textarea'
+            },
+            {
+                id: 'problems_you_notice',
+                title: '🔍 Problems You Notice',
+                question: 'What frustrates you about the world? What problems do you see that you wish someone would solve? What makes you think "there has to be a better way"?',
+                placeholder: 'Example: I hate seeing talented women settle for less because they dont know their worth. Or small businesses that struggle with marketing because its so confusing...',
+                type: 'textarea'
+            },
+            {
+                id: 'background_experience',
+                title: '📚 Your Life Experience',
+                question: 'What is your background? Include your work experience, life experiences, education, and any unique perspectives you have.',
+                placeholder: 'Example: 10 years in corporate HR, went through divorce and rebuilt my life, have a psychology degree, speak 3 languages, raised kids as single mom...',
+                type: 'textarea'
+            },
+            {
+                id: 'ideal_lifestyle',
+                title: '🌅 Your Dream Day',
+                question: 'Describe your ideal workday. What time do you wake up? Where are you working? Who are you helping? How do you feel at the end of the day?',
+                placeholder: 'Example: Wake up at 7am, work from my home office or coffee shop, have 3 coaching calls with amazing women, feel fulfilled knowing I made a real difference...',
+                type: 'textarea'
+            },
+            {
+                id: 'income_timeline',
+                title: '💰 Financial Goals & Timeline',
+                question: 'How much do you want to earn, and by when? What would that income allow you to do or change in your life?',
+                placeholder: 'Example: I want to replace my $75K salary within 18 months so I can leave corporate and have more flexibility with my kids...',
                 type: 'textarea'
             }
         ];
@@ -650,17 +661,21 @@
         // Create detailed input from interview answers
         function createDetailedInputFromAnswers() {
             return `
-VISION: ${interviewAnswers.vision || 'Career/business goal'}
+ENTREPRENEUR ARCHETYPE: ${interviewAnswers.entrepreneur_archetype || 'exploring archetype'}
 
-CURRENT SITUATION: ${interviewAnswers.current_situation || 'Professional with experience'}
+PASSION & ENERGY: ${interviewAnswers.energy_passion || 'Exploring interests'}
 
-CHALLENGES: ${interviewAnswers.challenges || 'Need guidance on next steps'}
+NATURAL STRENGTHS: ${interviewAnswers.natural_strengths || 'Developing skills'}
 
-LIFESTYLE CONSTRAINTS: ${interviewAnswers.lifestyle || 'Balancing multiple priorities'}
+PROBLEMS THEY NOTICE: ${interviewAnswers.problems_you_notice || 'Identifying opportunities'}
 
-SUCCESS DEFINITION: ${interviewAnswers.success || 'Achieving financial and personal goals'}
+BACKGROUND & EXPERIENCE: ${interviewAnswers.background_experience || 'Building on experience'}
 
-TIMELINE: ${interviewAnswers.timeline || '12-months'}
+IDEAL LIFESTYLE: ${interviewAnswers.ideal_lifestyle || 'Flexible work arrangement'}
+
+FINANCIAL GOALS: ${interviewAnswers.income_timeline || 'Building sustainable income'}
+
+TASK: Based on this person's archetype, passions, strengths, and problems they notice, suggest 2-3 specific business ideas that align with their archetype and combine their interests with their experience. Then create a concrete 90-day action plan for the most promising idea, with specific weekly tasks that a beginner can actually do. Include practical steps like "Week 1: Create LinkedIn post about [specific topic]" and "Week 2: Reach out to 5 people in [specific industry]" not vague advice like "build your brand" or "network more". Focus on their archetype strengths to guide the business direction.
             `.trim();
         }
 
