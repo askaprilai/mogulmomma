@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Roadmap Builder Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .input-section {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            min-height: 120px;
+            resize: vertical;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background: #7c3aed;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #6d28d9;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .output {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            min-height: 100px;
+        }
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        .success {
+            color: #155724;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 12px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ Simple Roadmap Builder Test</h1>
+        <p>Testing the OpenAI integration for roadmap generation</p>
+        
+        <div class="input-section">
+            <label for="goal-input">Describe Your Goal or Dream:</label>
+            <textarea id="goal-input" placeholder="Example: I want to start a coaching business helping women in career transitions. I have corporate leadership experience but need to build my personal brand and client base.">I want to start a coaching business helping women in career transitions. I have corporate leadership experience but need to build my personal brand and client base.</textarea>
+        </div>
+        
+        <div class="input-section">
+            <label for="timeline-select">Timeline:</label>
+            <select id="timeline-select">
+                <option value="3-months">3 Months</option>
+                <option value="6-months">6 Months</option>
+                <option value="12-months" selected>12 Months</option>
+                <option value="18-months">18 Months</option>
+            </select>
+        </div>
+        
+        <button onclick="generateRoadmap()" id="generate-btn">
+            🚀 Generate My Roadmap
+        </button>
+        
+        <div id="output" class="output">
+            Results will appear here after you click "Generate My Roadmap"
+        </div>
+    </div>
+
+    <script>
+        async function generateRoadmap() {
+            const input = document.getElementById('goal-input').value.trim();
+            const timeline = document.getElementById('timeline-select').value;
+            const output = document.getElementById('output');
+            const button = document.getElementById('generate-btn');
+            
+            console.log('Starting roadmap generation...');
+            console.log('Input:', input);
+            console.log('Timeline:', timeline);
+            
+            if (!input) {
+                output.innerHTML = '<div class="error">Please describe your goal first!</div>';
+                return;
+            }
+            
+            // Show loading state
+            output.innerHTML = '<div class="loading">🤖 AI is generating your personalized roadmap... This may take a few moments.</div>';
+            button.disabled = true;
+            button.textContent = 'Generating...';
+            
+            try {
+                console.log('Calling API endpoint...');
+                
+                // Call our Vercel serverless function
+                const response = await fetch('/api/generate-roadmap', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        input: input,
+                        timeline: timeline
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('API Error:', errorText);
+                    throw new Error(`API request failed: ${response.status} - ${errorText}`);
+                }
+                
+                const data = await response.json();
+                console.log('API Response:', data);
+                
+                if (data.success) {
+                    output.innerHTML = `
+                        <div class="success">✅ Roadmap Generated Successfully!</div>
+                        <div style="margin-top: 20px;">
+                            ${data.roadmap}
+                        </div>
+                    `;
+                } else {
+                    throw new Error(data.error || 'Unknown error occurred');
+                }
+                
+            } catch (error) {
+                console.error('Error generating roadmap:', error);
+                output.innerHTML = `
+                    <div class="error">
+                        <strong>Error:</strong> ${error.message}
+                        <br><br>
+                        <strong>Troubleshooting:</strong>
+                        <ul>
+                            <li>Make sure you have an OpenAI API key set in your environment variables</li>
+                            <li>Check that the Vercel function is deployed correctly</li>
+                            <li>Verify your internet connection</li>
+                        </ul>
+                        <button onclick="generateRoadmap()" style="margin-top: 10px;">Try Again</button>
+                    </div>
+                `;
+            } finally {
+                button.disabled = false;
+                button.textContent = '🚀 Generate My Roadmap';
+            }
+        }
+        
+        // Test API endpoint availability on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('Simple Roadmap Test loaded successfully!');
+            console.log('Current URL:', window.location.href);
+            
+            // Test if API endpoint is available
+            fetch('/api/generate-roadmap', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ input: 'test', timeline: '3-months' })
+            }).then(response => {
+                console.log('API endpoint test - Status:', response.status);
+                console.log('API endpoint test - Response:', response);
+                if (response.ok) {
+                    console.log('✅ API endpoint is available');
+                    return response.json();
+                } else {
+                    console.log('⚠️ API endpoint returned error status');
+                    return response.text();
+                }
+            }).then(data => {
+                console.log('API test response data:', data);
+            }).catch(error => {
+                console.log('❌ API endpoint test failed:', error.message);
+                console.log('This is normal for static file servers - Vercel deployment needed for API');
+            });
+        });
+    </script>
+</body>
+</html>
