@@ -1052,16 +1052,21 @@
                             </button>
                             <br>
                             <button onclick="
-                                alert('Testing roadmap generation...');
+                                alert('Step 1: Starting test...');
+                                console.log('Looking for roadmap-output element');
                                 const output = document.getElementById('roadmap-output');
+                                console.log('Found element:', output);
+                                alert('Step 2: Element found = ' + (output ? 'YES' : 'NO'));
                                 if (output) {
+                                    console.log('Setting innerHTML...');
                                     output.innerHTML = '<div style=\"text-align: center; padding: 40px; background: #10b981; color: white; border-radius: 12px;\"><h3>✅ Success!</h3><p>Roadmap generation is working!</p></div>';
-                                    alert('Success! Check the output below.');
+                                    console.log('innerHTML set successfully');
+                                    alert('Step 3: Success! Content should be visible now.');
                                 } else {
-                                    alert('Error: Could not find roadmap-output element');
+                                    alert('Step 3: ERROR - roadmap-output element not found');
                                 }
                             " style="background: #10b981; color: white; border: none; padding: 15px 25px; margin: 5px; border-radius: 8px; font-weight: 600; cursor: pointer;">
-                                🧪 Test Generate Roadmap
+                                🧪 Test Generate Roadmap (Debug)
                             </button>
                         </div>
 
