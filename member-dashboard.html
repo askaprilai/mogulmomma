@@ -1059,9 +1059,9 @@
                                 alert('Step 2: Element found = ' + (output ? 'YES' : 'NO'));
                                 if (output) {
                                     console.log('Setting innerHTML...');
-                                    output.innerHTML = '<div style=\"text-align: center; padding: 40px; background: #10b981; color: white; border-radius: 12px;\"><h3>✅ Success!</h3><p>Roadmap generation is working!</p></div>';
+                                    output.innerHTML = '<div style=\"text-align: center; padding: 40px; background: red; color: white; border: 5px solid yellow; font-size: 24px; margin: 20px; box-shadow: 0 0 20px red;\"><h1>🎉 IT WORKS! 🎉</h1><p>The roadmap generation is working!</p><p>Now we can add OpenAI!</p></div>';
                                     console.log('innerHTML set successfully');
-                                    alert('Step 3: Success! Content should be visible now.');
+                                    alert('Step 3: Success! Look for the BIG RED BOX below!');
                                 } else {
                                     alert('Step 3: ERROR - roadmap-output element not found');
                                 }
