@@ -22,14 +22,9 @@
             overflow-x: hidden;
         }
 
-        /* Hero Section - Blue to Purple Gradient */
+        /* Hero Section - Soft Peachy Pink Gradient */
         .hero {
-            background: linear-gradient(135deg, 
-                #00d4ff 0%,    /* bright cyan */
-                #5b9bd5 25%,   /* sky blue */
-                #8a2be2 75%,   /* blue violet */
-                #6a5acd 100%   /* slate blue */
-            );
+            background: linear-gradient(135deg, #fef7f0 0%, #fed7d7 50%, #fbb6ce 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -64,19 +59,19 @@
         }
 
         .hero-text {
-            color: white;
+            color: #1f2937;
         }
 
         .hero-badge {
-            background: rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.95);
+            background: rgba(31, 41, 55, 0.08);
+            color: #6b7280;
             padding: 12px 24px;
             border-radius: 50px;
             display: inline-block;
             font-weight: 600;
             margin-bottom: 30px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(31, 41, 55, 0.1);
             font-size: 0.9rem;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -88,14 +83,13 @@
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 25px;
-            color: white;
+            color: #1f2937;
             font-family: 'Montserrat', sans-serif;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .hero-subtitle {
             font-size: clamp(1rem, 2vw, 1.3rem);
-            color: rgba(255, 255, 255, 0.9);
+            color: #6b7280;
             margin-bottom: 35px;
             font-weight: 400;
             line-height: 1.6;
@@ -117,12 +111,12 @@
             height: 80px;
             border-radius: 50%;
             background: white;
-            border: 3px solid #00d4ff;
+            border: 3px solid #dc2626;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.5rem;
-            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.2);
             animation: float 3s ease-in-out infinite;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -130,29 +124,29 @@
 
         .process-node:hover {
             transform: scale(1.1);
-            box-shadow: 0 12px 35px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 12px 35px rgba(220, 38, 38, 0.3);
         }
 
         .process-node.active {
-            background: #00d4ff;
+            background: #dc2626;
             color: white;
             animation: pulse 2s ease-in-out infinite;
         }
 
-        .node-1 { border-color: #00d4ff; } /* bright cyan */
-        .node-1.active { background: #00d4ff; }
-        .node-2 { border-color: #5b9bd5; } /* sky blue */
-        .node-2.active { background: #5b9bd5; }
-        .node-3 { border-color: #8a2be2; } /* blue violet */
-        .node-3.active { background: #8a2be2; }
-        .node-4 { border-color: #6a5acd; } /* slate blue */
-        .node-4.active { background: #6a5acd; }
+        .node-1 { border-color: #dc2626; } /* confident red */
+        .node-1.active { background: #dc2626; }
+        .node-2 { border-color: #f59e0b; } /* warm amber */
+        .node-2.active { background: #f59e0b; }
+        .node-3 { border-color: #10b981; } /* success green */
+        .node-3.active { background: #10b981; }
+        .node-4 { border-color: #8b5cf6; } /* elegant purple */
+        .node-4.active { background: #8b5cf6; }
 
         .process-line {
             position: absolute;
-            height: 3px;
-            background: linear-gradient(90deg, #00d4ff, #5b9bd5, #8a2be2, #6a5acd);
-            opacity: 0.8;
+            height: 2px;
+            background: linear-gradient(90deg, #dc2626, #f59e0b, #10b981, #8b5cf6);
+            opacity: 0.6;
             animation: drawLine 2s ease-in-out infinite;
             border-radius: 2px;
         }
@@ -208,7 +202,7 @@
         }
 
         .cta-button {
-            background: linear-gradient(135deg, #00d4ff 0%, #8a2be2 100%);
+            background: #dc2626;
             color: white;
             padding: 18px 36px;
             border: none;
@@ -1325,7 +1319,7 @@
     </section>
 
     <!-- Founders Section -->
-    <section style="padding: 100px 0; background: linear-gradient(135deg, #e6f7ff 0%, #f0f4ff 50%, #f3e8ff 100%);">
+    <section style="padding: 100px 0; background: linear-gradient(135deg, #fef7f0 0%, #fed7d7 50%, #fbb6ce 100%);">
         <div class="section-content">
             <div class="section-header reveal">
                 <h2 style="color: #1f2937;">Meet Your Dream Mapping Guides</h2>
@@ -1336,16 +1330,16 @@
 
             <div class="founders-container" style="display: grid; grid-template-columns: 1fr; gap: 40px; max-width: 800px; margin: 0 auto; margin-top: 60px;">
                 <div class="founder-card reveal" style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); text-align: center;">
-                    <div class="founder-image" style="width: 200px; height: 200px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 4px solid #00d4ff;">
+                    <div class="founder-image" style="width: 200px; height: 200px; margin: 0 auto 30px; border-radius: 50%; overflow: hidden; border: 4px solid #dc2626;">
                         <img src="https://lh3.googleusercontent.com/d/1F4oc3ksHIj_d8jVovXxGbyIshYFCQK2o" alt="MogulMomma founders" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <h3 style="color: #1f2937; font-size: 1.5rem; margin-bottom: 15px;">April & Angie</h3>
-                    <p style="color: #00d4ff; font-weight: 600; margin-bottom: 20px;">Co-Founders & Dream Mapping Architects</p>
+                    <p style="color: #dc2626; font-weight: 600; margin-bottom: 20px;">Co-Founders & Dream Mapping Architects</p>
                     <p style="color: #6b7280; line-height: 1.7; margin-bottom: 25px;">
                         We know what it's like to have big dreams but feel stuck in the details. After years in corporate leadership, we created the Dream Mapping System that helped us—and now 1,200+ women—transform vision into reality. We're here to help you stop planning and start building.
                     </p>
-                    <div style="background: rgba(0, 212, 255, 0.1); padding: 20px; border-radius: 12px; border-left: 4px solid #00d4ff;">
-                        <p style="color: #00d4ff; font-weight: 600; margin-bottom: 10px;">"Your dreams aren't too big. Your strategy just needs to be more specific."</p>
+                    <div style="background: rgba(220, 38, 38, 0.1); padding: 20px; border-radius: 12px; border-left: 4px solid #dc2626;">
+                        <p style="color: #dc2626; font-weight: 600; margin-bottom: 10px;">"Your dreams aren't too big. Your strategy just needs to be more specific."</p>
                         <p style="color: #6b7280; font-size: 0.9rem; font-style: italic;">— April & Angie, MogulMomma Co-Founders</p>
                     </div>
                 </div>
