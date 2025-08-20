@@ -106,10 +106,10 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
             position: relative;
             z-index: 10;
             min-height: 100vh;
@@ -124,32 +124,30 @@
 
         .hero-badge {
             background: rgba(148, 163, 184, 0.2);
-            color: rgba(241, 245, 249, 0.95);
-            padding: 10px 20px;
+            color: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
             border-radius: 50px;
             display: inline-block;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(148, 163, 184, 0.3);
-            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             letter-spacing: 0.5px;
             text-transform: uppercase;
             font-family: 'Montserrat', sans-serif;
+            margin-left: 0;
+            text-align: left;
         }
 
         .hero h1 {
-            font-size: clamp(1.8rem, 6vw, 4.5rem);
+            font-size: clamp(1.6rem, 4.5vw, 3.2rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: clamp(15px, 3vw, 25px);
-            color: #f1f5f9;
+            color: #ffffff;
             font-family: 'Montserrat', sans-serif;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
             max-width: 100%;
             text-align: left;
             word-wrap: break-word;
@@ -258,6 +256,14 @@
             .hero-content {
                 padding: 0 20px;
                 min-height: calc(100vh - 120px);
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .hero-badge {
+                padding: 12px 24px;
+                font-size: clamp(0.8rem, 2vw, 1rem);
+                margin-bottom: 25px;
             }
             
             .hero h1 {
@@ -279,6 +285,10 @@
                 font-size: clamp(0.85rem, 3vw, 1.1rem);
                 margin-bottom: 25px;
             }
+
+            .hero-visual {
+                order: -1;
+            }
         }
         
         @media (max-width: 480px) {
@@ -292,9 +302,9 @@
             }
             
             .hero-badge {
-                padding: 8px 16px;
-                font-size: clamp(0.7rem, 2.5vw, 0.8rem);
-                margin-bottom: 15px;
+                padding: 10px 20px;
+                font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+                margin-bottom: 20px;
             }
         }
 
@@ -1247,6 +1257,26 @@
                 </p>
                 <a href="/assessment" class="cta-button"><i class="hero-icon" data-lucide="map"></i>Start Your MogulMomma Map™ Journey (Free)</a>
                 <p style="margin-top: clamp(15px, 3vw, 20px); opacity: 0.8; font-size: clamp(0.8rem, 2vw, 0.9rem); color: rgba(148, 163, 184, 0.8);"><i class="hero-icon" data-lucide="check-circle"></i>10-minute assessment • <i class="hero-icon" data-lucide="check-circle"></i>Personalized roadmap • <i class="hero-icon" data-lucide="check-circle"></i>Instant results</p>
+            </div>
+            <div class="hero-visual">
+                <div class="process-map">
+                    <!-- Animated connecting lines -->
+                    <div class="process-line line-1"></div>
+                    <div class="process-line line-2"></div>
+                    <div class="process-line line-3"></div>
+                    
+                    <!-- Process nodes with icons -->
+                    <div class="process-node node-1 active">💭</div>
+                    <div class="process-node node-2">🗺️</div>
+                    <div class="process-node node-3">🚀</div>
+                    <div class="process-node node-4">👑</div>
+                    
+                    <!-- Floating labels -->
+                    <div class="process-label label-1">Dream Discovery</div>
+                    <div class="process-label label-2">Strategic Mapping</div>
+                    <div class="process-label label-3">Launch & Execute</div>
+                    <div class="process-label label-4">Scale & Thrive</div>
+                </div>
             </div>
         </div>
     </section>
