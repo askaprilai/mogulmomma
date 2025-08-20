@@ -212,12 +212,12 @@
 
         .typewriter .line1 {
             border-right: clamp(2px, 0.5vw, 3px) solid rgba(255, 255, 255, 0.75);
-            animation: typing-line1 2.5s steps(20, end), blink-caret 0.75s step-end infinite;
+            animation: typing-line1 2.5s steps(20, end), hide-cursor-line1 0s 2.5s both;
         }
 
         .typewriter .line2 {
             border-right: clamp(2px, 0.5vw, 3px) solid rgba(255, 255, 255, 0.75);
-            animation: typing-line2 2.5s steps(18, end) 2.5s both, blink-caret 0.75s step-end infinite 2.5s;
+            animation: typing-line2 2.5s steps(18, end) 2.5s both, hide-cursor-line2 0s 5s both;
         }
 
         @keyframes typing-line1 {
@@ -230,9 +230,12 @@
             to { width: 100% }
         }
 
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: rgba(255, 255, 255, 0.75) }
+        @keyframes hide-cursor-line1 {
+            to { border-right-color: transparent; }
+        }
+
+        @keyframes hide-cursor-line2 {
+            to { border-right-color: transparent; }
         }
 
         /* Responsive Breakpoints */
@@ -264,11 +267,11 @@
             }
             
             .typewriter .line1 {
-                animation: typing-line1 2s steps(15, end), blink-caret 0.75s step-end infinite;
+                animation: typing-line1 2s steps(15, end), hide-cursor-line1 0s 2s both;
             }
             
             .typewriter .line2 {
-                animation: typing-line2 2s steps(13, end) 2s both, blink-caret 0.75s step-end infinite 2s;
+                animation: typing-line2 2s steps(13, end) 2s both, hide-cursor-line2 0s 4s both;
             }
             
             .hero-subtitle {
