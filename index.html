@@ -22,7 +22,7 @@
             overflow-x: hidden;
         }
 
-        /* Hero Section - Vibrant Purple-Orange Gradient */
+        /* Hero Section - Aurora Style with Animated Gradients */
         .hero {
             background: linear-gradient(135deg, 
                 #ff8a65 0%,    /* warm coral */
@@ -39,6 +39,7 @@
             padding-top: 60px;
         }
 
+        /* Aurora Background Layers */
         .hero::before {
             content: '';
             position: absolute;
@@ -46,10 +47,130 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 138, 101, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(216, 27, 96, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 60% 40%, rgba(142, 36, 170, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 40% 80%, rgba(94, 53, 177, 0.2) 0%, transparent 40%);
+            animation: aurora-move 20s ease-in-out infinite;
             pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 60%, rgba(255, 112, 67, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 30%, rgba(244, 114, 182, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
+            animation: aurora-drift 15s ease-in-out infinite reverse;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Aurora Animations */
+        @keyframes aurora-move {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) scale(1);
+                opacity: 0.8;
+            }
+            33% {
+                transform: translateX(30px) translateY(-20px) scale(1.1);
+                opacity: 0.9;
+            }
+            66% {
+                transform: translateX(-20px) translateY(20px) scale(0.95);
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes aurora-drift {
+            0%, 100% {
+                transform: translateX(0px) translateY(0px) rotate(0deg);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateX(-30px) translateY(-30px) rotate(1deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Floating Aurora Orbs */
+        .aurora-orbs {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .aurora-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .aurora-orb:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 138, 101, 0.3) 0%, transparent 70%);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 12s;
+        }
+
+        .aurora-orb:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(216, 27, 96, 0.25) 0%, transparent 70%);
+            top: 60%;
+            right: 15%;
+            animation-delay: -3s;
+            animation-duration: 10s;
+        }
+
+        .aurora-orb:nth-child(3) {
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, rgba(142, 36, 170, 0.2) 0%, transparent 70%);
+            bottom: 30%;
+            left: 20%;
+            animation-delay: -6s;
+            animation-duration: 14s;
+        }
+
+        .aurora-orb:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, rgba(94, 53, 177, 0.3) 0%, transparent 70%);
+            top: 40%;
+            right: 30%;
+            animation-delay: -9s;
+            animation-duration: 8s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) scale(1);
+                opacity: 0.6;
+            }
+            33% {
+                transform: translateY(-20px) translateX(10px) scale(1.1);
+                opacity: 0.8;
+            }
+            66% {
+                transform: translateY(10px) translateX(-15px) scale(0.9);
+                opacity: 0.4;
+            }
         }
 
         .hero-content {
@@ -61,7 +182,7 @@
             gap: 60px;
             align-items: center;
             position: relative;
-            z-index: 1;
+            z-index: 10;
         }
 
         .hero-text {
@@ -92,6 +213,26 @@
             color: white;
             font-family: 'Montserrat', sans-serif;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Typewriter Animation */
+        .typewriter {
+            overflow: hidden;
+            border-right: 3px solid rgba(255, 255, 255, 0.75);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 0.15em;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: rgba(255, 255, 255, 0.75) }
         }
 
         .hero-subtitle {
@@ -1036,14 +1177,22 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <!-- Aurora Orbs Background -->
+        <div class="aurora-orbs">
+            <div class="aurora-orb"></div>
+            <div class="aurora-orb"></div>
+            <div class="aurora-orb"></div>
+            <div class="aurora-orb"></div>
+        </div>
+        
         <div class="hero-content">
             <div class="hero-text">
                 <div class="hero-badge"><i class="hero-icon" data-lucide="star"></i>For Extraordinary Women Ready for More</div>
-                <h1>You Bring the Dream, We Bring You the Map</h1>
+                <h1 class="typewriter">You Bring the Dream, We Bring You the Map</h1>
                 <p class="hero-subtitle">
-                    Turn Your Big Vision into Your Next Successful Chapter. Stop waiting for "someday." Using our proven Dream Mapping System, you'll transform your ideas into a concrete, actionable plan. Join a powerhouse community of accomplished women who are already building the businesses, careers, and lives they once only dreamed about.
+                    Turn Your Big Vision into Your Next Successful Chapter. Stop waiting for "someday." Using our proven MogulMomma Map™, you'll transform your ideas into a concrete, actionable plan. Join a powerhouse community of accomplished women who are already building the businesses, careers, and lives they once only dreamed about.
                 </p>
-                <a href="/assessment" class="cta-button"><i class="hero-icon" data-lucide="map"></i>Start Your Dream Mapping Journey (Free)</a>
+                <a href="/assessment" class="cta-button"><i class="hero-icon" data-lucide="map"></i>Start Your MogulMomma Map™ Journey (Free)</a>
                 <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9rem;"><i class="hero-icon" data-lucide="check-circle"></i>10-minute assessment • <i class="hero-icon" data-lucide="check-circle"></i>Personalized roadmap • <i class="hero-icon" data-lucide="check-circle"></i>Instant results</p>
             </div>
             <div class="hero-visual">
@@ -1127,7 +1276,7 @@
                 <div class="solution-text reveal">
                     <h2>Turn Your Dreams Into Your Strategic Reality</h2>
                     <p>
-                        You don't need to abandon your dreams or settle for "realistic." You need the proven Dream Mapping system 
+                        You don't need to abandon your dreams or settle for "realistic." You need the proven MogulMomma Map™ system 
                         that transforms your biggest visions into step-by-step action plans.
                     </p>
                     
@@ -1309,7 +1458,7 @@
                         <p>Get a personalized roadmap to take confident steps forward</p>
                     </div>
                     <div class="assessment-feature">
-                        <h4><i class="feature-icon" data-lucide="compass"></i>Dream Mapping</h4>
+                        <h4><i class="feature-icon" data-lucide="compass"></i>MogulMomma Map™</h4>
                         <p>Transform your dreams into actionable steps with our proven mapping system</p>
                     </div>
                 </div>
@@ -1329,7 +1478,7 @@
     <section style="padding: 100px 0; background: linear-gradient(135deg, #fff3e0 0%, #fce4ec 50%, #f3e5f5 100%);">
         <div class="section-content">
             <div class="section-header reveal">
-                <h2 style="color: #1f2937;">Meet Your Dream Mapping Guides</h2>
+                <h2 style="color: #1f2937;">Meet Your MogulMomma Map™ Guides</h2>
                 <p class="subtitle" style="color: #6b7280;">
                     The women who understand your journey because they've lived it—and created the proven system to help you navigate it with confidence.
                 </p>
@@ -1341,9 +1490,9 @@
                         <img src="https://lh3.googleusercontent.com/d/1F4oc3ksHIj_d8jVovXxGbyIshYFCQK2o" alt="MogulMomma founders" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <h3 style="color: #1f2937; font-size: 1.5rem; margin-bottom: 15px;">April & Angie</h3>
-                    <p style="color: #ff7043; font-weight: 600; margin-bottom: 20px;">Co-Founders & Dream Mapping Architects</p>
+                    <p style="color: #ff7043; font-weight: 600; margin-bottom: 20px;">Co-Founders & MogulMomma Map™ Architects</p>
                     <p style="color: #6b7280; line-height: 1.7; margin-bottom: 25px;">
-                        We know what it's like to have big dreams but feel stuck in the details. After years in corporate leadership, we created the Dream Mapping System that helped us—and now 1,200+ women—transform vision into reality. We're here to help you stop planning and start building.
+                        We know what it's like to have big dreams but feel stuck in the details. After years in corporate leadership, we created the MogulMomma Map™ that helped us—and now 1,200+ women—transform vision into reality. We're here to help you stop planning and start building.
                     </p>
                     <div style="background: rgba(255, 112, 67, 0.1); padding: 20px; border-radius: 12px; border-left: 4px solid #ff7043;">
                         <p style="color: #ff7043; font-weight: 600; margin-bottom: 10px;">"Your dreams aren't too big. Your strategy just needs to be more specific."</p>
@@ -1388,7 +1537,7 @@
                         </div>
                     </div>
                     <p style="color: #374151; line-height: 1.7; font-style: italic; margin-bottom: 15px;">
-                        "<i class="hero-icon" data-lucide="party-popper" style="color: #10b981;"></i>HUGE WIN! Just signed my first $10K coaching client! The dream mapping process was game-changing. Special thanks to this incredible community for the support!"
+                        "<i class="hero-icon" data-lucide="party-popper" style="color: #10b981;"></i>HUGE WIN! Just signed my first $10K coaching client! The MogulMomma Map™ process was game-changing. Special thanks to this incredible community for the support!"
                     </p>
                     <div style="display: flex; gap: 15px; color: #64748b; font-size: 0.9rem;">
                         <span><i class="hero-icon" data-lucide="heart" style="color: #ef4444;"></i>247 loves</span>
@@ -1545,7 +1694,7 @@
                 </p>
                 
                 <div style="background: rgba(255, 255, 255, 0.15); padding: 40px; border-radius: 20px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); margin: 40px 0;">
-                    <h3 style="font-size: 1.8rem; margin-bottom: 20px; font-weight: 600;"><i class="hero-icon" data-lucide="map" style="width: 1.3em; height: 1.3em;"></i>Dream Mapping Sessions Available</h3>
+                    <h3 style="font-size: 1.8rem; margin-bottom: 20px; font-weight: 600;"><i class="hero-icon" data-lucide="map" style="width: 1.3em; height: 1.3em;"></i>MogulMomma Map™ Sessions Available</h3>
                     <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 30px;">
                         Join our signature group sessions where we transform your dreams into detailed action plans with a community of ambitious women just like you.
                     </p>
@@ -1553,7 +1702,7 @@
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0;">
                         <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 12px;">
                             <h4 style="margin-bottom: 10px;"><i class="hero-icon" data-lucide="calendar"></i>Monthly Group Sessions</h4>
-                            <p style="opacity: 0.9; font-size: 0.95rem;">Deep dive into your dream mapping with expert guidance</p>
+                            <p style="opacity: 0.9; font-size: 0.95rem;">Deep dive into your MogulMomma Map™ with expert guidance</p>
                         </div>
                         <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 12px;">
                             <h4 style="margin-bottom: 10px;"><i class="hero-icon" data-lucide="users"></i>Supportive Community</h4>
@@ -1568,7 +1717,7 @@
                 
                 <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px;">
                     <a href="/assessment" style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); color: #7c3aed; padding: 18px 40px; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 1.1rem; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); transition: all 0.3s ease;">
-                        <i class="hero-icon" data-lucide="map"></i>Start Dream Mapping (Free)
+                        <i class="hero-icon" data-lucide="map"></i>Start MogulMomma Map™ (Free)
                     </a>
                     <a href="/membership" style="background: rgba(255, 255, 255, 0.2); color: white; padding: 18px 40px; border-radius: 50px; font-weight: 600; text-decoration: none; font-size: 1.1rem; border: 2px solid rgba(255, 255, 255, 0.3); transition: all 0.3s ease;">
                         <i class="hero-icon" data-lucide="gem"></i>Join Community ($97/mo)
