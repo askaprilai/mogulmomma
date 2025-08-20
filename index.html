@@ -6,6 +6,8 @@
     <title>MogulMomma - Transform Your Career Transition Into Your Greatest Success Story</title>
     <!-- Add Lucide Icons for sophisticated iconography -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Three.js for 3D stars background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -22,15 +24,9 @@
             overflow-x: hidden;
         }
 
-        /* Hero Section - Aurora Style with Animated Gradients */
+        /* Hero Section - Dreams in the Sky with Aurora & Stars */
         .hero {
-            background: linear-gradient(135deg, 
-                #ff8a65 0%,    /* warm coral */
-                #ff7043 20%,   /* vibrant orange */
-                #d81b60 50%,   /* magenta pink */
-                #8e24aa 75%,   /* deep purple */
-                #5e35b1 100%   /* rich violet */
-            );
+            background: #020617;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -39,7 +35,29 @@
             padding-top: 60px;
         }
 
-        /* Aurora Background Layers */
+        /* Animated Aurora Background */
+        .aurora-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(125% 125% at 50% 0%, #020617 50%, var(--aurora-color));
+            animation: aurora-color-cycle 10s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Aurora Color Animation */
+        @keyframes aurora-color-cycle {
+            0% { --aurora-color: #ff8a65; }
+            25% { --aurora-color: #d81b60; }
+            50% { --aurora-color: #8e24aa; }
+            75% { --aurora-color: #5e35b1; }
+            100% { --aurora-color: #ff8a65; }
+        }
+
+        /* Alternative Aurora Background with CSS Variables */
         .hero::before {
             content: '';
             position: absolute;
@@ -47,132 +65,43 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(255, 138, 101, 0.4) 0%, transparent 40%),
-                radial-gradient(circle at 80% 80%, rgba(216, 27, 96, 0.3) 0%, transparent 40%),
-                radial-gradient(circle at 60% 40%, rgba(142, 36, 170, 0.3) 0%, transparent 40%),
-                radial-gradient(circle at 40% 80%, rgba(94, 53, 177, 0.2) 0%, transparent 40%);
-            animation: aurora-move 20s ease-in-out infinite;
+            background: radial-gradient(125% 125% at 50% 0%, #020617 50%, #ff8a65);
+            animation: aurora-shift 10s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
         }
 
-        .hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 30% 60%, rgba(255, 112, 67, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 30%, rgba(244, 114, 182, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 70%, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
-            animation: aurora-drift 15s ease-in-out infinite reverse;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Aurora Animations */
-        @keyframes aurora-move {
+        @keyframes aurora-shift {
             0%, 100% {
-                transform: translateX(0px) translateY(0px) scale(1);
+                background: radial-gradient(125% 125% at 50% 0%, #020617 50%, #ff8a65);
                 opacity: 0.8;
             }
-            33% {
-                transform: translateX(30px) translateY(-20px) scale(1.1);
+            25% {
+                background: radial-gradient(125% 125% at 50% 0%, #020617 50%, #d81b60);
                 opacity: 0.9;
             }
-            66% {
-                transform: translateX(-20px) translateY(20px) scale(0.95);
+            50% {
+                background: radial-gradient(125% 125% at 50% 0%, #020617 50%, #8e24aa);
+                opacity: 0.8;
+            }
+            75% {
+                background: radial-gradient(125% 125% at 50% 0%, #020617 50%, #5e35b1);
                 opacity: 0.7;
             }
         }
 
-        @keyframes aurora-drift {
-            0%, 100% {
-                transform: translateX(0px) translateY(0px) rotate(0deg);
-                opacity: 0.6;
-            }
-            50% {
-                transform: translateX(-30px) translateY(-30px) rotate(1deg);
-                opacity: 0.8;
-            }
-        }
-
-        /* Floating Aurora Orbs */
-        .aurora-orbs {
+        /* 3D Stars Canvas Container */
+        .stars-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
 
-        .aurora-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(2px);
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .aurora-orb:nth-child(1) {
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(255, 138, 101, 0.3) 0%, transparent 70%);
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-            animation-duration: 12s;
-        }
-
-        .aurora-orb:nth-child(2) {
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(216, 27, 96, 0.25) 0%, transparent 70%);
-            top: 60%;
-            right: 15%;
-            animation-delay: -3s;
-            animation-duration: 10s;
-        }
-
-        .aurora-orb:nth-child(3) {
-            width: 180px;
-            height: 180px;
-            background: radial-gradient(circle, rgba(142, 36, 170, 0.2) 0%, transparent 70%);
-            bottom: 30%;
-            left: 20%;
-            animation-delay: -6s;
-            animation-duration: 14s;
-        }
-
-        .aurora-orb:nth-child(4) {
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, rgba(94, 53, 177, 0.3) 0%, transparent 70%);
-            top: 40%;
-            right: 30%;
-            animation-delay: -9s;
-            animation-duration: 8s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) translateX(0px) scale(1);
-                opacity: 0.6;
-            }
-            33% {
-                transform: translateY(-20px) translateX(10px) scale(1.1);
-                opacity: 0.8;
-            }
-            66% {
-                transform: translateY(10px) translateX(-15px) scale(0.9);
-                opacity: 0.4;
-            }
-        }
-
+        /* Enhanced Content Styling for Dark Background */
         .hero-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -186,23 +115,70 @@
         }
 
         .hero-text {
-            color: white;
+            color: #f1f5f9;
         }
 
         .hero-badge {
-            background: rgba(255, 255, 255, 0.2);
-            color: rgba(255, 255, 255, 0.95);
+            background: rgba(148, 163, 184, 0.2);
+            color: rgba(241, 245, 249, 0.95);
             padding: 12px 24px;
             border-radius: 50px;
             display: inline-block;
             font-weight: 600;
             margin-bottom: 30px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(148, 163, 184, 0.3);
             font-size: 0.9rem;
             letter-spacing: 0.5px;
             text-transform: uppercase;
             font-family: 'Montserrat', sans-serif;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            color: #f1f5f9;
+            font-family: 'Montserrat', sans-serif;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(148, 163, 184, 0.9);
+            margin-bottom: 35px;
+            font-weight: 400;
+            line-height: 1.6;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #ff7043 0%, #d81b60 100%);
+            color: white;
+            padding: 18px 36px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(255, 112, 67, 0.3);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 112, 67, 0.5);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 112, 67, 0.4);
         }
 
         .hero h1 {
@@ -1177,13 +1153,8 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <!-- Aurora Orbs Background -->
-        <div class="aurora-orbs">
-            <div class="aurora-orb"></div>
-            <div class="aurora-orb"></div>
-            <div class="aurora-orb"></div>
-            <div class="aurora-orb"></div>
-        </div>
+        <!-- 3D Stars Canvas Background -->
+        <div class="stars-canvas" id="stars-canvas"></div>
         
         <div class="hero-content">
             <div class="hero-text">
@@ -1774,6 +1745,76 @@
             } else {
                 navbar.style.background = 'rgba(255, 255, 255, 0.95)';
             }
+        });
+
+        // 3D Stars Background Animation
+        function initStarsBackground() {
+            const canvas = document.getElementById('stars-canvas');
+            if (!canvas) return;
+
+            // Create Three.js scene
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            canvas.appendChild(renderer.domElement);
+
+            // Create stars
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsMaterial = new THREE.PointsMaterial({
+                color: 0xffffff,
+                size: 2,
+                sizeAttenuation: true,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            // Generate star positions
+            const starsVertices = [];
+            const starCount = 2500;
+            
+            for (let i = 0; i < starCount; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                starsVertices.push(x, y, z);
+            }
+
+            starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+            const stars = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(stars);
+
+            // Position camera
+            camera.position.z = 50;
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Rotate stars slowly
+                stars.rotation.x += 0.0005;
+                stars.rotation.y += 0.0003;
+                stars.rotation.z += 0.0002;
+                
+                renderer.render(scene, camera);
+            }
+
+            // Handle window resize
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+
+        // Initialize stars when page loads
+        window.addEventListener('load', () => {
+            setTimeout(initStarsBackground, 100); // Small delay to ensure DOM is ready
         });
 
         // Mobile menu functionality
