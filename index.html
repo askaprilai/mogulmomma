@@ -103,42 +103,46 @@
 
         /* Enhanced Content Styling for Dark Background */
         .hero-content {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 30px;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 60px;
-            align-items: center;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
             position: relative;
             z-index: 10;
+            min-height: 100vh;
+            width: 100%;
         }
 
         .hero-text {
             color: #f1f5f9;
+            max-width: 100%;
+            width: 100%;
         }
 
         .hero-badge {
             background: rgba(148, 163, 184, 0.2);
             color: rgba(241, 245, 249, 0.95);
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 50px;
             display: inline-block;
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(148, 163, 184, 0.3);
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
             letter-spacing: 0.5px;
             text-transform: uppercase;
             font-family: 'Montserrat', sans-serif;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-size: clamp(1.8rem, 6vw, 4.5rem);
             font-weight: 800;
             line-height: 1.1;
-            margin-bottom: 25px;
+            margin-bottom: clamp(15px, 3vw, 25px);
             color: #f1f5f9;
             font-family: 'Montserrat', sans-serif;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -148,24 +152,27 @@
             background-clip: text;
             max-width: 100%;
             text-align: left;
+            word-wrap: break-word;
+            hyphens: auto;
         }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.3rem);
             color: rgba(148, 163, 184, 0.9);
-            margin-bottom: 35px;
+            margin-bottom: clamp(20px, 4vw, 35px);
             font-weight: 400;
             line-height: 1.6;
             font-family: 'Montserrat', sans-serif;
+            max-width: 90%;
         }
 
         .cta-button {
             background: linear-gradient(135deg, #ff7043 0%, #d81b60 100%);
             color: white;
-            padding: 18px 36px;
+            padding: clamp(14px, 3vw, 18px) clamp(28px, 6vw, 36px);
             border: none;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
             cursor: pointer;
@@ -176,6 +183,7 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(255, 112, 67, 0.5);
+            margin-bottom: clamp(15px, 3vw, 20px);
         }
 
         .cta-button:hover {
@@ -183,23 +191,14 @@
             box-shadow: 0 15px 35px rgba(255, 112, 67, 0.4);
         }
 
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 25px;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
 
         /* Typewriter Animation */
         .typewriter {
             overflow: hidden;
-            border-right: 3px solid rgba(255, 255, 255, 0.75);
+            border-right: clamp(2px, 0.5vw, 3px) solid rgba(255, 255, 255, 0.75);
             white-space: nowrap;
             margin: 0;
-            letter-spacing: 0.05em;
+            letter-spacing: clamp(0.02em, 0.1vw, 0.05em);
             animation: typing 4s steps(45, end), blink-caret 0.75s step-end infinite;
             display: inline-block;
             max-width: 100%;
@@ -216,33 +215,63 @@
             50% { border-color: rgba(255, 255, 255, 0.75) }
         }
 
-        /* Responsive adjustments for mobile */
-        @media (max-width: 768px) {
+        /* Responsive Breakpoints */
+        @media (max-width: 1200px) {
             .hero-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                text-align: left;
+                padding: 0 30px;
             }
             
             .hero h1 {
-                font-size: clamp(1.8rem, 7vw, 3rem);
-                letter-spacing: 0.02em;
+                font-size: clamp(1.6rem, 5.5vw, 3.8rem);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 80px;
+                padding-bottom: 40px;
+            }
+            
+            .hero-content {
+                padding: 0 20px;
+                min-height: calc(100vh - 120px);
+            }
+            
+            .hero h1 {
+                font-size: clamp(1.4rem, 7vw, 2.8rem);
+                line-height: 1.2;
+                margin-bottom: 15px;
             }
             
             .typewriter {
-                letter-spacing: 0.02em;
-                animation: typing 3s steps(35, end), blink-caret 0.75s step-end infinite;
+                letter-spacing: clamp(0.01em, 0.2vw, 0.03em);
+                animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+            }
+            
+            .hero-subtitle {
+                max-width: 95%;
+                font-size: clamp(0.85rem, 3vw, 1.1rem);
+                margin-bottom: 25px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-content {
+                padding: 0 15px;
+            }
+            
+            .hero h1 {
+                font-size: clamp(1.2rem, 8vw, 2.2rem);
+                line-height: 1.3;
+            }
+            
+            .hero-badge {
+                padding: 8px 16px;
+                font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+                margin-bottom: 15px;
             }
         }
 
-        .hero-subtitle {
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 35px;
-            font-weight: 400;
-            line-height: 1.6;
-            font-family: 'Montserrat', sans-serif;
-        }
 
         /* Animated Process Map */
         .process-map {
@@ -1188,27 +1217,7 @@
                     Turn Your Big Vision into Your Next Successful Chapter. Stop waiting for "someday." Using our proven MogulMomma Map™, you'll transform your ideas into a concrete, actionable plan. Join a powerhouse community of accomplished women who are already building the businesses, careers, and lives they once only dreamed about.
                 </p>
                 <a href="/assessment" class="cta-button"><i class="hero-icon" data-lucide="map"></i>Start Your MogulMomma Map™ Journey (Free)</a>
-                <p style="margin-top: 20px; opacity: 0.8; font-size: 0.9rem;"><i class="hero-icon" data-lucide="check-circle"></i>10-minute assessment • <i class="hero-icon" data-lucide="check-circle"></i>Personalized roadmap • <i class="hero-icon" data-lucide="check-circle"></i>Instant results</p>
-            </div>
-            <div class="hero-visual">
-                <div class="process-map">
-                    <!-- Animated connecting lines -->
-                    <div class="process-line line-1"></div>
-                    <div class="process-line line-2"></div>
-                    <div class="process-line line-3"></div>
-                    
-                    <!-- Process nodes with icons -->
-                    <div class="process-node node-1 active">💭</div>
-                    <div class="process-node node-2">🗺️</div>
-                    <div class="process-node node-3">🚀</div>
-                    <div class="process-node node-4">👑</div>
-                    
-                    <!-- Floating labels -->
-                    <div class="process-label label-1">Dream Discovery</div>
-                    <div class="process-label label-2">Strategic Mapping</div>
-                    <div class="process-label label-3">Launch & Execute</div>
-                    <div class="process-label label-4">Scale & Thrive</div>
-                </div>
+                <p style="margin-top: clamp(15px, 3vw, 20px); opacity: 0.8; font-size: clamp(0.8rem, 2vw, 0.9rem); color: rgba(148, 163, 184, 0.8);"><i class="hero-icon" data-lucide="check-circle"></i>10-minute assessment • <i class="hero-icon" data-lucide="check-circle"></i>Personalized roadmap • <i class="hero-icon" data-lucide="check-circle"></i>Instant results</p>
             </div>
         </div>
     </section>
