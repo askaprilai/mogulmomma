@@ -194,18 +194,38 @@
 
         /* Typewriter Animation */
         .typewriter {
-            overflow: hidden;
-            border-right: clamp(2px, 0.5vw, 3px) solid rgba(255, 255, 255, 0.75);
-            white-space: nowrap;
             margin: 0;
             letter-spacing: clamp(0.02em, 0.1vw, 0.05em);
-            animation: typing 4s steps(45, end), blink-caret 0.75s step-end infinite;
-            display: inline-block;
+            display: block;
             max-width: 100%;
             text-align: left;
+            line-height: 1.1;
         }
 
-        @keyframes typing {
+        .typewriter .line1,
+        .typewriter .line2 {
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0;
+        }
+
+        .typewriter .line1 {
+            border-right: clamp(2px, 0.5vw, 3px) solid rgba(255, 255, 255, 0.75);
+            animation: typing-line1 2.5s steps(20, end), blink-caret 0.75s step-end infinite;
+        }
+
+        .typewriter .line2 {
+            border-right: clamp(2px, 0.5vw, 3px) solid rgba(255, 255, 255, 0.75);
+            animation: typing-line2 2.5s steps(18, end) 2.5s both, blink-caret 0.75s step-end infinite 2.5s;
+        }
+
+        @keyframes typing-line1 {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes typing-line2 {
             from { width: 0 }
             to { width: 100% }
         }
@@ -243,9 +263,12 @@
                 margin-bottom: 15px;
             }
             
-            .typewriter {
-                letter-spacing: clamp(0.01em, 0.2vw, 0.03em);
-                animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+            .typewriter .line1 {
+                animation: typing-line1 2s steps(15, end), blink-caret 0.75s step-end infinite;
+            }
+            
+            .typewriter .line2 {
+                animation: typing-line2 2s steps(13, end) 2s both, blink-caret 0.75s step-end infinite 2s;
             }
             
             .hero-subtitle {
@@ -1212,7 +1235,10 @@
         <div class="hero-content">
             <div class="hero-text">
                 <div class="hero-badge"><i class="hero-icon" data-lucide="star"></i>For Extraordinary Women Ready for More</div>
-                <h1 class="typewriter">You Bring the Dream, We Bring You the Map</h1>
+                <h1 class="typewriter">
+                    <span class="line1">You Bring the Dream,</span>
+                    <span class="line2">We Bring You the Map</span>
+                </h1>
                 <p class="hero-subtitle">
                     Turn Your Big Vision into Your Next Successful Chapter. Stop waiting for "someday." Using our proven MogulMomma Map™, you'll transform your ideas into a concrete, actionable plan. Join a powerhouse community of accomplished women who are already building the businesses, careers, and lives they once only dreamed about.
                 </p>
