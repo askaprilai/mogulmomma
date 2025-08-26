@@ -523,6 +523,61 @@
             box-shadow: 0 8px 25px rgba(255, 138, 101, 0.3);
         }
 
+        /* Engagement Buttons */
+        .engagement-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .engagement-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            min-width: 180px;
+            justify-content: center;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .share-btn {
+            background: linear-gradient(135deg, #e1306c, #c13584);
+            color: white;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(225, 48, 108, 0.3);
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        }
+
         .social-icon {
             width: 24px;
             height: 24px;
@@ -995,6 +1050,24 @@
                     <p class="archetype-description" id="archetypeDescription">
                         You're a big-picture thinker with the ability to see possibilities others miss. You're driven by creating meaningful impact and building something lasting.
                     </p>
+                    
+                    <!-- Engagement Buttons -->
+                    <div class="engagement-buttons" id="engagementButtons" style="display: none;">
+                        <button class="engagement-btn download-btn" onclick="downloadArchetypePDF()">
+                            <i data-lucide="download"></i>
+                            Download My Results
+                        </button>
+                        
+                        <button class="engagement-btn share-btn" onclick="shareOnInstagram()">
+                            <i data-lucide="instagram"></i>
+                            Share & Tag @mogulmommas
+                        </button>
+                        
+                        <button class="engagement-btn copy-btn" onclick="copyShareText()">
+                            <i data-lucide="copy"></i>
+                            Copy Share Text
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1280,6 +1353,12 @@
             document.getElementById('archetypeTitle').textContent = archetypeData.title;
             document.getElementById('archetypeDescription').textContent = archetypeData.description;
 
+            // Show engagement buttons
+            document.getElementById('engagementButtons').style.display = 'flex';
+
+            // Store current archetype for sharing
+            window.currentArchetype = archetypeData;
+
             // Scroll to social section
             setTimeout(() => {
                 document.querySelector('.social-section').scrollIntoView({ 
@@ -1292,6 +1371,119 @@
             document.getElementById('assessment').scrollIntoView({ 
                 behavior: 'smooth' 
             });
+        }
+
+        // Engagement Functions
+        async function downloadArchetypePDF() {
+            if (!window.currentArchetype) return;
+            
+            // Import jsPDF library
+            if (!window.jsPDF) {
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                document.head.appendChild(script);
+                
+                script.onload = () => generatePDF();
+                return;
+            }
+            
+            generatePDF();
+        }
+        
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            const archetype = window.currentArchetype;
+            
+            // Add content to PDF
+            doc.setFontSize(24);
+            doc.setTextColor(255, 138, 101);
+            doc.text('MogulMomma Archetype™ Results', 20, 30);
+            
+            doc.setFontSize(20);
+            doc.setTextColor(0, 0, 0);
+            doc.text(`${archetype.icon} ${archetype.title}`, 20, 50);
+            
+            doc.setFontSize(12);
+            const splitText = doc.splitTextToSize(archetype.description, 170);
+            doc.text(splitText, 20, 70);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text('Generated by mogulmomma.com', 20, 250);
+            doc.text('Follow @mogulmommas on Instagram for more insights!', 20, 260);
+            
+            // Download the PDF
+            doc.save(`MogulMomma-${archetype.title.replace(/\s+/g, '-')}-Results.pdf`);
+        }
+        
+        function shareOnInstagram() {
+            if (!window.currentArchetype) return;
+            
+            const archetype = window.currentArchetype;
+            const shareText = `🎉 I just discovered I'm ${archetype.title} ${archetype.icon}!
+
+${archetype.description}
+
+What's your MogulMomma Archetype™? Take the free assessment at mogulmomma.com 
+
+#MogulMomma #SuccessArchetype #CareerTransition #WomenEntrepreneurs #MogulMommaMap`;
+            
+            // Try to share via Web Share API (mobile)
+            if (navigator.share) {
+                navigator.share({
+                    title: `I'm ${archetype.title}!`,
+                    text: shareText,
+                    url: 'https://mogulmomma.com'
+                });
+            } else {
+                // Fallback: copy text and open Instagram
+                copyToClipboard(shareText);
+                window.open('https://www.instagram.com/', '_blank');
+                alert('Share text copied to clipboard! Paste it in your Instagram post and tag @mogulmommas');
+            }
+        }
+        
+        function copyShareText() {
+            if (!window.currentArchetype) return;
+            
+            const archetype = window.currentArchetype;
+            const shareText = `🎉 I just discovered I'm ${archetype.title} ${archetype.icon}!
+
+${archetype.description}
+
+What's your MogulMomma Archetype™? Take the free assessment at mogulmomma.com 
+
+#MogulMomma #SuccessArchetype #CareerTransition @mogulmommas`;
+            
+            copyToClipboard(shareText);
+            
+            // Show feedback
+            const copyBtn = document.querySelector('.copy-btn');
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i data-lucide="check"></i> Copied!';
+            copyBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            
+            setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+                copyBtn.style.background = 'linear-gradient(135deg, #3b82f6, #2563eb)';
+                lucide.createIcons();
+            }, 2000);
+        }
+        
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+            }
         }
 
         // Initialize Lucide icons
