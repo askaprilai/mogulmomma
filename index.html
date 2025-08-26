@@ -1210,7 +1210,7 @@
                 const archetype = calculateArchetype();
                 const archetypeData = archetypes[archetype];
 
-                // Send email via EmailJS
+                // Send email via EmailJS - Simplified parameters
                 const templateParams = {
                     to_name: firstName,
                     to_email: email,
@@ -1219,7 +1219,8 @@
                     archetype_icon: archetypeData.icon,
                     from_name: 'MogulMomma Team',
                     reply_to: 'hello@mogulmomma.com',
-                    subject: `${firstName}, Your MogulMomma Archetype™ Results Are Here! ${archetypeData.icon}`
+                    subject: `${firstName}, Your MogulMomma Archetype Results Are Here! ${archetypeData.icon}`,
+                    message: `Hi ${firstName}! You are ${archetypeData.title}. ${archetypeData.description}`
                 };
 
                 console.log('Sending email with params:', templateParams);
@@ -1245,9 +1246,18 @@
             } catch (error) {
                 console.error('EmailJS Error:', error);
                 console.error('Error details:', error.text || error.message);
+                console.error('Error status:', error.status);
+                console.error('Template params that failed:', templateParams);
                 
-                // Show error message but still proceed
-                successMessage.textContent = '⚠️ Email delivery issue, but here are your results!';
+                // Show more specific error message
+                let errorMsg = '⚠️ Email delivery issue, but here are your results!';
+                if (error.status === 400) {
+                    errorMsg = '⚠️ Email template issue - results below!';
+                } else if (error.status === 401 || error.status === 403) {
+                    errorMsg = '⚠️ Email service authentication issue - results below!';
+                }
+                
+                successMessage.textContent = errorMsg;
                 successMessage.style.display = 'block';
                 successMessage.style.backgroundColor = '#fef3c7';
                 successMessage.style.color = '#92400e';
