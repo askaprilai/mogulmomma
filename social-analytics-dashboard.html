@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MogulMomma Social Analytics - Track Your Performance</title>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="social-api-backend.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff8a65 0%, #ff7043 25%, #d81b60 75%, #8e24aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .date-filter {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .filter-btn {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #ff8a65, #d81b60);
+            color: white;
+            border-color: transparent;
+        }
+
+        .filter-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .filter-btn.active:hover {
+            background: linear-gradient(135deg, #ff8a65, #d81b60);
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .dashboard-header {
+            margin-bottom: 40px;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+        }
+
+        /* Overview Cards */
+        .overview-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .overview-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .overview-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, #ff8a65, #d81b60);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, rgba(255, 138, 101, 0.1), rgba(216, 27, 96, 0.1));
+            color: #ff8a65;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .card-label {
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-change {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .card-change.positive {
+            color: #10b981;
+        }
+
+        .card-change.negative {
+            color: #ef4444;
+        }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .chart-selector {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        .chart-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #64748b;
+        }
+
+        .chart-btn.active {
+            background: white;
+            color: #ff8a65;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Platform Performance */
+        .platform-performance {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+
+        .platform-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .platform-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .platform-item:hover {
+            background: #e2e8f0;
+        }
+
+        .platform-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .facebook { background: #1877f2; }
+        .instagram { background: linear-gradient(45deg, #833ab4, #fd1d1d, #fcb045); }
+        .twitter { background: #1da1f2; }
+        .linkedin { background: #0077b5; }
+        .youtube { background: #ff0000; }
+        .tiktok { background: #000000; }
+
+        .platform-details {
+            flex: 1;
+        }
+
+        .platform-name {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .platform-stats {
+            display: flex;
+            gap: 20px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .performance-score {
+            background: linear-gradient(135deg, #ff8a65, #d81b60);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Top Posts */
+        .top-posts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .posts-container {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .post-item {
+            display: flex;
+            gap: 15px;
+            padding: 20px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .post-item:last-child {
+            border-bottom: none;
+        }
+
+        .post-thumbnail {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff8a65, #d81b60);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .post-content {
+            flex: 1;
+        }
+
+        .post-text {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 15px;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .post-metric {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .top-posts {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 20px;
+            }
+
+            .overview-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .platform-stats {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .date-filter {
+                flex-wrap: wrap;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        /* Loading States */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #64748b;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f1f5f9;
+            border-top: 4px solid #ff8a65;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">👑 MogulMomma Analytics</div>
+            <div class="date-filter">
+                <button class="filter-btn" onclick="setDateFilter('7d')">7 Days</button>
+                <button class="filter-btn active" onclick="setDateFilter('30d')">30 Days</button>
+                <button class="filter-btn" onclick="setDateFilter('90d')">90 Days</button>
+                <button class="filter-btn" onclick="setDateFilter('12m')">12 Months</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Social Media Analytics</h1>
+            <p class="dashboard-subtitle">Track your performance across all platforms and optimize your strategy</p>
+        </div>
+
+        <!-- Overview Cards -->
+        <div class="overview-cards">
+            <div class="overview-card">
+                <div class="card-icon">
+                    <i data-lucide="eye" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="card-value" id="totalImpressions">2.3M</div>
+                <div class="card-label">Total Impressions</div>
+                <div class="card-change positive">
+                    <i data-lucide="trending-up" style="width: 16px; height: 16px;"></i>
+                    <span>+23% vs last month</span>
+                </div>
+            </div>
+
+            <div class="overview-card">
+                <div class="card-icon">
+                    <i data-lucide="heart" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="card-value" id="totalEngagement">156K</div>
+                <div class="card-label">Total Engagement</div>
+                <div class="card-change positive">
+                    <i data-lucide="trending-up" style="width: 16px; height: 16px;"></i>
+                    <span>+18% vs last month</span>
+                </div>
+            </div>
+
+            <div class="overview-card">
+                <div class="card-icon">
+                    <i data-lucide="users" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="card-value" id="totalFollowers">89.2K</div>
+                <div class="card-label">Total Followers</div>
+                <div class="card-change positive">
+                    <i data-lucide="trending-up" style="width: 16px; height: 16px;"></i>
+                    <span>+12% vs last month</span>
+                </div>
+            </div>
+
+            <div class="overview-card">
+                <div class="card-icon">
+                    <i data-lucide="mouse-pointer-click" style="width: 24px; height: 24px;"></i>
+                </div>
+                <div class="card-value" id="engagementRate">6.8%</div>
+                <div class="card-label">Avg Engagement Rate</div>
+                <div class="card-change positive">
+                    <i data-lucide="trending-up" style="width: 16px; height: 16px;"></i>
+                    <span>+2.1% vs last month</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Performance Trends</h3>
+                    <div class="chart-selector">
+                        <button class="chart-btn active" onclick="changeChart('impressions')">Impressions</button>
+                        <button class="chart-btn" onclick="changeChart('engagement')">Engagement</button>
+                        <button class="chart-btn" onclick="changeChart('followers')">Followers</button>
+                    </div>
+                </div>
+                <canvas id="performanceChart" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Platform Distribution</h3>
+                </div>
+                <canvas id="platformChart" width="200" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- Platform Performance -->
+        <div class="platform-performance">
+            <div class="chart-header">
+                <h3 class="chart-title">Platform Performance</h3>
+            </div>
+            <div class="platform-list">
+                <div class="platform-item">
+                    <div class="platform-icon instagram">
+                        <i data-lucide="camera" style="width: 20px; height: 20px;"></i>
+                    </div>
+                    <div class="platform-details">
+                        <div class="platform-name">Instagram</div>
+                        <div class="platform-stats">
+                            <div class="stat-item">
+                                <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+                                <span>1.2M impressions</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="heart" style="width: 14px; height: 14px;"></i>
+                                <span>89K engagements</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="users" style="width: 14px; height: 14px;"></i>
+                                <span>45.2K followers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="performance-score">92</div>
+                </div>
+
+                <div class="platform-item">
+                    <div class="platform-icon facebook">f</div>
+                    <div class="platform-details">
+                        <div class="platform-name">Facebook</div>
+                        <div class="platform-stats">
+                            <div class="stat-item">
+                                <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+                                <span>856K impressions</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="heart" style="width: 14px; height: 14px;"></i>
+                                <span>42K engagements</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="users" style="width: 14px; height: 14px;"></i>
+                                <span>28.7K followers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="performance-score">85</div>
+                </div>
+
+                <div class="platform-item">
+                    <div class="platform-icon linkedin">in</div>
+                    <div class="platform-details">
+                        <div class="platform-name">LinkedIn</div>
+                        <div class="platform-stats">
+                            <div class="stat-item">
+                                <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+                                <span>234K impressions</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="heart" style="width: 14px; height: 14px;"></i>
+                                <span>18K engagements</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="users" style="width: 14px; height: 14px;"></i>
+                                <span>12.1K followers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="performance-score">78</div>
+                </div>
+
+                <div class="platform-item">
+                    <div class="platform-icon twitter">
+                        <i data-lucide="twitter" style="width: 20px; height: 20px;"></i>
+                    </div>
+                    <div class="platform-details">
+                        <div class="platform-name">Twitter</div>
+                        <div class="platform-stats">
+                            <div class="stat-item">
+                                <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+                                <span>187K impressions</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="heart" style="width: 14px; height: 14px;"></i>
+                                <span>9.2K engagements</span>
+                            </div>
+                            <div class="stat-item">
+                                <i data-lucide="users" style="width: 14px; height: 14px;"></i>
+                                <span>8.9K followers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="performance-score">71</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Posts -->
+        <div class="top-posts">
+            <div class="posts-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Top Performing Posts</h3>
+                </div>
+
+                <div class="post-item">
+                    <div class="post-thumbnail">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-text">Monday Motivation: Your dreams don't expire! ✨ Whether you're 25 or 55...</div>
+                        <div class="post-meta">
+                            <div class="post-metric">
+                                <i data-lucide="heart" style="width: 12px; height: 12px;"></i>
+                                <span>2.3K</span>
+                            </div>
+                            <div class="post-metric">
+                                <i data-lucide="message-circle" style="width: 12px; height: 12px;"></i>
+                                <span>187</span>
+                            </div>
+                            <div class="post-metric">
+                                <i data-lucide="share" style="width: 12px; height: 12px;"></i>
+                                <span>94</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-item">
+                    <div class="post-thumbnail">
+                        <i data-lucide="briefcase"></i>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-text">Career transition tip: Network authentically, not transactionally...</div>
+                        <div class="post-meta">
+                            <div class="post-metric">
+                                <i data-lucide="heart" style="width: 12px; height: 12px;"></i>
+                                <span>1.8K</span>
+                            </div>
+                            <div class="post-metric">
+                                <i data-lucide="message-circle" style="width: 12px; height: 12px;"></i>
+                                <span>143</span>
+                            </div>
+                            <div class="post-metric">
+                                <i data-lucide="share" style="width: 12px; height: 12px;"></i>
+                                <span>76</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-item">
+                    <div class="post-thumbnail">
+                        <i data-lucide="crown"></i>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-text">Behind the scenes: Building MogulMomma from passion to platform...</div>
+                        <div class="post-meta">
+                            <div class="post-metric">
+                                <i data-lucide="heart" style="width: 12px; height: 12px;"></i>
+                                <span>1.5K</span>
+                            </div>
+                            <div class="post-metric">
+                                <i data-lucide="message-circle" style="width: 12px; height: 12px;"></i>
+                                <span>112</span>
+                            </div>
+                            <div class="post-metric">
+                                <i data-lucide="share" style="width: 12px; height: 12px;"></i>
+                                <span>58</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="posts-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Recent Activity</h3>
+                </div>
+
+                <div class="post-item">
+                    <div class="post-thumbnail">
+                        <i data-lucide="calendar"></i>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-text">Posted "Feature Friday: Meet Sarah, from corporate to consultant"</div>
+                        <div class="post-meta">
+                            <div class="post-metric">
+                                <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+                                <span>2 hours ago</span>
+                            </div>
+                            <div class="post-metric">
+                                <i data-lucide="instagram" style="width: 12px; height: 12px;"></i>
+                                <span>Instagram</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-item">
+                    <div class="post-thumbnail">
+                        <i data-lucide="send"></i>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-text">Scheduled 12 posts for next week across all platforms</div>
+                        <div class="post-meta">
+                            <div class="post-metric">
+                                <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+                                <span>1 day ago</span>
+                            </div>
+                            <div class="post-metric">
+                                <i data-lucide="calendar-check" style="width: 12px; height: 12px;"></i>
+                                <span>Bulk Schedule</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="post-item">
+                    <div class="post-thumbnail">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-text">LinkedIn post reached 50K impressions - new record!</div>
+                        <div class="post-meta">
+                            <div class="post-metric">
+                                <i data-lucide="clock" style="width: 12px; height: 12px;"></i>
+                                <span>2 days ago</span>
+                            </div>
+                            <div class="post-metric">
+                                <i data-lucide="linkedin" style="width: 12px; height: 12px;"></i>
+                                <span>LinkedIn</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize analytics
+        let currentFilter = '30d';
+        let performanceChart, platformChart;
+
+        // Sample data
+        const analyticsData = {
+            '7d': {
+                impressions: [12000, 15000, 18000, 14000, 22000, 19000, 25000],
+                engagement: [850, 1200, 1400, 980, 1600, 1350, 1800],
+                followers: [89180, 89185, 89192, 89201, 89215, 89228, 89245]
+            },
+            '30d': {
+                impressions: generateDailyData(30, 15000, 3000),
+                engagement: generateDailyData(30, 1200, 300),
+                followers: generateGrowthData(30, 89000, 245)
+            }
+        };
+
+        function generateDailyData(days, base, variance) {
+            const data = [];
+            for (let i = 0; i < days; i++) {
+                const value = base + (Math.random() - 0.5) * variance * 2;
+                data.push(Math.max(0, Math.round(value)));
+            }
+            return data;
+        }
+
+        function generateGrowthData(days, startValue, totalGrowth) {
+            const data = [];
+            const dailyGrowth = totalGrowth / days;
+            for (let i = 0; i < days; i++) {
+                const randomFactor = (Math.random() - 0.5) * 0.3 + 1;
+                const value = startValue + (dailyGrowth * i * randomFactor);
+                data.push(Math.round(value));
+            }
+            return data;
+        }
+
+        // Chart initialization
+        function initializeCharts() {
+            initPerformanceChart();
+            initPlatformChart();
+        }
+
+        function initPerformanceChart() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, 'rgba(255, 138, 101, 0.3)');
+            gradient.addColorStop(1, 'rgba(255, 138, 101, 0.05)');
+
+            performanceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: generateLabels(currentFilter),
+                    datasets: [{
+                        label: 'Impressions',
+                        data: analyticsData[currentFilter].impressions,
+                        borderColor: '#ff8a65',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#ff8a65',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                color: '#f1f5f9'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return formatNumber(value);
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    elements: {
+                        point: {
+                            hoverRadius: 8
+                        }
+                    }
+                }
+            });
+        }
+
+        function initPlatformChart() {
+            const ctx = document.getElementById('platformChart').getContext('2d');
+            
+            platformChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Instagram', 'Facebook', 'LinkedIn', 'Twitter'],
+                    datasets: [{
+                        data: [45, 28, 18, 9],
+                        backgroundColor: [
+                            '#e4405f',
+                            '#1877f2',
+                            '#0077b5',
+                            '#1da1f2'
+                        ],
+                        borderWidth: 0,
+                        cutout: '60%'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function generateLabels(filter) {
+            const labels = [];
+            const days = filter === '7d' ? 7 : 30;
+            
+            for (let i = days - 1; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                
+                if (filter === '7d') {
+                    labels.push(date.toLocaleDateString('en-US', { weekday: 'short' }));
+                } else {
+                    labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+                }
+            }
+            
+            return labels;
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        // Filter functions
+        function setDateFilter(filter) {
+            currentFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update charts
+            updateCharts();
+        }
+
+        function updateCharts() {
+            if (!analyticsData[currentFilter]) {
+                analyticsData[currentFilter] = {
+                    impressions: generateDailyData(currentFilter === '7d' ? 7 : 30, 15000, 3000),
+                    engagement: generateDailyData(currentFilter === '7d' ? 7 : 30, 1200, 300),
+                    followers: generateGrowthData(currentFilter === '7d' ? 7 : 30, 89000, 245)
+                };
+            }
+
+            performanceChart.data.labels = generateLabels(currentFilter);
+            performanceChart.data.datasets[0].data = analyticsData[currentFilter].impressions;
+            performanceChart.update();
+        }
+
+        function changeChart(type) {
+            // Update active button
+            document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update chart data
+            let data, label, color;
+            
+            switch (type) {
+                case 'impressions':
+                    data = analyticsData[currentFilter].impressions;
+                    label = 'Impressions';
+                    color = '#ff8a65';
+                    break;
+                case 'engagement':
+                    data = analyticsData[currentFilter].engagement;
+                    label = 'Engagement';
+                    color = '#d81b60';
+                    break;
+                case 'followers':
+                    data = analyticsData[currentFilter].followers;
+                    label = 'Followers';
+                    color = '#8e24aa';
+                    break;
+            }
+            
+            performanceChart.data.datasets[0].data = data;
+            performanceChart.data.datasets[0].label = label;
+            performanceChart.data.datasets[0].borderColor = color;
+            performanceChart.data.datasets[0].pointBackgroundColor = color;
+            
+            // Update gradient
+            const ctx = performanceChart.ctx;
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, color.replace(')', ', 0.3)').replace('rgb', 'rgba'));
+            gradient.addColorStop(1, color.replace(')', ', 0.05)').replace('rgb', 'rgba'));
+            performanceChart.data.datasets[0].backgroundColor = gradient;
+            
+            performanceChart.update();
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initializeCharts();
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (performanceChart) performanceChart.resize();
+            if (platformChart) platformChart.resize();
+        });
+    </script>
+</body>
+</html>
