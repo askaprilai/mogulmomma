@@ -1292,20 +1292,19 @@
                 const archetype = calculateArchetype();
                 const archetypeData = archetypes[archetype];
 
-                // Send email via EmailJS - Simplified parameters
+                // Send email via EmailJS - Fixed parameters
                 const templateParams = {
                     to_name: firstName,
                     to_email: email,
-                    archetype_title: archetypeData.title,
-                    archetype_description: archetypeData.description,
-                    archetype_icon: archetypeData.icon,
-                    from_name: 'MogulMomma Team',
-                    reply_to: 'hello@mogulmomma.com',
-                    subject: `${firstName}, Your MogulMomma Archetype Results Are Here! ${archetypeData.icon}`,
-                    message: `Hi ${firstName}! You are ${archetypeData.title}. ${archetypeData.description}`
+                    title: archetypeData.title,
+                    description: archetypeData.description,
+                    icon: archetypeData.icon,
+                    from_name: 'MogulMomma Team'
                 };
 
                 console.log('Sending email with params:', templateParams);
+                console.log('Archetype data:', archetypeData);
+                console.log('Calculated archetype:', archetype);
                 
                 // Send to Google Sheets first (don't let it block the flow)
                 console.log('Saving to Google Sheets:', { firstName, email, archetype: archetypeData.title });
