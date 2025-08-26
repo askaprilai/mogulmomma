@@ -1301,10 +1301,11 @@
                 const safeDescription = archetypeData?.description || 'You are a natural business leader!';
                 const safeIcon = archetypeData?.icon || '🏗️';
 
-                // Send email via EmailJS - Super simple test parameters
+                // Send email via EmailJS - Fixed recipient parameters
                 const templateParams = {
                     to_name: firstName,
-                    to_email: email,
+                    reply_to: email,
+                    user_email: email,
                     message: `Hi ${firstName}! You are ${safeTitle} ${safeIcon}. ${safeDescription}`
                 };
 
