@@ -1034,9 +1034,11 @@
         async function saveToGoogleSheets(firstName, email, archetype) {
             try {
                 const formData = new FormData();
-                formData.append('name', firstName);
-                formData.append('email', email);
-                formData.append('archetype', archetype);
+                formData.append('First Name', firstName);
+                formData.append('Email', email);
+                formData.append('Archetype', archetype);
+                formData.append('Source', 'Landing Page Assessment');
+                formData.append('User Agent', navigator.userAgent);
 
                 // Replace with your Google Apps Script Web App URL
                 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyNVHq5bZcKpPmuLyZqWqjO5-qIP7jHUb9sUc4rrtiK2Dukxd234Dq43NWigwojDca9/exec';
@@ -1051,7 +1053,8 @@
                 }
 
                 const result = await response.json();
-                console.log('Google Sheets saved:', result);
+                console.log('Google Sheets response:', result);
+                console.log('Response status:', response.status);
                 return true;
             } catch (error) {
                 console.error('Google Sheets Error:', error);
@@ -1222,6 +1225,7 @@
                 console.log('Sending email with params:', templateParams);
                 
                 // Send to Google Sheets first
+                console.log('Saving to Google Sheets:', { firstName, email, archetype: archetypeData.title });
                 await saveToGoogleSheets(firstName, email, archetypeData.title);
                 
                 // Then send email
