@@ -1322,11 +1322,11 @@
                 // Then send email (also don't let it block)
                 try {
                     console.log('Attempting to send email...');
-                    console.log('Service ID: service_5g6k8yr');
+                    console.log('Service ID: service_vntq4ai');
                     console.log('Template ID: template_tcyaiym');
                     console.log('Template params:', templateParams);
                     
-                    const result = await emailjs.send('service_5g6k8yr', 'template_tcyaiym', templateParams);
+                    const result = await emailjs.send('service_vntq4ai', 'template_tcyaiym', templateParams);
                     console.log('Email sent successfully! Result:', result);
                 } catch (emailError) {
                     console.error('Email failed but continuing:', emailError);
