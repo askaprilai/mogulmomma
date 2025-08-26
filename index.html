@@ -1290,21 +1290,28 @@
             try {
                 // Calculate archetype
                 const archetype = calculateArchetype();
+                console.log('DEBUG: Raw archetype result:', archetype);
+                
                 const archetypeData = archetypes[archetype];
+                console.log('DEBUG: Archetype data lookup:', archetypeData);
+                console.log('DEBUG: All archetypes available:', Object.keys(archetypes));
+
+                // Create simple test data if archetype data is missing
+                const safeTitle = archetypeData?.title || 'The Strategic Builder';
+                const safeDescription = archetypeData?.description || 'You are a natural business leader!';
+                const safeIcon = archetypeData?.icon || '🏗️';
 
                 // Send email via EmailJS - Fixed parameters
                 const templateParams = {
                     to_name: firstName,
                     to_email: email,
-                    title: archetypeData.title,
-                    description: archetypeData.description,
-                    icon: archetypeData.icon,
+                    title: safeTitle,
+                    description: safeDescription,
+                    icon: safeIcon,
                     from_name: 'MogulMomma Team'
                 };
 
-                console.log('Sending email with params:', templateParams);
-                console.log('Archetype data:', archetypeData);
-                console.log('Calculated archetype:', archetype);
+                console.log('Sending email with safe params:', templateParams);
                 
                 // Send to Google Sheets first (don't let it block the flow)
                 console.log('Saving to Google Sheets:', { firstName, email, archetype: archetypeData.title });
