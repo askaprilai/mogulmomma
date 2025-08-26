@@ -1301,14 +1301,11 @@
                 const safeDescription = archetypeData?.description || 'You are a natural business leader!';
                 const safeIcon = archetypeData?.icon || '🏗️';
 
-                // Send email via EmailJS - Fixed parameters
+                // Send email via EmailJS - Super simple test parameters
                 const templateParams = {
                     to_name: firstName,
                     to_email: email,
-                    title: safeTitle,
-                    description: safeDescription,
-                    icon: safeIcon,
-                    from_name: 'MogulMomma Team'
+                    message: `Hi ${firstName}! You are ${safeTitle} ${safeIcon}. ${safeDescription}`
                 };
 
                 console.log('Sending email with safe params:', templateParams);
@@ -1324,10 +1321,17 @@
                 
                 // Then send email (also don't let it block)
                 try {
-                    await emailjs.send('service_5g6k8yr', 'template_tcyaiym', templateParams);
-                    console.log('Email sent successfully!');
+                    console.log('Attempting to send email...');
+                    console.log('Service ID: service_5g6k8yr');
+                    console.log('Template ID: template_tcyaiym');
+                    console.log('Template params:', templateParams);
+                    
+                    const result = await emailjs.send('service_5g6k8yr', 'template_tcyaiym', templateParams);
+                    console.log('Email sent successfully! Result:', result);
                 } catch (emailError) {
                     console.error('Email failed but continuing:', emailError);
+                    console.error('Email error details:', emailError.text);
+                    console.error('Email error status:', emailError.status);
                 }
 
                 // Clear the force timeout
