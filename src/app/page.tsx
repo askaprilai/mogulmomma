@@ -45,7 +45,7 @@ export default function Home() {
       <nav id="navbar" className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-black/10 z-50 transition-all duration-300">
         <div className="max-w-6xl mx-auto px-8 py-4 flex justify-between items-center">
           <div className="text-3xl font-extrabold bg-gradient-to-r from-purple-700 to-pink-400 bg-clip-text text-transparent">
-            👑 MogulMomma
+            <span className="text-purple-600">👑</span> MogulMomma
           </div>
           <ul className="hidden md:flex gap-8 list-none">
             <li><a href="#home" className="text-slate-600 font-medium hover:text-purple-700 transition-colors">Home</a></li>
@@ -415,7 +415,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-8">
           <div className="text-center mb-8">
             <div className="text-3xl font-extrabold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-              👑 MogulMomma
+              <span className="text-purple-400">👑</span> MogulMomma
             </div>
             <p className="text-slate-300 max-w-2xl mx-auto">
               Empowering accomplished women to transform their career transitions into their greatest success stories.
