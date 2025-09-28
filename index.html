@@ -485,10 +485,16 @@
             font-size: clamp(2rem, 4vw, 2.8rem);
             font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, #9333ea 0%, #c084fc 100%);
+            color: #9333ea; /* Fallback color for older browsers */
+            background: linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #f472b6 100%);
+            background: -webkit-linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #f472b6 100%);
+            background: -moz-linear-gradient(135deg, #9333ea 0%, #c084fc 50%, #f472b6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            /* Enhanced Windows/mobile support */
+            -moz-background-clip: text;
+            -moz-text-fill-color: transparent;
         }
 
         .social-subtitle {
