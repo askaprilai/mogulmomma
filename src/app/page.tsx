@@ -44,27 +44,27 @@ export default function Home() {
       {/* Navigation */}
       <nav id="navbar" className="fixed top-0 w-full bg-white/95 backdrop-blur-sm border-b border-black/10 z-50 transition-all duration-300">
         <div className="max-w-6xl mx-auto px-8 py-4 flex justify-between items-center">
-          <div className="text-3xl font-extrabold bg-gradient-to-r from-purple-700 to-pink-400 bg-clip-text text-transparent flex items-center gap-2">
-            <svg className="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+          <div className="text-3xl font-extrabold bg-gradient-to-r from-yellow-500 to-amber-400 bg-clip-text text-transparent flex items-center gap-2">
+            <svg className="w-8 h-8 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
               <path d="M5 16L3 9l2.5 1.5L12 8l6.5 2.5L21 9l-2 7H5zm7-11a2 2 0 100 4 2 2 0 000-4z"/>
               <path d="M2 20h20v2H2z"/>
             </svg>
             MogulMomma
           </div>
           <ul className="hidden md:flex gap-8 list-none">
-            <li><a href="#home" className="text-slate-600 font-medium hover:text-purple-700 transition-colors">Home</a></li>
-            <li><a href="#problem" className="text-slate-600 font-medium hover:text-purple-700 transition-colors">Challenges</a></li>
-            <li><a href="#solution" className="text-slate-600 font-medium hover:text-purple-700 transition-colors">Solution</a></li>
-            <li><a href="#assessment" className="text-slate-600 font-medium hover:text-purple-700 transition-colors">Assessment</a></li>
-            <li><a href="#testimonials" className="text-slate-600 font-medium hover:text-purple-700 transition-colors">Success Stories</a></li>
+            <li><a href="#home" className="text-slate-600 font-medium hover:text-yellow-600 transition-colors">Home</a></li>
+            <li><a href="#problem" className="text-slate-600 font-medium hover:text-yellow-600 transition-colors">Challenges</a></li>
+            <li><a href="#solution" className="text-slate-600 font-medium hover:text-yellow-600 transition-colors">Solution</a></li>
+            <li><a href="#assessment" className="text-slate-600 font-medium hover:text-yellow-600 transition-colors">Assessment</a></li>
+            <li><a href="#testimonials" className="text-slate-600 font-medium hover:text-yellow-600 transition-colors">Success Stories</a></li>
           </ul>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-purple-700 via-purple-400 to-pink-400">
+      <section id="home" className="min-h-screen flex items-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700">
         {/* Background Overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(139,92,246,0.3)_0%,transparent_50%),radial-gradient(circle_at_80%_20%,rgba(196,181,253,0.3)_0%,transparent_50%),radial-gradient(circle_at_40%_40%,rgba(244,114,182,0.2)_0%,transparent_50%)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(245,173,0,0.2)_0%,transparent_50%),radial-gradient(circle_at_80%_20%,rgba(245,173,0,0.3)_0%,transparent_50%),radial-gradient(circle_at_40%_40%,rgba(245,173,0,0.1)_0%,transparent_50%)] pointer-events-none"></div>
         
         <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
           <div className="text-white">
@@ -77,8 +77,8 @@ export default function Home() {
             <p className="text-xl lg:text-2xl opacity-95 mb-8 font-light leading-relaxed">
               Accomplished women don&apos;t need another generic career coach. You need a strategic partner who understands your journey and helps you map your dreams into reality.
             </p>
-            <Link href="/assessment" className="relative bg-gradient-to-r from-white to-slate-50 text-purple-700 px-10 py-5 rounded-full text-xl font-bold inline-block transition-all duration-300 hover:-translate-y-1 hover:shadow-xl shadow-black/20 overflow-hidden group">
-              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-700/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></span>
+            <Link href="/assessment" className="relative bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-900 px-10 py-5 rounded-full text-xl font-bold inline-block transition-all duration-300 hover:-translate-y-1 hover:shadow-xl shadow-black/20 overflow-hidden group">
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-300/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></span>
               Start Your Dream Assessment
             </Link>
           </div>
@@ -106,7 +106,7 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
             <div className="bg-white p-10 rounded-3xl shadow-lg hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-700 to-pink-400"></div>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-amber-500"></div>
               <div className="text-5xl mb-5">🎯</div>
               <h3 className="text-2xl font-semibold mb-4 text-slate-800">Your Dreams Feel Unclear</h3>
               <p className="text-slate-600 leading-relaxed">You have big aspirations but can&apos;t quite articulate what you want your next chapter to look like.</p>
